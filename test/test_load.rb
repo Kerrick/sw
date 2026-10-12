@@ -56,6 +56,13 @@ class TestLoad < Minitest::Test
     assert_includes failed.reason, FIXTURE_SERVER.url
   end
 
+  def test_a_vehicles_collection_that_is_not_json_fails_naming_its_url
+    failed = FIXTURE_SERVER.answering("/api/vehicles", "<html>Bad Gateway</html>") { delivered(FIXTURE_SERVER.url) }
+
+    assert_equal "Sw::Load::Failed", failed.class.name
+    assert_includes failed.reason, "#{FIXTURE_SERVER.url}/vehicles"
+  end
+
   def test_a_vehicle_without_a_name_fails_the_download
     failed = FIXTURE_SERVER.answering("/api/vehicles", '[{"model": "Sand Crawler"}]') { delivered(FIXTURE_SERVER.url) }
 

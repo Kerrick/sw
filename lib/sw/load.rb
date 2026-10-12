@@ -18,35 +18,46 @@ module Sw
     end
 
     def call(out, token)
+      out.put(catch(:failed) { download(out, token) })
+    rescue => e
+      out.put(failure(e.message))
+    end
+
+    private def download(out, token)
+      links = parse(url) { mapper.links(fetch_root(out, token).body) }
+      bodies = fetch_collections(out, token, links)
+      Finished.new(
+        characters: parse(links.fetch(:people)) { mapper.characters(bodies.fetch(:people)) },
+        vehicles: parse(links.fetch(:vehicles)) { mapper.vehicles(bodies.fetch(:vehicles)) }
+      )
+    end
+
+    private def fetch_root(out, token)
       root = out.source(Command.http(:get, url, :root), token)
-      return report_failure(out, root, url) unless root.success?
+      refuse(root, url) unless root.success?
+      root
+    end
 
-      links = links_in(root)
-      return out.put(Failed.new(reason: "Couldn't read the response from #{url}".freeze)) unless links
-
+    private def fetch_collections(out, token, links)
       fetches = links.map { |name, link| Command.http(:get, link, name) }
       responses = out.source(Command.all(:collections, fetches), token).results
       refused = responses.find { |response| !response.success? }
-      return report_failure(out, refused, links.fetch(refused.envelope)) if refused
-
-      bodies = responses.to_h { |response| [response.envelope, response.body] }
-      out.put(Finished.new(
-        characters: mapper.characters(bodies.fetch(:people)),
-        vehicles: mapper.vehicles(bodies.fetch(:vehicles))
-      ))
-    rescue => e
-      out.put(Failed.new(reason: e.message.freeze))
+      refuse(refused, links.fetch(refused.envelope)) if refused
+      responses.to_h { |response| [response.envelope, response.body] }
     end
 
-    private def links_in(root)
-      mapper.links(root.body)
+    # Ends the download with a Failed, from anywhere inside it.
+    private def refuse(response, from)
+      throw :failed, failure(response.error || "HTTP #{response.status} from #{from}")
+    end
+
+    private def parse(from)
+      yield
     rescue JSON::ParserError
-      nil
+      throw :failed, failure("Couldn't read the response from #{from}")
     end
 
-    private def report_failure(out, response, from)
-      out.put(Failed.new(reason: (response.error || "HTTP #{response.status} from #{from}").freeze))
-    end
+    private def failure(reason) = Failed.new(reason: reason.freeze)
 
     private def mapper = Mapper.new
   end
