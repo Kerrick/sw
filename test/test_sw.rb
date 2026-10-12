@@ -4,6 +4,7 @@ require "test_helper"
 
 class TestSw < Minitest::Test
   include ViewTestHelper
+  include ThreeCharacters
 
   def test_init_loads_from_the_root_in_sw_api_url
     ENV["SW_API_URL"] = "http://localhost:3000/api"
@@ -22,19 +23,13 @@ class TestSw < Minitest::Test
   end
 
   def test_the_top_line_is_a_bold_title
-    model = Sw::Model.new(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
-
-    with_rendered(Sw::View.call(model, tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
       assert_bold(0, 0)
     end
   end
 
   def test_the_selected_character_is_named_in_bold
-    luke = Sw::Character.new(name: "Luke Skywalker")
-    ackbar = Sw::Character.new(name: "Ackbar")
-    characters = Sw::Characters::Init.(characters: Sw::Collection.new([luke, ackbar])).with(selected: luke)
-
-    with_rendered(Sw::View.call(Sw::Model.new(characters:), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters(selected: luke)), tui)) do
       assert shown_with?("Luke Skywalker", :bold), "Expected Luke Skywalker in bold"
     end
   end
@@ -86,7 +81,7 @@ class TestSw < Minitest::Test
   def test_r_is_shown_as_a_hotkey_whether_loading_failed_or_loaded
     loading, = Sw::Init.call
     failed = loading.with(failure: "Connection refused")
-    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
+    loaded = loading.with(characters: three_characters)
 
     { loading:, failed:, loaded: }.each do |state, model|
       with_rendered(Sw::View.call(model, tui)) do
@@ -110,7 +105,7 @@ class TestSw < Minitest::Test
 
   def test_r_reloads_the_download_and_keeps_the_characters_on_screen
     loading, download = Sw::Init.call
-    characters = Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")]))
+    characters = three_characters
     loaded = loading.with(characters:)
 
     reloading, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
@@ -121,7 +116,7 @@ class TestSw < Minitest::Test
 
   def test_reloading_with_characters_on_screen_shows_the_blue_loading_status_word
     loading, = Sw::Init.call
-    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
+    loaded = loading.with(characters: three_characters)
     reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     with_rendered(Sw::View.call(reloading, tui)) do
@@ -155,6 +150,47 @@ class TestSw < Minitest::Test
     with_rendered(Sw::View.call(model, tui)) do
       assert shown_with?("q", :bold, :underlined), "Expected q styled as a hotkey"
     end
+  end
+
+  def test_the_down_arrow_and_j_move_the_highlight_to_the_next_character
+    %w[down j].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters))
+
+      assert_equal han, model.characters.selected, "Expected #{key} to select Han"
+    end
+  end
+
+  def test_the_up_arrow_and_k_move_the_highlight_to_the_previous_character
+    %w[up k].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters(selected: luke)))
+
+      assert_equal han, model.characters.selected, "Expected #{key} to select Han"
+    end
+  end
+
+  def test_home_and_g_jump_the_highlight_to_the_first_character
+    %w[home g].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters(selected: luke)))
+
+      assert_equal ackbar, model.characters.selected, "Expected #{key} to select Ackbar"
+    end
+  end
+
+  def test_end_and_capital_g_jump_the_highlight_to_the_last_character
+    [{ code: "end" }, { code: "G", modifiers: ["shift"] }].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(characters: three_characters))
+
+      assert_equal luke, model.characters.selected, "Expected #{key} to select Luke"
+    end
+  end
+
+  def test_the_down_arrow_does_nothing_while_the_download_is_under_way
+    loading, = Sw::Init.call
+
+    model, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "down"), loading)
+
+    assert_equal loading, model
+    assert_nil command
   end
 
   private def shown_with?(text, *modifiers)

@@ -29,10 +29,13 @@ module Sw
 
   class Collection[T] < Data
     include Enumerable[T]
-    attr_reader records: Array[T]
     def initialize: (Array[T] records) -> void
     def each: () { (T) -> void } -> Array[T]
             | () -> Enumerator[T, Array[T]]
+
+    private
+
+    attr_reader records: Array[T]
   end
 
   class Load < Data
@@ -71,6 +74,8 @@ module Sw
     end
 
     Init: ^(characters: Collection[Character]) -> Model
+    Select: ^(Symbol, Model) -> Model
+    Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
     View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
   end
 end

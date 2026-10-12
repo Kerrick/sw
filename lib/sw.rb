@@ -128,6 +128,15 @@ module Sw
   receive_events %i[q ctrl_c], :quit
   receive_events %i[r f5], :reload
 
+  route :characters, to: Characters
+
+  only when: -> (_, model) { model.characters } do
+    forward_events %i[down j], to: :characters, as: :move_down
+    forward_events %i[up k], to: :characters, as: :move_up
+    forward_events %i[home g], to: :characters, as: :move_first
+    forward_events %i[end shift_G], to: :characters, as: :move_last
+  end
+
   receive_instances_of Load::Finished, -> (message, model) {
     model.with(characters: Characters::Init.(characters: message.characters), loading: false)
   }

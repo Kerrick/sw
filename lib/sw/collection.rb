@@ -8,5 +8,7 @@ module Sw
     def initialize(records:) = super(records: Ractor.make_shareable(records))
 
     def each(&) = records.each(&)
+
+    private :records
   end
 end

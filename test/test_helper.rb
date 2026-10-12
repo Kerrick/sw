@@ -5,6 +5,7 @@ require "sw"
 require "rooibos/test_helper"
 require_relative "support/fixture_server"
 require_relative "support/view_test_helper"
+require_relative "support/three_characters"
 
 require "minitest/autorun"
 

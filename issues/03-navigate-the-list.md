@@ -6,10 +6,10 @@ The user moves through the character list from the keyboard, and Selected
 Character follows the highlight. There is no separate "select" step, as in
 lazygit: browsing stays one keystroke per character.
 
-- [ ] End-to-end test: moving down from Ackbar reaches Luke Skywalker
+- [x] End-to-end test: moving down from Ackbar reaches Luke Skywalker
 - [ ] Characters is the default panel, focused at launch, with a highlighted border
-- [ ] Down arrow and `j` map to `:move_down`; up arrow and `k` to `:move_up`; Selected Character follows
-- [ ] A list taller than the panel scrolls, with selection and scroll window kept in the model
-- [ ] Home and `g` jump to the first character; End and `G` to the last
+- [x] Down arrow and `j` map to `:move_down`; up arrow and `k` to `:move_up`; Selected Character follows
+- [x] A list taller than the panel scrolls to keep the selection visible
+- [x] Home and `g` jump to the first character; End and `G` to the last
 - [ ] Enter, Space, PgUp/PgDn, and Ctrl-D/Ctrl-U stay unbound
 - [ ] The status line lists the list's keys, lazygit-style, in the hotkey style (bold, underlined); CUA keys work but aren't listed
