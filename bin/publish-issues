@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Creates one GitHub issue per issues/*.md, one at a time, in filename
+# order. The first line ("# Title") is the title; the rest is the body.
+# Run before pushing the commits that reference them. Prints each file with
+# the issue number GitHub gave it.
+
+require "open3"
+
+Dir[File.join(__dir__, "..", "issues", "*.md")].each do |path|
+  title, body = File.read(path).split("\n", 2)
+  url, status = Open3.capture2(
+    "gh", "issue", "create", "--repo", "Kerrick/sw",
+    "--title", title.delete_prefix("# "), "--body", body.strip
+  )
+  abort "gh failed on #{path}" unless status.success?
+  puts "#{File.basename(path)} -> ##{url.strip.split("/").last}"
+end

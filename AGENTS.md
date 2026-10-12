@@ -217,11 +217,17 @@ write paragraphs, not tables, bullets, or bold.
 
 ## Changes, commits, changelog
 
-- Don't stage or commit unless asked. When done, suggest a Conventional
-  Commits message covering the whole `git diff` and `git diff --cached`:
-  plain text, no markdown, body only when it explains *why*. End with
-  your own harness's attribution lines (naming your model, not one copied
-  from history), in the format earlier commits use.
+- Until the project ends, issues live as committed files in `issues/`,
+  numbered as GitHub will number them, and nothing is pushed. Each commit
+  ticks its item in the issue file. At the end, `bin/publish-issues`
+  creates them on GitHub before the push, and a final commit deletes the
+  files.
+- Stage and commit only when the human asks; never push. Tick an issue's
+  item in the working tree so the commit includes it. When done, suggest
+  a Conventional Commits message covering the whole `git diff` and
+  `git diff --cached`: plain text, no markdown, body only when it explains
+  *why*. End with your own harness's attribution lines (naming your model,
+  not one copied from history), in the format earlier commits use.
 - User-visible changes go under `## [Unreleased]` in `CHANGELOG.md`
   (Keep a Changelog). Tests, refactors, and tooling do not.
 - Keep `sig/` RBS current for public constants and classes; no `untyped`
