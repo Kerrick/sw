@@ -22,6 +22,15 @@ class TestCharacters < Minitest::Test
     end
   end
 
+  def test_the_border_is_green_only_while_the_list_has_focus
+    with_rendered(Sw::Characters::View.call(three_characters, tui, focused: true)) do
+      assert_fg_color(:green, 0, 0)
+    end
+    with_rendered(Sw::Characters::View.call(three_characters, tui, focused: false)) do
+      refute_equal :green, get_cell(0, 0).fg
+    end
+  end
+
   def test_moving_down_selects_the_next_character
     assert_equal han, moved(:move_down, three_characters).selected
   end

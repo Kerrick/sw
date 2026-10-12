@@ -7,8 +7,9 @@ module Sw
     attr_reader characters: Characters::Model?
     attr_reader failure: String?
     attr_reader loading: bool
-    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool) -> void
-    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool) -> Model
+    attr_reader focus: Symbol
+    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol) -> void
+    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol) -> Model
     def loading?: () -> bool
   end
 
@@ -76,6 +77,6 @@ module Sw
     Init: ^(characters: Collection[Character]) -> Model
     Select: ^(Symbol, Model) -> Model
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
-    View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
+    View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> RatatuiRuby::Widgets::List
   end
 end

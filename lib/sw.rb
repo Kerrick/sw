@@ -14,8 +14,8 @@ module Sw
 
   API_URL = "https://swapi.info/api"
 
-  Model = Data.define(:characters, :failure, :loading) do
-    def initialize(characters:, failure: nil, loading: false) = super
+  Model = Data.define(:characters, :failure, :loading, :focus) do
+    def initialize(characters:, failure: nil, loading: false, focus: :characters) = super
 
     alias_method :loading?, :loading
   end
@@ -102,7 +102,7 @@ module Sw
           direction: :horizontal,
           constraints: [tui.constraint_length(27), tui.constraint_fill(1)],
           children: [
-            Characters::View.call(model.characters, tui),
+            Characters::View.call(model.characters, tui, focused: model.focus == :characters),
             tui.block(
               title: model.characters.selected.name,
               title_style: tui.style(modifiers: [:bold]),

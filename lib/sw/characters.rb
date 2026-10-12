@@ -28,12 +28,12 @@ module Sw
 
     Update = from_router
 
-    View = -> (model, tui) {
+    View = -> (model, tui, focused: false) {
       tui.list(
         items: model.collection.map(&:name),
         selected_index: model.collection.find_index(model.selected),
         highlight_style: tui.style(modifiers: [:reversed]),
-        block: tui.block(title: "Characters", borders: [:all])
+        block: tui.block(title: "Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))
       )
     }
   end

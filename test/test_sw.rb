@@ -40,6 +40,20 @@ class TestSw < Minitest::Test
     assert_nil model.characters
   end
 
+  def test_the_app_opens_with_the_characters_panel_focused
+    model, = Sw::Init.call
+
+    assert_equal :characters, model.focus
+  end
+
+  def test_the_characters_border_is_green_when_the_app_opens
+    model, = Sw::Init.call
+
+    with_rendered(Sw::View.call(model.with(characters: three_characters), tui)) do
+      assert_fg_color(:green, 0, 1)
+    end
+  end
+
   def test_the_screen_tells_the_user_the_download_is_under_way
     model, = Sw::Init.call
 
