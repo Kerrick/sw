@@ -33,7 +33,7 @@ writing code in the same area:
 - `examples/app_fractal_dashboard`: modal input capture, text input fragment.
 - `examples/app_tabbed_fragments`: Router DSL reference, `Command.bubble`, custom messages.
 - `doc/scaling_up/fractal_architecture.md`: fragments, model composition, and
-  each View taking its own fragment's `Model`.
+  widget slots.
 - `doc/best_practices/no_stateful_widgets.md`: scrolling without `ListState`.
 - `lib/rooibos/command/outlet.rb`, `command/all.rb`, `command/http.rb`.
 - RatatuiRuby `doc/concepts/application_testing.md` and
@@ -42,9 +42,10 @@ writing code in the same area:
 Examples also live in `~/Developer/rooibos/examples` and
 `~/Developer/ratatui_ruby/examples`. `~/Developer/sidekiq/lib/sidekiq/tui`
 (branch `rooibos`) is a larger Rooibos app: `fragments/table.rb` for
-selection fragments, `key_map.rb` for contextual key help. It is a Rooibos
-re-implementation of a third-party RatatuiRuby TUI wrought by the Rooibos
-maintainer.
+selection fragments, `key_map.rb` for contextual key help, and
+`fragments/home.rb` for `View`-only parts as lambdas inside a fragment. It
+is a Rooibos re-implementation of a third-party RatatuiRuby TUI wrought by
+the Rooibos maintainer.
 
 Local checkouts (e.g. `~/Developer/rooibos`) may be ahead of `Gemfile.lock`.
 When an exact API matters, confirm it in the installed gem
@@ -68,6 +69,15 @@ Facts that are easy to get wrong:
   Under test, debug mode tries to make that exception Ractor-shareable and
   raises `Ractor::Error`, which hides the real cause. Rescue inside the
   command and out.put a message.
+- RatatuiRuby's List takes only Strings, Spans, Lines, and ListItems. Block
+  titles, Table cells, and Spans' `content:` take anything with `to_s`. In the running app, a widget that raises while
+  drawing leaves its panel blank and reports nothing.
+- Table cells don't wrap, not even a Paragraph with `wrap: true` in a taller
+  row. Long values are cut off, and the project accepts that. Tables have no
+  row separators; `Vehicles::Vehicle` shows the way around it.
+- A Paragraph's `style:` covers its blank cells too, which changes the
+  `.ansi` snapshots. Be sure whether you intend to style the text or the area
+  around it.
 
 Vocabulary: a Rooibos unit is a **fragment**, never a "component" (reserved
 for the Kit library). "Widget" means a RatatuiRuby render primitive. Write
@@ -138,12 +148,11 @@ No record type is the center. Every record keeps the API's links in both
 directions (a character's films and a film's characters, a planet's
 residents and a resident's homeworld) as direct references, each to-many link
 a `Collection`, so `luke.vehicles.first.pilots` reads naturally. Records
-carry no IDs. The Mapper links them by URL while it maps, then freezes the
-whole graph. The graph has cycles, and that's fine: the cache holds raw
+carry no IDs. The graph has cycles, and that's fine: the cache holds raw
 JSON, so no record is ever serialized. The API's two directions agree today;
 if a source ever disagrees, that's a data quirk with a test. A screen's View
 hands the record it centers on to its panels. Don't name or build an
-Identity Map; the Mapper's index of URLs lives only while it maps.
+Identity Map.
 
 **Loading.** One or more custom commands, (`include Rooibos::Command::Custom`),
 responsible for crawling from the root URL (in parallel), caching the responses
@@ -172,14 +181,22 @@ under the platform-appropriate user cache directory from the `etcetera` gem.
 
 Cache age is an input in the loading tests, alongside network outcomes.
 
-**UI.** One module per panel. Only panels that take focus and keep state
-have `Init`/`Update`/Router. The rest are `View`-only modules. A
-fragment's View takes that fragment's own `Model`, plus keywords for what the
-root owns, such as `focused:`. Key bindings, focus order, and on-screen wording
-belong in the issues, not here.
+**UI.** One module per panel, even a simple one; the repo shows off the
+fractal architecture. A panel takes focus only when it has keys to answer,
+and only those panels keep state and have `Init`/`Update`/Router. The rest
+are `View`-only modules. A fragment's View takes that fragment's own
+`Model`, plus keywords for what the root owns, such as `focused:`. A
+`View`-only module takes whatever it needs, like props: a record, a
+`Collection`, or nothing. Parts inside a panel are `View`-only too, as
+lambdas in the panel's module or as modules of their own; file length
+decides. Key bindings, focus order, and on-screen wording belong in the
+issues, not here.
 
 - The root model owns focus. The root Router handles focus with
   `only when:` guards. Each screen names a default panel.
+- Number keys count only the panels that take focus, in reading order. Once
+  a panel has a number, it keeps it; a panel that takes focus later gets the
+  next one.
 - Keys map to **intents** at the root:
   `forward_events %i[down j], to: :characters, as: :move_down`.
   Characters' Update handles `:move_down`, never raw keys. Support both
@@ -213,7 +230,9 @@ The approach comes from five books. Apply them; don't cite them in code.
   (`test_luke_appears_in_episodes_three_through_six`), so the suite reads as
   the specification. Name a test in a product owner's words, with a subject
   that can do the verb: `test_the_app_knows_why_the_download_failed`, not
-  `test_a_failed_download_keeps_the_failure`.
+  `test_a_failed_download_keeps_the_failure`. A test named for an example
+  shows that example in its body, through an explaining variable:
+  `emergency_firespeeder_passengers = Sw::Value.new("unknown")`.
 - Shore, *The Art of Agile Development* (2nd ed.): stories are small
   vertical slices a user can see. Decisions, technical tasks, and refactors
   fold into the stories that need them, never issues of their own. A story
@@ -221,7 +240,9 @@ The approach comes from five books. Apply them; don't cite them in code.
 
 - Fixtures are recorded real responses. The source is frozen, so they don't
   go stale; never hit the live API in the default suite. Recording them is
-  the only time to touch the live API, and only after asking.
+  the only time to touch the live API, and only after asking. Never edit
+  them, and keep bulk edits out of `test/fixtures/`: renaming `Count` once
+  turned "Count Dooku" into "Value Dooku".
 - `test_helper.rb` starts one `FIXTURE_SERVER` for the whole suite and
   resets `SW_API_URL`, which overrides the API root, to it before every
   test. No test reaches swapi.info.
@@ -236,7 +257,10 @@ The approach comes from five books. Apply them; don't cite them in code.
   behavior and style, never positions or box-drawing characters; layout
   belongs to snapshots. Assert style or data, never copy, which product
   decisions change. `ViewTestHelper#with_rendered` renders a View for
-  these assertions.
+  these assertions. Find text with `#text_position` and check its style
+  with `#assert_text_style`, named as they would be in RatatuiRuby, rather
+  than indexing `buffer_content` by hand. Refer to on-screen wording through
+  the View's own constant, like `Sw::Vehicles::EMPTY`.
 - Don't test non-behavior.
 - Don't unit-test framework wiring: Router dispatch, `Data#with`, or
   generated placeholders. The end-to-end test covers it.
@@ -246,8 +270,9 @@ The approach comes from five books. Apply them; don't cite them in code.
   `FixtureServer#refusing` (404), `#dropping` (no answer), and `#answering`
   (any body), each for the length of a block.
 - System tests run the app against the fixture server, reach their example
-  with keys, and check the screen with `assert_snapshots`. Name snapshots after the example they show, and mask
-  machine-specific output with `normalize_snapshots`. A snapshot that doesn't
+  with keys, and check the screen with `assert_snapshots`. Name snapshots
+  after the example they show, and mask machine-specific output with
+  `normalize_snapshots`. A snapshot that doesn't
   exist yet passes on its first run and writes itself, so a snapshot alone
   can't make a test red. Assert on data first.
 - Point the cache at a temp directory via the environment, so tests exercise
@@ -260,6 +285,14 @@ Prose (README, docs, commit bodies, review messages) follows Zinsser's *On
 Writing Well* and Klinkenborg's *Several Short Sentences About Writing*:
 short, plain, active sentences, each doing work; no clutter. In README.md,
 write paragraphs, not tables, bullets, or bold.
+
+README.md is one essay, written as if from the end of the project, looking
+back. Read it whole and revise it whole, never in patches, and never get
+ahead of a decision an issue hasn't made. Read any `.md` file in full before
+you edit it.
+
+Code comments describe the code. They never mention the wireframe or a
+mockup.
 
 ## Changes, commits, changelog
 

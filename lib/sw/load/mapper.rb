@@ -4,9 +4,12 @@ require "json"
 
 module Sw
   class Load
-    # Maps the API's records to domain objects.
+    # Maps the API's records to domain objects, by Metadata Mapping: COLLECTIONS names each collection's record
+    # class, and each class's Data members name the API fields it reads. Every array is a list of links and becomes
+    # a Collection of records; every other field becomes a Value.
     class Mapper
-      # Each API collection, with the name the app uses for it and the class of its records.
+      # Each API collection, with the name the app uses for it and the class of its records. A new collection needs
+      # only an entry here and a Data class.
       COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle] }.freeze
 
       def links(root)
@@ -18,7 +21,9 @@ module Sw
       # Maps every collection at once, so each record can hold the records it links to.
       def records(**collections) = Mapping.new.call(collections)
 
-      # One run of #records. It remembers each record by its URL, and each link to fill once every record exists.
+      # One run of #records. It remembers each record by its URL, and each link to fill once every record exists,
+      # then freezes the whole graph. Records hold each other directly, with no IDs, and the index of URLs is gone
+      # when the run ends.
       class Mapping
         def initialize
           @by_url = {}

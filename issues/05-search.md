@@ -10,6 +10,12 @@ This is the first story with a second focusable panel, so the list's keys
 must work only while Characters has focus, and the status line must list the
 focused panel's keys.
 
+While these are the only two panels that take focus, `2` can never move
+focus. In Search, digits type into the query, and from the list, `2` names
+the panel that already has focus. Decide whether to bind it anyway, so the
+numbers never move when a third panel takes focus (recommended), or leave it
+unbound until then.
+
 - [ ] `1` or `/` focuses Search
 - [ ] `2` focuses Characters
 - [ ] The list's keys work only while Characters has focus

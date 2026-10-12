@@ -31,6 +31,7 @@ module Sw
 
     Update = from_router
 
+    # A List takes only strings and text, unlike a block title, so each name's Value becomes a String here.
     View = -> (model, tui, focused: false) {
       tui.list(
         items: model.collection.map { |character| character.name.to_s },

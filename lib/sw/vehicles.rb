@@ -14,7 +14,8 @@ module Sw
       tui.text_line(spans: [ValueSpan.(first, tui), tui.text_span(content: " / "), ValueSpan.(second, tui)])
     }
 
-    # One vehicle's three rows. Every vehicle after the first has a rule above it.
+    # One vehicle's three rows. A Table has no row separators, so each vehicle is a Table of its own, and every
+    # one after the first draws its top border as a rule.
     Vehicle = -> (vehicle, tui, first:) {
       tui.table(
         rows: [

@@ -94,14 +94,17 @@ is a new test, so it starts a new cycle and goes to its own TEST REVIEW.
 Implement only the test the reviewer approved. Run the full check. Only the
 end-to-end test may be red at a gate. If the code would break any other test,
 fold the change into the cycle that fixes that test, or split the work so
-every other test stays green.
+every other test stays green. If a change breaks more than you expected,
+revert to the last green state first. Then make the change easy, and make
+the easy change (Beck): a few small steps, each green on its own.
 Fix lint offenses rather than disabling rules. Refactor only while green, and
 only within what this cycle touched. Meet the rest of the project's
 definition of done.
 
 If the change makes `README.md` or `AGENTS.md` wrong, don't edit them. Flag
 it at the next gate. Edit them only when the reviewer asks, and change only
-what they asked for.
+what they asked for. Before you edit any document, read all of it, so the
+edit fits the whole.
 
 ### 6. Gate two: IMPLEMENTATION REVIEW
 
@@ -122,7 +125,10 @@ End your turn and wait.
 
 Stage and commit only when the reviewer asks; never push. When asked,
 stage only the files of the cycles the commit covers, and commit with the
-approved message.
+approved message. A refactor gets its own commit, apart from the behavior
+around it. The working tree may hold more than the commit will, so run the
+full check on exactly what is staged, for example in a copy made with
+`git checkout-index -a --prefix=<dir>/`.
 
 A commit needs the full check to pass. While an end-to-end test is still
 red, a cycle ends at its approved IMPLEMENTATION REVIEW, and the next cycle

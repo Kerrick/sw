@@ -23,6 +23,7 @@ module ViewTestHelper
   end
 
   # Asserts the style of the first cell of text, found as text_position finds it, with assert_cell_style's attributes.
+  # Pass modifiers as Symbols, which cells hold at runtime, though RatatuiRuby's cell.rbs says Strings.
   private def assert_text_style(text, on_line_with: text, line: nil, **expected_attributes)
     x, y = text_position(text, on_line_with:, line:)
     refute_nil y, "Expected #{text.inspect} on screen#{" on a line with #{on_line_with.inspect}" unless on_line_with == text}"
