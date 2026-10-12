@@ -19,42 +19,73 @@ module Sw
   end
 
   Init = -> {
-    [Model.new(characters: Characters::Init.(characters: Collection.new([]))), Load.new(url: ENV.fetch("SW_API_URL", API_URL))]
+    [Model.new(characters: nil), Load.new(url: ENV.fetch("SW_API_URL", API_URL))]
   }
 
   Title = -> (tui) { tui.paragraph(text: "Star Wars Character Datapad", style: tui.style(modifiers: [:bold])) }
 
-  KeyHelp = -> (tui) {
+  # A status word takes no width when absent. Blue is for ephemeral status.
+  StatusWord = -> (tui, word, color) {
+    [tui.text_span(content: word, style: tui.style(fg: color)), tui.text_span(content: " ")]
+  }
+
+  KeyHelp = -> (tui, status: []) {
     tui.paragraph(text: [
       tui.text_line(spans: [
+        *status,
         tui.text_span(content: "q", style: tui.style(modifiers: [:bold, :underlined])),
         tui.text_span(content: ": Quit"),
       ]),
     ])
   }
 
-  FailureView = -> (model, tui) {
+  # The title and key help around one body, for screens without panels.
+  Wrapper = -> (tui, body, status: []) {
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-      children: [
-        Title.call(tui),
-        tui.center(
-          child: tui.paragraph(
-            text: model.failure,
-            wrap: true,
-            block: tui.block(title: "Couldn't load the data", title_style: tui.style(modifiers: [:bold]), borders: [:all])
-          ),
-          width_percent: 60,
-          height_percent: 40
-        ),
-        KeyHelp.call(tui),
-      ]
+      children: [Title.call(tui), body, KeyHelp.call(tui, status:)]
     )
+  }
+
+  # A one-line box, centered both ways. Its height fits its text, so the text is centered too.
+  LoadingView = -> (tui) {
+    spacer = tui.paragraph(text: "")
+    box = tui.paragraph(text: "Loading the Datapad…", alignment: :center, block: tui.block(borders: [:all]))
+    Wrapper.call(
+      tui,
+      tui.layout(
+        direction: :vertical,
+        constraints: [tui.constraint_fill(1), tui.constraint_length(3), tui.constraint_fill(1)],
+        children: [
+          spacer,
+          tui.layout(
+            direction: :horizontal,
+            constraints: [tui.constraint_fill(1), tui.constraint_length(30), tui.constraint_fill(1)],
+            children: [spacer, box, spacer]
+          ),
+          spacer,
+        ]
+      ),
+      status: StatusWord.call(tui, "Loading", :blue)
+    )
+  }
+
+  FailureView = -> (model, tui) {
+    Wrapper.call(tui, tui.center(
+      child: tui.paragraph(
+        text: model.failure,
+        wrap: true,
+        block: tui.block(title: "Couldn't load the data", title_style: tui.style(modifiers: [:bold]), borders: [:all])
+      ),
+      width_percent: 60,
+      height_percent: 40
+    ))
   }
 
   View = -> (model, tui) {
     return FailureView.call(model, tui) if model.failure
+    return LoadingView.call(tui) unless model.characters
 
     tui.layout(
       direction: :vertical,

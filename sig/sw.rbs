@@ -4,10 +4,10 @@ module Sw
   API_URL: String
 
   class Model < Data
-    attr_reader characters: Characters::Model
+    attr_reader characters: Characters::Model?
     attr_reader failure: String?
-    def initialize: (characters: Characters::Model, ?failure: String?) -> void
-    def with: (?characters: Characters::Model, ?failure: String?) -> Model
+    def initialize: (characters: Characters::Model?, ?failure: String?) -> void
+    def with: (?characters: Characters::Model?, ?failure: String?) -> Model
   end
 
   Init: ^() -> [Model, Load]
