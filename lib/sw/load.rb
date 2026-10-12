@@ -21,7 +21,9 @@ module Sw
       root = out.source(Command.http(:get, url, :root), token)
       return report_failure(out, root, url) unless root.success?
 
-      links = mapper.links(root.body)
+      links = links_in(root)
+      return out.put(Failed.new(reason: "Couldn't read the response from #{url}".freeze)) unless links
+
       fetches = links.map { |name, link| Command.http(:get, link, name) }
       responses = out.source(Command.all(:collections, fetches), token).results
       refused = responses.find { |response| !response.success? }
@@ -32,6 +34,14 @@ module Sw
         characters: mapper.characters(bodies.fetch(:people)),
         vehicles: mapper.vehicles(bodies.fetch(:vehicles))
       ))
+    rescue => e
+      out.put(Failed.new(reason: e.message.freeze))
+    end
+
+    private def links_in(root)
+      mapper.links(root.body)
+    rescue JSON::ParserError
+      nil
     end
 
     private def report_failure(out, response, from)

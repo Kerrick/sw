@@ -12,6 +12,7 @@ class FixtureServer
     @server = TCPServer.new("127.0.0.1", 0)
     @refused = []
     @dropped = []
+    @answers = {}
     @thread = Thread.new { serve }
   end
 
@@ -33,6 +34,14 @@ class FixtureServer
     @dropped.delete(path)
   end
 
+  # Answers 200 with the body for the path while the block runs, whatever the body is.
+  def answering(path, body)
+    @answers[path] = body
+    yield
+  ensure
+    @answers.delete(path)
+  end
+
   def close
     @server.close
     @thread.join
@@ -51,6 +60,7 @@ class FixtureServer
     path = client.gets.split[1]
     nil until client.gets.chomp.empty?
     return if @dropped.include?(path)
+    return client.print(ok(@answers.fetch(path))) if @answers.key?(path)
 
     file = File.join(FIXTURES, "#{path}.json")
     served = File.file?(file) && !@refused.include?(path)
