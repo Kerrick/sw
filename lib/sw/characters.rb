@@ -26,6 +26,9 @@ module Sw
 
     receive_routed :move_last, -> (_, model) { model.with(selected: model.collection.to_a.last) }
 
+    # What the status line shows for this panel. The arrow and Home/End keys work too, but aren't listed.
+    Keys = [["k/j", "Prev/Next"], ["g/G", "First/Last"]].freeze
+
     Update = from_router
 
     View = -> (model, tui, focused: false) {

@@ -35,9 +35,13 @@ module Sw
     [tui.text_span(content: key, style: tui.style(modifiers: [:bold, :underlined])), tui.text_span(content: ": #{label}")]
   }
 
-  KeyHelp = -> (tui, status: []) {
+  GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
+
+  # The focused panel's keys come first, then the keys that work everywhere.
+  StatusLine = -> (tui, status: [], keys: []) {
+    hotkeys = [*keys, *GlobalKeys].map { |key, label| Hotkey.call(tui, key, label) }
     tui.paragraph(text: [
-      tui.text_line(spans: [*status, *Hotkey.call(tui, "r", "Reload"), tui.text_span(content: "  "), *Hotkey.call(tui, "q", "Quit")]),
+      tui.text_line(spans: [*status, *hotkeys.flat_map { |spans| [*spans, tui.text_span(content: "  ")] }.slice(0...-1)]),
     ])
   }
 
@@ -46,7 +50,7 @@ module Sw
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-      children: [Title.call(tui), body, KeyHelp.call(tui, status:)]
+      children: [Title.call(tui), body, StatusLine.call(tui, status:)]
     )
   }
 
@@ -116,7 +120,7 @@ module Sw
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
           children: [tui.block(title: "Starships", borders: [:all]), tui.block(title: "Vehicles", borders: [:all])]
         ),
-        KeyHelp.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : []),
+        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: Characters::Keys),
       ]
     )
   }

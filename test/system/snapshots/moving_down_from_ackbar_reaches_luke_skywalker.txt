@@ -37,4 +37,4 @@ Star Wars Character Datapad
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘
-r: Reload  q: Quit                                                                                                      
+k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                                                     

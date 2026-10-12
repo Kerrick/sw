@@ -54,6 +54,19 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_status_line_shows_the_list_keys_as_hotkeys_while_the_list_has_focus
+    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+      row = buffer_content.size - 1
+      %w[k/j g/G].each do |keys|
+        x = buffer_content.last.index(keys)
+
+        assert x, "Expected #{keys} on the status line"
+        assert_bold(x, row)
+        assert_underlined(x, row)
+      end
+    end
+  end
+
   def test_the_screen_tells_the_user_the_download_is_under_way
     model, = Sw::Init.call
 
