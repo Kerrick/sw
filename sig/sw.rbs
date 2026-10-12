@@ -98,6 +98,18 @@ module Sw
     View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> RatatuiRuby::Widgets::List
   end
 
+  module SelectedCharacter
+    View: ^(Character, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+  end
+
+  module Films
+    View: ^(RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+  end
+
+  module Starships
+    View: ^(RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+  end
+
   module Vehicles
     EMPTY: String
     ValueSpan: ^(Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span

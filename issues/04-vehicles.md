@@ -17,4 +17,4 @@ pilots more than two, which always fit, so it has nothing to scroll.
 - [x] Passengers `"unknown"`
 - [x] Any unknown field reads dimmed (the Emergency Firespeeder's manufacturer)
 - [x] A character who pilots no vehicle sees an empty state
-- [ ] Refactor: extract one module per panel, with snapshots unchanged. Attributes, Species, and Homeworld become View-only parts of Selected Character.
+- [x] Refactor: extract one module per panel, with snapshots unchanged. (Attributes, Species, and Homeworld become View-only parts of Selected Character in issues 8 to 10, which create them.)

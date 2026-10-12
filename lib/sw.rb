@@ -8,6 +8,9 @@ require_relative "sw/collection"
 require_relative "sw/load"
 require_relative "sw/load/mapper"
 require_relative "sw/characters"
+require_relative "sw/selected_character"
+require_relative "sw/films"
+require_relative "sw/starships"
 require_relative "sw/vehicles"
 
 # The Star Wars Character Datapad.
@@ -99,6 +102,8 @@ module Sw
     return FailureView.call(model, tui) if model.failure
     return LoadingView.call(tui) unless model.characters
 
+    selected = model.characters.selected
+
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(1), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2), tui.constraint_length(1)],
@@ -109,18 +114,14 @@ module Sw
           constraints: [tui.constraint_length(27), tui.constraint_fill(1)],
           children: [
             Characters::View.call(model.characters, tui, focused: model.focus == :characters),
-            tui.block(
-              title: model.characters.selected.name,
-              title_style: tui.style(modifiers: [:bold]),
-              borders: [:all]
-            ),
+            SelectedCharacter::View.call(selected, tui),
           ]
         ),
-        tui.block(title: "Films", borders: [:all]),
+        Films::View.call(tui),
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
-          children: [tui.block(title: "Starships", borders: [:all]), Vehicles::View.call(model.characters.selected.vehicles, tui)]
+          children: [Starships::View.call(tui), Vehicles::View.call(selected.vehicles, tui)]
         ),
         StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: Characters::Keys),
       ]

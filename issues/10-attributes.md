@@ -3,7 +3,7 @@
 Estimate: 25 minutes
 
 The attributes table in Selected Character, where most of the data's quirks
-live.
+live. It is a View-only part of that panel.
 
 - [ ] Birth years `"19BBY"`, `"41.9BBY"`, and `"unknown"`
 - [ ] Jabba's mass of `"1,358"`

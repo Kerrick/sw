@@ -2,7 +2,8 @@
 
 Estimate: 20 minutes
 
-The homeworld box in Selected Character, from the planet record.
+The homeworld box in Selected Character, from the planet record. It is a
+View-only part of the Selected Character panel.
 
 - [ ] Luke's homeworld resolves to Tatooine, with population, terrain, climate, surface water, diameter, rotation and orbital periods, and gravity
 - [ ] A planet named `"unknown"` (planets/28, Yoda's) shows as an unknown homeworld, not a place

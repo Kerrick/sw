@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+module Sw
+  # The panel beside the list, titled with the highlighted character's name.
+  module SelectedCharacter
+    View = -> (character, tui) {
+      tui.block(title: character.name, title_style: tui.style(modifiers: [:bold]), borders: [:all])
+    }
+  end
+end

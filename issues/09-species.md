@@ -2,7 +2,7 @@
 
 Estimate: 20 minutes
 
-The species box in Selected Character. Thirty-two characters, Luke among
+The species box in Selected Character, a View-only part of that panel. Thirty-two characters, Luke among
 them, have no species in the data. The app shows them as unknown and never
 guesses: R4-P17 is a droid and Sly Moore an Umbaran.
 
