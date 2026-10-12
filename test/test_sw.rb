@@ -35,7 +35,7 @@ class TestSw < Minitest::Test
     characters = Sw::Characters::Init.(characters: Sw::Collection.new([luke, ackbar])).with(selected: luke)
 
     with_rendered(Sw::View.call(Sw::Model.new(characters:), tui)) do
-      assert shown_in_bold?("Luke Skywalker"), "Expected Luke Skywalker in bold"
+      assert shown_with?("Luke Skywalker", :bold), "Expected Luke Skywalker in bold"
     end
   end
 
@@ -47,10 +47,18 @@ class TestSw < Minitest::Test
     assert_equal Rooibos::Command.exit, command
   end
 
-  private def shown_in_bold?(text)
+  def test_q_is_shown_as_a_hotkey
+    model, = Sw::Init.call
+
+    with_rendered(Sw::View.call(model, tui)) do
+      assert shown_with?("q", :bold, :underlined), "Expected q styled as a hotkey"
+    end
+  end
+
+  private def shown_with?(text, *modifiers)
     buffer_content.each_with_index.any? do |line, y|
       x = line.index(text)
-      x && get_cell(x, y).modifiers&.map(&:to_sym)&.include?(:bold)
+      x && (modifiers - Array(get_cell(x, y).modifiers).map(&:to_sym)).empty?
     end
   end
 end

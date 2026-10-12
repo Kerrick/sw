@@ -24,7 +24,7 @@ module Sw
   View = -> (model, tui) {
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(1), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2)],
+      constraints: [tui.constraint_length(1), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2), tui.constraint_length(1)],
       children: [
         tui.paragraph(text: "Star Wars Character Datapad", style: tui.style(modifiers: [:bold])),
         tui.layout(
@@ -45,6 +45,12 @@ module Sw
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
           children: [tui.block(title: "Starships", borders: [:all]), tui.block(title: "Vehicles", borders: [:all])]
         ),
+        tui.paragraph(text: [
+tui.text_line(spans: [
+  tui.text_span(content: "q", style: tui.style(modifiers: [:bold, :underlined])),
+  tui.text_span(content: ": Quit"),
+        ]),
+]),
       ]
     )
   }
