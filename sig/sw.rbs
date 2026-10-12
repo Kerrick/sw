@@ -96,6 +96,7 @@ module Sw
   end
 
   module Vehicles
-    View: ^(Collection[Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Paragraph
+    Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
+    View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 end

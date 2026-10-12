@@ -25,13 +25,13 @@ Star Wars Character Datapad
 │                                                                                                                      │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
-│                                                          ││Snowspeeder                                               │
-│                                                          ││Imperial Speeder Bike                                     │
-│                                                          ││                                                          │
-│                                                          ││                                                          │
-│                                                          ││                                                          │
-│                                                          ││                                                          │
-│                                                          ││                                                          │
+│                                                          ││Snowspeeder            airspeeder                         │
+│                                                          ││Crew / Passengers:     2 / 0                              │
+│                                                          ││Model / Manufacturer:  t-47 airspeeder / Incom corporation│
+│                                                          ││──────────────────────────────────────────────────────────│
+│                                                          ││Imperial Speeder Bike  speeder                            │
+│                                                          ││Crew / Passengers:     1 / 1                              │
+│                                                          ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulso│
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
