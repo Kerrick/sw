@@ -73,6 +73,16 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_a_failed_download_shows_a_red_error_status_word
+    model, = Sw::Init.call
+
+    with_rendered(Sw::View.call(model.with(failure: "Connection refused"), tui)) do
+      status_line = buffer_content.last
+      assert_includes status_line, "Error", "Expected the Error status word on the status line"
+      assert_fg_color(:red, status_line.index("Error"), buffer_content.size - 1)
+    end
+  end
+
   def test_q_quits
     model, = Sw::Init.call
 

@@ -7,7 +7,7 @@
 - Quit with q or Ctrl-C.
 - Show the keys you can press on the bottom line.
 - Show a loading screen, with a blue Loading status word, while the data downloads.
-- Show why the download failed when the first launch has no network.
+- Show why the download failed, with a red Error status word, when the first launch has no network.
 
 ## [0.1.0] - 2026-10-12
 

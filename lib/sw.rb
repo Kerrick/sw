@@ -72,15 +72,19 @@ module Sw
   }
 
   FailureView = -> (model, tui) {
-    Wrapper.call(tui, tui.center(
-      child: tui.paragraph(
-        text: model.failure,
-        wrap: true,
-        block: tui.block(title: "Couldn't load the data", title_style: tui.style(modifiers: [:bold]), borders: [:all])
+    Wrapper.call(
+      tui,
+      tui.center(
+        child: tui.paragraph(
+          text: model.failure,
+          wrap: true,
+          block: tui.block(title: "Couldn't load the data", title_style: tui.style(modifiers: [:bold]), borders: [:all])
+        ),
+        width_percent: 60,
+        height_percent: 40
       ),
-      width_percent: 60,
-      height_percent: 40
-    ))
+      status: StatusWord.call(tui, "Error", :red)
+    )
   }
 
   View = -> (model, tui) {

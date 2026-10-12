@@ -37,4 +37,4 @@ Star Wars Character Datapad
                                                                                                                         
                                                                                                                         
                                                                                                                         
-q: Quit                                                                                                                 
+Error q: Quit                                                                                                           
