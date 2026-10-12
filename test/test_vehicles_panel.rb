@@ -50,21 +50,21 @@ class TestVehiclesPanel < Minitest::Test
   private def emergency_firespeeder
     Sw::Vehicle.new(
       name: "Emergency Firespeeder", model: "Fire suppression speeder", manufacturer: "unknown",
-      vehicle_class: "fire suppression ship", crew: Sw::Count.new("2"), passengers: Sw::Count.new("unknown")
+      vehicle_class: "fire suppression ship", crew: Sw::Value.new("2"), passengers: Sw::Value.new("unknown")
     )
   end
 
   private def sand_crawler
     Sw::Vehicle.new(
       name: "Sand Crawler", model: "Digger Crawler", manufacturer: "Corellia Mining Corporation",
-      vehicle_class: "wheeled", crew: Sw::Count.new("46"), passengers: Sw::Count.new("30")
+      vehicle_class: "wheeled", crew: Sw::Value.new("46"), passengers: Sw::Value.new("30")
     )
   end
 
   private def snowspeeder
     Sw::Vehicle.new(
       name: "Snowspeeder", model: "t-47 airspeeder", manufacturer: "Incom corporation",
-      vehicle_class: "airspeeder", crew: Sw::Count.new("2"), passengers: Sw::Count.new("0")
+      vehicle_class: "airspeeder", crew: Sw::Value.new("2"), passengers: Sw::Value.new("0")
     )
   end
 end

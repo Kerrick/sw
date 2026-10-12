@@ -2,7 +2,7 @@
 
 require "rooibos"
 require_relative "sw/character"
-require_relative "sw/count"
+require_relative "sw/value"
 require_relative "sw/vehicle"
 require_relative "sw/collection"
 require_relative "sw/load"

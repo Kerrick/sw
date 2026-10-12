@@ -24,7 +24,7 @@ module Sw
     def initialize: (name: String, ?vehicles: Collection[Vehicle]) -> void
   end
 
-  class Count < Data
+  class Value < Data
     attr_reader text: String
     def initialize: (String text) -> void
                   | (text: String) -> void
@@ -37,10 +37,10 @@ module Sw
     attr_reader model: String
     attr_reader manufacturer: String
     attr_reader vehicle_class: String
-    attr_reader crew: Count
-    attr_reader passengers: Count
+    attr_reader crew: Value
+    attr_reader passengers: Value
     attr_reader pilots: Collection[Character]
-    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Count, passengers: Count, ?pilots: Collection[Character]) -> void
+    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
   end
 
   class Collection[T] < Data
@@ -76,7 +76,7 @@ module Sw
 
     class Mapper
       COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle)]]
-      FIELDS: Hash[Symbol, singleton(Count)]
+      FIELDS: Hash[Symbol, singleton(Value)]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
       def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle]]
@@ -98,7 +98,7 @@ module Sw
   end
 
   module Vehicles
-    CountSpan: ^(Count, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
+    ValueSpan: ^(Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
     Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end

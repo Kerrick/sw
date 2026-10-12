@@ -46,7 +46,7 @@ class TestLoadMapper < Minitest::Test
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
     assert_equal(
-      { model: "t-47 airspeeder", manufacturer: "Incom corporation", vehicle_class: "airspeeder", crew: Sw::Count.new("2"), passengers: Sw::Count.new("0") },
+      { model: "t-47 airspeeder", manufacturer: "Incom corporation", vehicle_class: "airspeeder", crew: Sw::Value.new("2"), passengers: Sw::Value.new("0") },
       snowspeeder.to_h.slice(:model, :manufacturer, :vehicle_class, :crew, :passengers)
     )
   end

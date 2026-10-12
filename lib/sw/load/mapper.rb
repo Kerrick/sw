@@ -10,7 +10,7 @@ module Sw
       COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle] }.freeze
 
       # The type each field becomes, by member name, wherever it appears. Other fields stay strings.
-      FIELDS = { crew: Count, passengers: Count }.freeze
+      FIELDS = { crew: Value, passengers: Value }.freeze
 
       def links(root)
         JSON.parse(root, freeze: true).transform_keys(&:to_sym)
