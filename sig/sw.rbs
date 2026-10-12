@@ -6,10 +6,13 @@ module Sw
   class Model < Data
     attr_reader characters: Characters::Model?
     attr_reader failure: String?
-    def initialize: (characters: Characters::Model?, ?failure: String?) -> void
-    def with: (?characters: Characters::Model?, ?failure: String?) -> Model
+    attr_reader loading: bool
+    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool) -> void
+    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool) -> Model
+    def loading?: () -> bool
   end
 
+  Download: ^() -> Load
   Init: ^() -> [Model, Load]
   View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
   Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]

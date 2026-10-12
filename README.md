@@ -92,8 +92,7 @@ or `j` and `k` move the highlight, and the panels beside it follow. Home and
 End, or `g` and `G`, jump to either end. The same keys scroll any other
 panel. Search filters the list as you type. Enter keeps the filter and
 returns to the list. Esc clears it. Ctrl-C quits from anywhere, and `q`
-quits from anywhere but Search. The bottom line lists the keys the focused
-panel accepts.
+quits from anywhere but Search. F5 and `r` reload the data from the API.
 
 ## Assumptions
 

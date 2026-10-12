@@ -37,4 +37,4 @@ Star Wars Character Datapad
                                                                                                                         
                                                                                                                         
                                                                                                                         
-Loading q: Quit                                                                                                         
+Loading r: Reload  q: Quit                                                                                              

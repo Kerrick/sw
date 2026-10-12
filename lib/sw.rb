@@ -14,13 +14,15 @@ module Sw
 
   API_URL = "https://swapi.info/api"
 
-  Model = Data.define(:characters, :failure) do
-    def initialize(characters:, failure: nil) = super
+  Model = Data.define(:characters, :failure, :loading) do
+    def initialize(characters:, failure: nil, loading: false) = super
+
+    alias_method :loading?, :loading
   end
 
-  Init = -> {
-    [Model.new(characters: nil), Load.new(url: ENV.fetch("SW_API_URL", API_URL))]
-  }
+  Download = -> { Load.new(url: ENV.fetch("SW_API_URL", API_URL)) }
+
+  Init = -> { [Model.new(characters: nil, loading: true), Download.call] }
 
   Title = -> (tui) { tui.paragraph(text: "Star Wars Character Datapad", style: tui.style(modifiers: [:bold])) }
 
@@ -29,13 +31,13 @@ module Sw
     [tui.text_span(content: word, style: tui.style(fg: color)), tui.text_span(content: " ")]
   }
 
+  Hotkey = -> (tui, key, label) {
+    [tui.text_span(content: key, style: tui.style(modifiers: [:bold, :underlined])), tui.text_span(content: ": #{label}")]
+  }
+
   KeyHelp = -> (tui, status: []) {
     tui.paragraph(text: [
-      tui.text_line(spans: [
-        *status,
-        tui.text_span(content: "q", style: tui.style(modifiers: [:bold, :underlined])),
-        tui.text_span(content: ": Quit"),
-      ]),
+      tui.text_line(spans: [*status, *Hotkey.call(tui, "r", "Reload"), tui.text_span(content: "  "), *Hotkey.call(tui, "q", "Quit")]),
     ])
   }
 
@@ -114,21 +116,24 @@ module Sw
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
           children: [tui.block(title: "Starships", borders: [:all]), tui.block(title: "Vehicles", borders: [:all])]
         ),
-        KeyHelp.call(tui),
+        KeyHelp.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : []),
       ]
     )
   }
 
   action :quit, -> { Rooibos::Command.exit }
 
+  action :reload, -> (_, model) { [model.with(failure: nil, loading: true), Download.call] }
+
   receive_events %i[q ctrl_c], :quit
+  receive_events %i[r f5], :reload
 
   receive_instances_of Load::Finished, -> (message, model) {
-    model.with(characters: Characters::Init.(characters: message.characters))
+    model.with(characters: Characters::Init.(characters: message.characters), loading: false)
   }
 
   receive_instances_of Load::Failed, -> (message, model) {
-    model.with(failure: message.reason)
+    model.with(failure: message.reason, loading: false)
   }
 
   Update = from_router

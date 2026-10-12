@@ -13,5 +13,5 @@ error-free.
 - [ ] An HTTP error status shows a meaningful error with a retry key
 - [ ] A malformed JSON response shows a meaningful error with a retry key
 - [ ] A timeout or cancellation (a `nil` message) is handled apart from HTTP errors
-- [ ] Retry downloads again
+- [x] Retry downloads again
 - [ ] Panels don't draw until data arrives; remove the `selected&.name.to_s` fallback

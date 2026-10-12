@@ -83,6 +83,64 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_r_is_shown_as_a_hotkey_whether_loading_failed_or_loaded
+    loading, = Sw::Init.call
+    failed = loading.with(failure: "Connection refused")
+    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([])))
+
+    { loading:, failed:, loaded: }.each do |state, model|
+      with_rendered(Sw::View.call(model, tui)) do
+        x = buffer_content.last.index("r: ")
+        refute_nil x, "Expected r in the key help while #{state}"
+        assert_bold(x, buffer_content.size - 1)
+        assert_underlined(x, buffer_content.size - 1)
+      end
+    end
+  end
+
+  def test_r_reloads_the_download_after_a_failure
+    model, download = Sw::Init.call
+    failed = model.with(failure: "Connection refused")
+
+    retried, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), failed)
+
+    assert_nil retried.failure
+    assert_equal download, command
+  end
+
+  def test_r_reloads_the_download_and_keeps_the_characters_on_screen
+    loading, download = Sw::Init.call
+    characters = Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")]))
+    loaded = loading.with(characters:)
+
+    reloading, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
+
+    assert_equal characters, reloading.characters
+    assert_equal download, command
+  end
+
+  def test_reloading_with_characters_on_screen_shows_the_blue_loading_status_word
+    loading, = Sw::Init.call
+    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
+    reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
+
+    with_rendered(Sw::View.call(reloading, tui)) do
+      status_line = buffer_content.last
+      assert_includes status_line, "Loading", "Expected the Loading status word on the status line"
+      assert_fg_color(:blue, status_line.index("Loading"), buffer_content.size - 1)
+    end
+  end
+
+  def test_f5_reloads_the_download_like_r
+    model, download = Sw::Init.call
+    failed = model.with(failure: "Connection refused")
+
+    reloading, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "f5"), failed)
+
+    assert_nil reloading.failure
+    assert_equal download, command
+  end
+
   def test_q_quits
     model, = Sw::Init.call
 
