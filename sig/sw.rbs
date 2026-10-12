@@ -20,12 +20,25 @@ module Sw
 
   class Character < Data
     attr_reader name: String
-    def initialize: (name: String) -> void
+    attr_reader vehicles: Collection[Vehicle]
+    def initialize: (name: String, ?vehicles: Collection[Vehicle]) -> void
+  end
+
+  class Count < Data
+    attr_reader text: String
+    def initialize: (String text) -> void
+                  | (text: String) -> void
+    def to_s: () -> String
   end
 
   class Vehicle < Data
     attr_reader name: String
-    def initialize: (name: String) -> void
+    attr_reader model: String
+    attr_reader manufacturer: String
+    attr_reader vehicle_class: String
+    attr_reader crew: Count
+    attr_reader passengers: Count
+    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Count, passengers: Count) -> void
   end
 
   class Collection[T] < Data
@@ -60,9 +73,11 @@ module Sw
     end
 
     class Mapper
+      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle)]]
+      FIELDS: Hash[Symbol, singleton(Count)]
       def links: (String root) -> Hash[Symbol, String]
-      def characters: (String people) -> Collection[Character]
-      def vehicles: (String vehicles) -> Collection[Vehicle]
+      def parse: (String body) -> Array[Hash[String, untyped]]
+      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle]]
     end
   end
 
@@ -78,5 +93,9 @@ module Sw
     Select: ^(Symbol, Model) -> Model
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
     View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> RatatuiRuby::Widgets::List
+  end
+
+  module Vehicles
+    View: ^(Collection[Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Paragraph
   end
 end

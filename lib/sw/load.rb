@@ -26,10 +26,8 @@ module Sw
     private def download(out, token)
       links = parse(url) { mapper.links(fetch_root(out, token).body) }
       bodies = fetch_collections(out, token, links)
-      Finished.new(
-        characters: parse(links.fetch(:people)) { mapper.characters(bodies.fetch(:people)) },
-        vehicles: parse(links.fetch(:vehicles)) { mapper.vehicles(bodies.fetch(:vehicles)) }
-      )
+      parsed = Mapper::COLLECTIONS.keys.to_h { |name| [name, parse(links.fetch(name)) { mapper.parse(bodies.fetch(name)) }] }
+      Finished.new(**mapper.records(**parsed))
     end
 
     private def fetch_root(out, token)

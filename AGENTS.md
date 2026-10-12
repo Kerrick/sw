@@ -114,7 +114,7 @@ Quirks every parser must handle. Each is an equivalence class with a test:
 - A planet's diameter, rotation period, or orbital period of `"0"` means
   unknown (Polis Massa, Stewjon, planets/28, and others); planets aren't
   black holes.
-- IDs come only from URLs; tolerate trailing `/`.
+- Links are URLs; match them with or without a trailing `/`.
 
 ## Architecture
 
@@ -136,20 +136,21 @@ questions (films in episode order, which films a character appears in).
 
 No record type is the center. Every record keeps the API's links in both
 directions (a character's films and a film's characters, a planet's
-residents and a resident's homeworld) as references by ID, and any reference
-resolves the same way through the domain model. IDs keep the graph free of
-cycles. The API's two directions agree today; if a source ever disagrees,
-that's a data quirk with a test. For ergonomic views, a screen's View
-resolves the record it centers on once, at the top, and hands that to its
-panels. Don't name or build an Identity Map; immutable, fully loaded data
-doesn't need one.
+residents and a resident's homeworld) as direct references, each to-many link
+a `Collection`, so `luke.vehicles.first.pilots` reads naturally. Records
+carry no IDs. The Mapper links them by URL while it maps, then freezes the
+whole graph. The graph has cycles, and that's fine: the cache holds raw
+JSON, so no record is ever serialized. The API's two directions agree today;
+if a source ever disagrees, that's a data quirk with a test. A screen's View
+hands the record it centers on to its panels. Don't name or build an
+Identity Map; the Mapper's index of URLs lives only while it maps.
 
 **Loading.** One or more custom commands, (`include Rooibos::Command::Custom`),
 responsible for crawling from the root URL (in parallel), caching the responses
 on disk, refreshing it after 7 days, parsing JSON, instantiating model classes,
 and making errors meaningful. `Load::Mapper` is the Data Mapper: the only
 code that knows the API's JSON. Records come back in a `Collection`, an
-immutable, `Enumerable` record set.
+`Enumerable` record set, frozen by whoever builds it.
 
 Failures are messages, not exceptions. `Load` sends `Load::Finished` or
 `Load::Failed`, and the project defines no exception classes (no `Sw::Error`).
@@ -244,9 +245,8 @@ The approach comes from five books. Apply them; don't cite them in code.
   WebMock, mock `Net::HTTP`, or fake the `Outlet`. Inject faults with
   `FixtureServer#refusing` (404), `#dropping` (no answer), and `#answering`
   (any body), each for the length of a block.
-- System tests run the app and check the screen with `assert_snapshots`.
-  They start from an explicit fixture-built model unless they are
-  about loading. Name snapshots after the example they show, and mask
+- System tests run the app against the fixture server, reach their example
+  with keys, and check the screen with `assert_snapshots`. Name snapshots after the example they show, and mask
   machine-specific output with `normalize_snapshots`. A snapshot that doesn't
   exist yet passes on its first run and writes itself, so a snapshot alone
   can't make a test red. Assert on data first.

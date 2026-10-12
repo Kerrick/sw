@@ -9,7 +9,7 @@ module Sw
 
     Init = -> (characters:) {
       sorted = Collection.new(characters.sort_by(&:name))
-      Model.new(collection: sorted, selected: sorted.first)
+      Ractor.make_shareable(Model.new(collection: sorted, selected: sorted.first))
     }
 
     # Moves the selection one step by an operator (:+ or :-) and stops at either end.

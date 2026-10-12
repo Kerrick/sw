@@ -9,10 +9,4 @@ class TestCollection < Minitest::Test
 
     assert_equal ["Luke Skywalker", "Leia Organa"], Sw::Collection.new([luke, leia]).map(&:name)
   end
-
-  def test_it_is_shareable_between_ractors_even_from_mutable_records
-    luke = Sw::Character.new(name: +"Luke Skywalker")
-
-    assert Ractor.shareable?(Sw::Collection.new([luke]))
-  end
 end

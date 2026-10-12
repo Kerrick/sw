@@ -2,11 +2,13 @@
 
 require "rooibos"
 require_relative "sw/character"
+require_relative "sw/count"
 require_relative "sw/vehicle"
 require_relative "sw/collection"
 require_relative "sw/load"
 require_relative "sw/load/mapper"
 require_relative "sw/characters"
+require_relative "sw/vehicles"
 
 # The Star Wars Character Datapad.
 module Sw
@@ -118,7 +120,7 @@ module Sw
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
-          children: [tui.block(title: "Starships", borders: [:all]), tui.block(title: "Vehicles", borders: [:all])]
+          children: [tui.block(title: "Starships", borders: [:all]), Vehicles::View.call(model.characters.selected.vehicles, tui)]
         ),
         StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: Characters::Keys),
       ]

@@ -153,11 +153,12 @@ on the way in. A small Domain Model, in Martin Fowler's sense from *Patterns of 
 Application Architecture*, holds those records and answers questions about
 them, like which films a character appears in. Records keep the API's
 links in both directions, so a character lists its films and a film lists its
-characters, and they point to each other by ID. That way the objects never
-refer to each other in a circle, and no kind of record is the center. Asking
-who pilots a vehicle is as easy as asking what a character pilots, which eases
-the addition of future screens. Each screen resolves the record it centers on
-once, so its panels can read it naturally.
+characters, and they point straight at each other. No kind of record is the
+center. Asking who pilots a vehicle is as easy as asking what a character
+pilots, which eases the addition of future screens. The records refer to each
+other in circles, which is safe because they never change and the cache
+stores raw JSON rather than objects. Each screen hands the record it centers
+on to its panels.
 
 Loading happens in custom Rooibos commands. They fetch the API's root, then
 all the collections at once. They cache the raw responses in the platform's
