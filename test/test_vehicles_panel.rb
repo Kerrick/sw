@@ -47,6 +47,14 @@ class TestVehiclesPanel < Minitest::Test
     end
   end
 
+  def test_ackbar_who_pilots_no_vehicle_sees_a_dimmed_empty_state
+    ackbars_vehicles = Sw::Collection.new([])
+
+    with_rendered(Sw::Vehicles::View.call(ackbars_vehicles, tui)) do
+      assert_text_style Sw::Vehicles::EMPTY, modifiers: [:dim]
+    end
+  end
+
   private def emergency_firespeeder
     Sw::Vehicle.new(
       name: Sw::Value.new("Emergency Firespeeder"), model: Sw::Value.new("Fire suppression speeder"), manufacturer: Sw::Value.new("unknown"),

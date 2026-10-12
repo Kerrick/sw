@@ -30,7 +30,7 @@ Star Wars Character Datapad
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
-│                                                          ││                                                          │
+│                                                          ││                        No vehicles                       │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │

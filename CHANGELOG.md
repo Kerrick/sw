@@ -11,6 +11,7 @@
 - Show the keys you can press on the bottom line, with the list's keys first.
 - Show the vehicles the highlighted character pilots in the Vehicles panel, each with its class, crew and passengers, model, and manufacturer, as the wireframe does.
 - Dim any value the data doesn't know, such as a vehicle's unknown passengers or manufacturer.
+- Say so in the Vehicles panel, dimmed, when the highlighted character pilots no vehicles.
 - Show a loading screen, with a blue Loading status word, while the data downloads.
 - Show why the download failed, with a red Error status word, when the first launch has no network or the server answers with an error, with something that isn't JSON, or with data the Datapad can't read.
 

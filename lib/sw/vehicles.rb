@@ -3,6 +3,9 @@
 module Sw
   # The panel that shows the vehicles a record links to.
   module Vehicles
+    # What the panel says when the record links to no vehicles.
+    EMPTY = "No vehicles"
+
     # A value as text, dimmed when the data doesn't know it.
     ValueSpan = -> (value, tui) { tui.text_span(content: value.to_s, style: (tui.style(modifiers: [:dim]) if value.unknown?)) }
 
@@ -24,18 +27,27 @@ module Sw
       )
     }
 
-    View = -> (vehicles, tui) {
-      tui.block(
-        title: "Vehicles",
-        borders: [:all],
-        children: [
-          tui.layout(
-            direction: :vertical,
-            constraints: [*vehicles.each_with_index.map { |_, index| tui.constraint_length(index.zero? ? 3 : 4) }, tui.constraint_fill(1)],
-            children: [*vehicles.each_with_index.map { |vehicle, index| Vehicle.call(vehicle, tui, first: index.zero?) }, tui.paragraph(text: "")]
-          ),
-        ]
+    # The vehicles, one above the next, with the rest of the panel left blank.
+    Stack = -> (vehicles, tui) {
+      tui.layout(
+        direction: :vertical,
+        constraints: [*vehicles.each_with_index.map { |_, index| tui.constraint_length(index.zero? ? 3 : 4) }, tui.constraint_fill(1)],
+        children: [*vehicles.each_with_index.map { |vehicle, index| Vehicle.call(vehicle, tui, first: index.zero?) }, tui.paragraph(text: "")]
       )
+    }
+
+    # What the panel shows when the record links to no vehicles: EMPTY, dimmed and centered both ways.
+    Empty = -> (tui) {
+      spacer = tui.paragraph(text: "")
+      tui.layout(
+        direction: :vertical,
+        constraints: [tui.constraint_fill(1), tui.constraint_length(1), tui.constraint_fill(1)],
+        children: [spacer, tui.paragraph(text: EMPTY, alignment: :center, style: tui.style(modifiers: [:dim])), spacer]
+      )
+    }
+
+    View = -> (vehicles, tui) {
+      tui.block(title: "Vehicles", borders: [:all], children: [vehicles.any? ? Stack.(vehicles, tui) : Empty.(tui)])
     }
   end
 end

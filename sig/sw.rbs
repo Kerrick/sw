@@ -99,9 +99,12 @@ module Sw
   end
 
   module Vehicles
+    EMPTY: String
     ValueSpan: ^(Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
     ValuePair: ^(Value, Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
     Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
+    Stack: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
+    Empty: ^(RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
     View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 end
