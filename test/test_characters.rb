@@ -12,13 +12,13 @@ class TestCharacters < Minitest::Test
 
   def test_ackbar_is_listed_before_luke_skywalker
     with_rendered(Sw::Characters::View.call(three_characters, tui)) do
-      assert_operator row_of("Ackbar"), :<, row_of("Luke Skywalker")
+      assert_operator text_position("Ackbar").last, :<, text_position("Luke Skywalker").last
     end
   end
 
   def test_the_selected_character_is_highlighted
     with_rendered(Sw::Characters::View.call(three_characters(selected: luke), tui)) do
-      assert_reversed(1, row_of("Luke Skywalker"))
+      assert_text_style "Luke Skywalker", modifiers: [:reversed]
     end
   end
 
@@ -58,9 +58,5 @@ class TestCharacters < Minitest::Test
   private def moved(intent, model)
     model, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: intent, event: nil), model)
     model
-  end
-
-  private def row_of(text)
-    buffer_content.index { |line| line.include?(text) }
   end
 end

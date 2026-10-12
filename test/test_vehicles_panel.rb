@@ -7,10 +7,7 @@ class TestVehiclesPanel < Minitest::Test
 
   def test_the_snowspeeder_is_named_in_bold
     with_rendered(Sw::Vehicles::View.call(Sw::Collection.new([snowspeeder]), tui)) do
-      y = buffer_content.index { |line| line.include?("Snowspeeder") }
-
-      refute_nil y, "Expected Snowspeeder on screen"
-      assert_bold(buffer_content[y].index("Snowspeeder"), y)
+      assert_text_style "Snowspeeder", modifiers: [:bold]
     end
   end
 
@@ -40,19 +37,13 @@ class TestVehiclesPanel < Minitest::Test
 
   def test_the_emergency_firespeeder_passengers_are_dimmed_as_unknown
     with_rendered(Sw::Vehicles::View.call(Sw::Collection.new([emergency_firespeeder]), tui)) do
-      y = buffer_content.index { |line| line.include?("unknown") && !line.include?("Fire suppression speeder") }
-
-      refute_nil y, "Expected the unknown passengers on screen"
-      assert_dim(buffer_content[y].index("unknown"), y)
+      assert_text_style "unknown", on_line_with: emergency_firespeeder.crew.to_s, modifiers: [:dim]
     end
   end
 
   def test_the_emergency_firespeeder_manufacturer_is_dimmed_as_unknown
     with_rendered(Sw::Vehicles::View.call(Sw::Collection.new([emergency_firespeeder]), tui)) do
-      y = buffer_content.index { |line| line.include?("Fire suppression speeder") }
-
-      refute_nil y, "Expected the Firespeeder's model and manufacturer on screen"
-      assert_dim(buffer_content[y].index("unknown"), y)
+      assert_text_style "unknown", on_line_with: emergency_firespeeder.model.to_s, modifiers: [:dim]
     end
   end
 

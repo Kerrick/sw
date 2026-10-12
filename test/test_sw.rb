@@ -30,7 +30,7 @@ class TestSw < Minitest::Test
 
   def test_the_selected_character_is_named_in_bold
     with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters(selected: luke)), tui)) do
-      assert shown_with?("Luke Skywalker", :bold), "Expected Luke Skywalker in bold"
+      assert_text_style "Luke Skywalker", modifiers: [:bold]
     end
   end
 
@@ -56,14 +56,7 @@ class TestSw < Minitest::Test
 
   def test_the_status_line_shows_the_list_keys_as_hotkeys_while_the_list_has_focus
     with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
-      row = buffer_content.size - 1
-      %w[k/j g/G].each do |keys|
-        x = buffer_content.last.index(keys)
-
-        assert x, "Expected #{keys} on the status line"
-        assert_bold(x, row)
-        assert_underlined(x, row)
-      end
+      %w[k/j g/G].each { |keys| assert_text_style keys, line: -1, modifiers: [:bold, :underlined] }
     end
   end
 
@@ -73,9 +66,7 @@ class TestSw < Minitest::Test
     with_rendered(Sw::View.call(model, tui)) do
       between_title_and_key_help = buffer_content[1...-1]
       assert between_title_and_key_help.any? { |line| line.strip != "" }, "Expected a loading box"
-      status_line = buffer_content.last
-      assert_includes status_line, "Loading", "Expected the Loading status word on the status line"
-      assert_fg_color(:blue, status_line.index("Loading"), buffer_content.size - 1)
+      assert_text_style "Loading", line: -1, fg: :blue
     end
   end
 
@@ -99,9 +90,7 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model.with(failure: "Connection refused"), tui)) do
-      status_line = buffer_content.last
-      assert_includes status_line, "Error", "Expected the Error status word on the status line"
-      assert_fg_color(:red, status_line.index("Error"), buffer_content.size - 1)
+      assert_text_style "Error", line: -1, fg: :red
     end
   end
 
@@ -110,13 +99,8 @@ class TestSw < Minitest::Test
     failed = loading.with(failure: "Connection refused")
     loaded = loading.with(characters: three_characters)
 
-    { loading:, failed:, loaded: }.each do |state, model|
-      with_rendered(Sw::View.call(model, tui)) do
-        x = buffer_content.last.index("r: ")
-        refute_nil x, "Expected r in the key help while #{state}"
-        assert_bold(x, buffer_content.size - 1)
-        assert_underlined(x, buffer_content.size - 1)
-      end
+    [loading, failed, loaded].each do |model|
+      with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", line: -1, modifiers: [:bold, :underlined] }
     end
   end
 
@@ -147,9 +131,7 @@ class TestSw < Minitest::Test
     reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     with_rendered(Sw::View.call(reloading, tui)) do
-      status_line = buffer_content.last
-      assert_includes status_line, "Loading", "Expected the Loading status word on the status line"
-      assert_fg_color(:blue, status_line.index("Loading"), buffer_content.size - 1)
+      assert_text_style "Loading", line: -1, fg: :blue
     end
   end
 
@@ -175,7 +157,7 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model, tui)) do
-      assert shown_with?("q", :bold, :underlined), "Expected q styled as a hotkey"
+      assert_text_style "q: ", line: -1, modifiers: [:bold, :underlined]
     end
   end
 
@@ -218,12 +200,5 @@ class TestSw < Minitest::Test
 
     assert_equal loading, model
     assert_nil command
-  end
-
-  private def shown_with?(text, *modifiers)
-    buffer_content.each_with_index.any? do |line, y|
-      x = line.index(text)
-      x && (modifiers - Array(get_cell(x, y).modifiers).map(&:to_sym)).empty?
-    end
   end
 end
