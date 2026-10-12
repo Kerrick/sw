@@ -14,20 +14,24 @@ module Sw
 
     Init = -> { Ractor.make_shareable(Model.new(query: "")) }
 
+    # Sets the query and tells the screen about it.
+    Change = -> (model, query) {
+      query = query.freeze
+      [model.with(query:), Rooibos::Command.bubble(QueryChanged.new(query:))]
+    }
+    private_constant :Change
+
     # Ctrl-U clears the line, as in a shell. Super-Backspace (Cmd or Win) arrives only from a terminal that reports Super.
-    receive_events %i[ctrl_u super_backspace], -> (_, model) { model.with(query: "") }
+    receive_events %i[ctrl_u super_backspace], -> (_, model) { Change.(model, "") }
 
     # A key that types one character. Ctrl and Alt chords are commands, not text, though Shift types capitals.
     Typed = -> (message, _) {
       message.respond_to?(:text?) && message.text? && message.code.length == 1 && !message.ctrl? && !message.alt?
     }
 
-    receive Typed, -> (message, model) {
-      query = "#{model.query}#{message.code}".freeze
-      [model.with(query:), Rooibos::Command.bubble(QueryChanged.new(query:))]
-    }
+    receive Typed, -> (message, model) { Change.(model, "#{model.query}#{message.code}") }
 
-    receive_events :backspace, -> (_, model) { model.with(query: model.query.chop.freeze) }
+    receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
 
     Update = from_router
   end

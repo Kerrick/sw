@@ -47,6 +47,14 @@ class TestSearchPanel < Minitest::Test
     assert_equal "", model.query
   end
 
+  def test_backspace_after_sky_tells_the_screen_the_query_is_now_sk
+    after_sky = Sw::Search::Init.call.with(query: "sky")
+
+    _, command = Sw::Search::Update.call(RatatuiRuby::Event::Key.new(code: "backspace"), after_sky)
+
+    assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "sk")), command
+  end
+
   def test_backspace_after_sky_makes_the_query_sk
     after_sky = Sw::Search::Init.call.with(query: "sky")
 
