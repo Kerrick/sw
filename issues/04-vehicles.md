@@ -7,20 +7,14 @@ pattern every later panel follows: records link straight to each other in both
 directions, so `luke.vehicles.first.pilots` reads as it should. The data's
 own capitalization stands ("t-47 airspeeder", "Incom corporation").
 
-This is the first story with a second focusable panel, so the list's keys
-must work only while Characters has focus, and the status line must list the
-focused panel's keys. Vehicles has none of its own beyond the global ones.
-
-Number keys follow the wireframe, left to right: `1` Characters, `2`
-Selected Character, `3` Search, `4` Films, `5` Starships, `6` Vehicles. Each
-panel's story binds its own key.
+Number keys count only the panels that take focus, in reading order: `1`
+Search, in the title row, then `2` Characters. A panel that takes focus later
+gets the next number, so these never move. Vehicles takes none: no character
+pilots more than two, which always fit, so it has nothing to scroll.
 
 - [x] Luke's vehicles: Snowspeeder and Imperial Speeder Bike, with model, manufacturer, class, crew, and passengers
 - [x] A vehicle's pilots link back, and both directions agree
 - [x] Passengers `"unknown"`
 - [x] Any unknown field reads dimmed (the Emergency Firespeeder's manufacturer)
 - [x] A character who pilots no vehicle sees an empty state
-- [ ] `6`, Tab, and Shift-Tab focus Vehicles
-- [ ] The list's keys work only while Characters has focus
-- [ ] The status line lists the focused panel's keys, with the global ones after them
 - [ ] Refactor: extract one module per panel, with snapshots unchanged. Attributes, Species, and Homeworld become View-only parts of Selected Character.

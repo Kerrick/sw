@@ -84,15 +84,14 @@ mise x -- bundle exec exe/sw
 
 To refresh the cache now, run `mise x -- bundle exec exe/sw --refresh`.
 
-The focused panel has a green border. Tab and Shift-Tab move between
-panels. So do the number keys: 1 for Characters, 2 for the selected
-character, 3 for Search, then 4, 5, and 6 for Films, Starships, and
-Vehicles. A slash also jumps to Search. In the character list, the arrow keys
-or `j` and `k` move the highlight, and the panels beside it follow. Home and
-End, or `g` and `G`, jump to either end. The same keys scroll any other
-panel. Search filters the list as you type. Enter keeps the filter and
-returns to the list. Esc clears it. Ctrl-C quits from anywhere, and `q`
-quits from anywhere but Search. F5 and `r` reload the data from the API.
+The app opens with the character list focused, and a green border marks
+whichever panel has focus. Tab and Shift-Tab move focus between the list and
+Search. So do the number keys, and a slash also jumps to Search. In the list,
+the arrow keys or `j` and `k` move the highlight, and the panels beside it
+follow. Home and End, or `g` and `G`, jump to either end. Search filters the
+list as you type. Enter keeps the filter and returns to the list. Esc clears
+it. Ctrl-C quits from anywhere, and `q` quits from anywhere but Search. F5
+and `r` reload the data from the API.
 
 ## Assumptions
 
@@ -170,12 +169,12 @@ than a week old, the app shows it anyway and refreshes in the background,
 swapping in the new data in one step. If that refresh fails, it keeps the old
 data. Only a first launch without a network shows an error.
 
-The screen is made of one module per panel. Every panel takes focus, so
-any of them can be driven from the keyboard. Each keeps its own state in its
-model. Smaller pieces inside them, like the attributes table, are only views.
-The top-level model records which panel has focus. The top-level router turns
-keys into intents, so the down arrow and `j` both mean "move down," and hands
-each intent to the focused panel.
+The screen is made of one module per panel. The list and Search take focus,
+and each keeps its own state in its model. The other panels, and the pieces
+inside every panel, like the attributes table, are only views. The root
+fragment's model records which panel has focus. Its router turns keys into
+intents, so the down arrow and `j` both mean "move down," and hands each
+intent to the focused panel.
 
 The brief needed one screen, centered on a character. Because panels are
 small modules over a shared domain model, a screen centered on a vehicle, a
@@ -214,9 +213,7 @@ The cache holds raw JSON, not parsed objects. When I change a parsing rule,
 the fix works with existing caches without a new download.
 
 The panels beside the list follow its highlight, as lazygit's do. Requiring
-Enter to choose a character would double the keystrokes for browsing and
-keep two cursors in the model. Scrolling a long panel needs focus anyway, so
-every panel can take it.
+Enter to choose a character would double the keystrokes for browsing.
 
 Only panels that take focus keep state. The other panels, and the pieces
 inside every panel, are View-only modules.

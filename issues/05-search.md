@@ -6,7 +6,14 @@ Typing narrows the list as you go. Search works like lazygit's filter: Enter
 keeps the filter and goes to the list it searched; Esc clears it and goes to
 the screen's default panel.
 
-- [ ] `3` or `/` focuses Search
+This is the first story with a second focusable panel, so the list's keys
+must work only while Characters has focus, and the status line must list the
+focused panel's keys.
+
+- [ ] `1` or `/` focuses Search
+- [ ] `2` focuses Characters
+- [ ] The list's keys work only while Characters has focus
+- [ ] The status line lists the focused panel's keys, with the global ones after them
 - [ ] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
 - [ ] Enter keeps the filter and focuses the searched list
 - [ ] Esc clears the filter and focuses the default panel
