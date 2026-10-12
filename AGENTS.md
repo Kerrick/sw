@@ -51,6 +51,11 @@ Facts that are easy to get wrong:
   returns all their results together.
 - Everything in a message or the model must be Ractor-shareable
   (`Ractor.make_shareable`). The test helpers enable debug mode, which checks.
+- A command that raises does not fail cleanly. The runtime wraps the exception
+  in a `Message::Error`, which `Update` ignores, so the app waits forever.
+  Under test, debug mode tries to make that exception Ractor-shareable and
+  raises `Ractor::Error`, which hides the real cause. Rescue inside the
+  command and out.put a message.
 
 Vocabulary: a Rooibos unit is a **fragment**, never a "component" (reserved
 for the Kit library). "Widget" means a RatatuiRuby render primitive. Write
@@ -134,6 +139,10 @@ and making errors meaningful. `Load::Mapper` is the Data Mapper: the only
 code that knows the API's JSON. Records come back in a `Collection`, an
 immutable, `Enumerable` record set.
 
+Failures are messages, not exceptions. `Load` sends `Load::Finished` or
+`Load::Failed`, and the project defines no exception classes (no `Sw::Error`).
+`Load` rescues Ruby's own exceptions inside the command, in one place.
+
 All-or-nothing: no progressive rendering. Detail panels need the joined data,
 and partial data looks like missing data. The whole download takes under a second.
 
@@ -186,7 +195,9 @@ The approach comes from five books. Apply them; don't cite them in code.
 - Adzic, *Specification by Example*, without Gherkin: key examples from the
   real data name the tests and snapshots
   (`test_luke_appears_in_episodes_three_through_six`), so the suite reads as
-  the specification.
+  the specification. Name a test in a product owner's words, with a subject
+  that can do the verb: `test_the_app_knows_why_the_download_failed`, not
+  `test_a_failed_download_keeps_the_failure`.
 - Shore, *The Art of Agile Development* (2nd ed.): stories are small
   vertical slices a user can see. Decisions, technical tasks, and refactors
   fold into the stories that need them, never issues of their own. A story
@@ -214,11 +225,15 @@ The approach comes from five books. Apply them; don't cite them in code.
   generated placeholders. The end-to-end test covers it.
 - Test custom commands through the real runtime with `inject_sync`, against
   a local `TCPServer` serving fixtures, as Rooibos's own tests do. Don't add
-  WebMock, mock `Net::HTTP`, or fake the `Outlet`.
+  WebMock, mock `Net::HTTP`, or fake the `Outlet`. Inject faults with
+  `FixtureServer#refusing` (404), `#dropping` (no answer), and `#answering`
+  (any body), each for the length of a block.
 - System tests run the app and check the screen with `assert_snapshots`.
   They start from an explicit fixture-built model unless they are
   about loading. Name snapshots after the example they show, and mask
-  machine-specific output with `normalize_snapshots`.
+  machine-specific output with `normalize_snapshots`. A snapshot that doesn't
+  exist yet passes on its first run and writes itself, so a snapshot alone
+  can't make a test red. Assert on data first.
 - Point the cache at a temp directory via the environment, so tests exercise
   real path resolution.
 - `with_test_terminal` times out after 2 s by default; keep each test small.

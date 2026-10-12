@@ -86,7 +86,10 @@ Write the least code that makes the test pass: fake it when unsure,
 triangulate with another test when the fake would survive, and write the
 obvious implementation only when it is obvious (Beck). A triangulating test
 is a new test, so it starts a new cycle and goes to its own TEST REVIEW.
-Implement only the test the reviewer approved. Run the full check.
+Implement only the test the reviewer approved. Run the full check. Only the
+end-to-end test may be red at a gate. If the code would break any other test,
+fold the change into the cycle that fixes that test, or split the work so
+every other test stays green.
 Fix lint offenses rather than disabling rules. Refactor only while green, and
 only within what this cycle touched. Meet the rest of the project's
 definition of done.

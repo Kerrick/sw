@@ -7,4 +7,4 @@ download.
 
 - [ ] Raw responses go under the `etcetera` user cache directory, pointed at a temp directory by the environment in tests
 - [ ] A fresh cache means no network at all
-- [ ] `--refresh` downloads now, even when the cache is fresh
+- [ ] `--refresh` downloads now, even when the cache is fresh; `r` and F5 do the same while the app runs

@@ -11,8 +11,8 @@ the screen's default panel.
 - [ ] Enter keeps the filter and focuses the searched list
 - [ ] Esc clears the filter and focuses the default panel
 - [ ] Tab and Shift-Tab keep the filter and move focus on
-- [ ] Ctrl-C quits from Search; `q`, digits, and Space type into it
+- [ ] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it
 - [ ] Pasted text goes into the query
 - [ ] A search with no matches says "No characters match …"
 - [ ] The cursor is drawn with `tui.cursor`
-- [ ] Status-line key help follows focus
+- [ ] Status-line key help follows focus, alongside the global `r: Reload  q: Quit`, which Search hides because those keys type into it
