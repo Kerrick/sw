@@ -16,6 +16,5 @@ error-free.
 - [x] A malformed JSON response on the root shows a meaningful error with a retry key
 - [x] Any other exception while loading shows its message with a retry key
 - [x] A malformed JSON response on a collection shows a meaningful error with a retry key
-- [ ] A timeout or cancellation (a `nil` message) is handled apart from HTTP errors
 - [x] Retry downloads again
-- [ ] Panels don't draw until data arrives; remove the `selected&.name.to_s` fallback
+- [x] Panels don't draw until data arrives; remove the `selected&.name.to_s` fallback

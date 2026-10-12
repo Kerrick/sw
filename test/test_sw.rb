@@ -22,7 +22,7 @@ class TestSw < Minitest::Test
   end
 
   def test_the_top_line_is_a_bold_title
-    model = Sw::Model.new(characters: Sw::Characters::Init.(characters: Sw::Collection.new([])))
+    model = Sw::Model.new(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
 
     with_rendered(Sw::View.call(model, tui)) do
       assert_bold(0, 0)
@@ -86,7 +86,7 @@ class TestSw < Minitest::Test
   def test_r_is_shown_as_a_hotkey_whether_loading_failed_or_loaded
     loading, = Sw::Init.call
     failed = loading.with(failure: "Connection refused")
-    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([])))
+    loaded = loading.with(characters: Sw::Characters::Init.(characters: Sw::Collection.new([Sw::Character.new(name: "Luke Skywalker")])))
 
     { loading:, failed:, loaded: }.each do |state, model|
       with_rendered(Sw::View.call(model, tui)) do

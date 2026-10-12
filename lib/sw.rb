@@ -104,7 +104,7 @@ module Sw
           children: [
             Characters::View.call(model.characters, tui),
             tui.block(
-              title: model.characters.selected&.name.to_s,
+              title: model.characters.selected.name,
               title_style: tui.style(modifiers: [:bold]),
               borders: [:all]
             ),
