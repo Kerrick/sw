@@ -33,7 +33,7 @@ module Sw
 
     View = -> (model, tui, focused: false) {
       tui.list(
-        items: model.collection.map(&:name),
+        items: model.collection.map { |character| character.name.to_s },
         selected_index: model.collection.find_index(model.selected),
         highlight_style: tui.style(modifiers: [:reversed]),
         block: tui.block(title: "Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))

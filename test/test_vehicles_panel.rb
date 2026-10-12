@@ -49,22 +49,22 @@ class TestVehiclesPanel < Minitest::Test
 
   private def emergency_firespeeder
     Sw::Vehicle.new(
-      name: "Emergency Firespeeder", model: "Fire suppression speeder", manufacturer: "unknown",
-      vehicle_class: "fire suppression ship", crew: Sw::Value.new("2"), passengers: Sw::Value.new("unknown")
+      name: Sw::Value.new("Emergency Firespeeder"), model: Sw::Value.new("Fire suppression speeder"), manufacturer: Sw::Value.new("unknown"),
+      vehicle_class: Sw::Value.new("fire suppression ship"), crew: Sw::Value.new("2"), passengers: Sw::Value.new("unknown")
     )
   end
 
   private def sand_crawler
     Sw::Vehicle.new(
-      name: "Sand Crawler", model: "Digger Crawler", manufacturer: "Corellia Mining Corporation",
-      vehicle_class: "wheeled", crew: Sw::Value.new("46"), passengers: Sw::Value.new("30")
+      name: Sw::Value.new("Sand Crawler"), model: Sw::Value.new("Digger Crawler"), manufacturer: Sw::Value.new("Corellia Mining Corporation"),
+      vehicle_class: Sw::Value.new("wheeled"), crew: Sw::Value.new("46"), passengers: Sw::Value.new("30")
     )
   end
 
   private def snowspeeder
     Sw::Vehicle.new(
-      name: "Snowspeeder", model: "t-47 airspeeder", manufacturer: "Incom corporation",
-      vehicle_class: "airspeeder", crew: Sw::Value.new("2"), passengers: Sw::Value.new("0")
+      name: Sw::Value.new("Snowspeeder"), model: Sw::Value.new("t-47 airspeeder"), manufacturer: Sw::Value.new("Incom corporation"),
+      vehicle_class: Sw::Value.new("airspeeder"), crew: Sw::Value.new("2"), passengers: Sw::Value.new("0")
     )
   end
 end

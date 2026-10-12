@@ -19,28 +19,30 @@ module Sw
   Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
 
   class Character < Data
-    attr_reader name: String
+    attr_reader name: Value
     attr_reader vehicles: Collection[Vehicle]
-    def initialize: (name: String, ?vehicles: Collection[Vehicle]) -> void
+    def initialize: (name: Value, ?vehicles: Collection[Vehicle]) -> void
   end
 
   class Value < Data
+    include Comparable
     attr_reader text: String
     def initialize: (String text) -> void
                   | (text: String) -> void
     def to_s: () -> String
     def unknown?: () -> bool
+    def <=>: (untyped other) -> Integer?
   end
 
   class Vehicle < Data
-    attr_reader name: String
-    attr_reader model: String
-    attr_reader manufacturer: String
-    attr_reader vehicle_class: String
+    attr_reader name: Value
+    attr_reader model: Value
+    attr_reader manufacturer: Value
+    attr_reader vehicle_class: Value
     attr_reader crew: Value
     attr_reader passengers: Value
     attr_reader pilots: Collection[Character]
-    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
+    def initialize: (name: Value, model: Value, manufacturer: Value, vehicle_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
   end
 
   class Collection[T] < Data
@@ -76,7 +78,6 @@ module Sw
 
     class Mapper
       COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle)]]
-      FIELDS: Hash[Symbol, singleton(Value)]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
       def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle]]

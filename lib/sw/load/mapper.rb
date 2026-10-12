@@ -9,9 +9,6 @@ module Sw
       # Each API collection, with the name the app uses for it and the class of its records.
       COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle] }.freeze
 
-      # The type each field becomes, by member name, wherever it appears. Other fields stay strings.
-      FIELDS = { crew: Value, passengers: Value }.freeze
-
       def links(root)
         JSON.parse(root, freeze: true).transform_keys(&:to_sym)
       end
@@ -41,15 +38,15 @@ module Sw
 
         # A record takes the API's field of the same name for each of its members.
         private def record(type, json)
-          record = type.new(**type.members.to_h { |member| [member, field(member, json.fetch(member.to_s))] })
+          record = type.new(**type.members.to_h { |member| [member, field(json.fetch(member.to_s))] })
           @by_url[json.fetch("url")] = record
         end
 
-        # Every array in the API is a list of links.
-        private def field(member, value)
+        # Every array in the API is a list of links. Every other field is a Value, which may be unknown.
+        private def field(value)
           return links_to(value) if value.is_a?(Array)
 
-          FIELDS.key?(member) ? FIELDS.fetch(member).new(value) : value
+          Value.new(value)
         end
 
         # A Collection of the records at the URLs, filled by #link once every record exists.

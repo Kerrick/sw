@@ -10,7 +10,7 @@ module Sw
     Vehicle = -> (vehicle, tui, first:) {
       tui.table(
         rows: [
-          [tui.text_span(content: vehicle.name, style: tui.style(modifiers: [:bold])), vehicle.vehicle_class],
+          [tui.text_span(content: vehicle.name.to_s, style: tui.style(modifiers: [:bold])), vehicle.vehicle_class],
           ["Crew / Passengers:", tui.text_line(spans: [ValueSpan.(vehicle.crew, tui), tui.text_span(content: " / "), ValueSpan.(vehicle.passengers, tui)])],
           ["Model / Manufacturer:", "#{vehicle.model} / #{vehicle.manufacturer}"],
         ],

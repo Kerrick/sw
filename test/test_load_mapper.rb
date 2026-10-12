@@ -7,7 +7,7 @@ class TestLoadMapper < Minitest::Test
   VEHICLES = File.read(File.join(FixtureServer::FIXTURES, "api/vehicles.json")).freeze
 
   def test_the_first_person_is_luke_skywalker
-    assert_equal "Luke Skywalker", records.fetch(:characters).first.name
+    assert_equal "Luke Skywalker", records.fetch(:characters).first.name.to_s
   end
 
   def test_all_82_people_become_characters
@@ -21,13 +21,13 @@ class TestLoadMapper < Minitest::Test
   def test_luke_pilots_the_snowspeeder_and_the_imperial_speeder_bike
     luke = records.fetch(:characters).first
 
-    assert_equal ["Snowspeeder", "Imperial Speeder Bike"], luke.vehicles.map(&:name)
+    assert_equal ["Snowspeeder", "Imperial Speeder Bike"], luke.vehicles.map { |vehicle| vehicle.name.to_s }
   end
 
   def test_the_snowspeeder_is_piloted_by_luke_skywalker_and_wedge_antilles
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
-    assert_equal ["Luke Skywalker", "Wedge Antilles"], snowspeeder.pilots.map(&:name)
+    assert_equal ["Luke Skywalker", "Wedge Antilles"], snowspeeder.pilots.map { |pilot| pilot.name.to_s }
   end
 
   def test_every_pilot_and_every_piloted_vehicle_list_each_other
@@ -46,9 +46,21 @@ class TestLoadMapper < Minitest::Test
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
     assert_equal(
-      { model: "t-47 airspeeder", manufacturer: "Incom corporation", vehicle_class: "airspeeder", crew: Sw::Value.new("2"), passengers: Sw::Value.new("0") },
+      {
+        model: Sw::Value.new("t-47 airspeeder"),
+        manufacturer: Sw::Value.new("Incom corporation"),
+        vehicle_class: Sw::Value.new("airspeeder"),
+        crew: Sw::Value.new("2"),
+        passengers: Sw::Value.new("0"),
+      },
       snowspeeder.to_h.slice(:model, :manufacturer, :vehicle_class, :crew, :passengers)
     )
+  end
+
+  def test_the_emergency_firespeeder_manufacturer_is_unknown
+    emergency_firespeeder = records.fetch(:vehicles).find { |vehicle| vehicle.name.to_s == "Emergency Firespeeder" }
+
+    assert_predicate emergency_firespeeder.manufacturer, :unknown?
   end
 
   def test_the_linked_records_can_be_shared_between_ractors
@@ -56,7 +68,7 @@ class TestLoadMapper < Minitest::Test
   end
 
   def test_the_first_vehicle_is_the_sand_crawler
-    assert_equal "Sand Crawler", records.fetch(:vehicles).first.name
+    assert_equal "Sand Crawler", records.fetch(:vehicles).first.name.to_s
   end
 
   private def records

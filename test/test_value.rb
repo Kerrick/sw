@@ -39,6 +39,13 @@ class TestValue < Minitest::Test
     refute_predicate snowspeeder_crew, :unknown?
   end
 
+  def test_ackbar_sorts_before_luke_skywalker
+    ackbar = Sw::Value.new("Ackbar")
+    luke = Sw::Value.new("Luke Skywalker")
+
+    assert_operator ackbar, :<, luke
+  end
+
   def test_the_star_destroyer_passengers_read_as_not_applicable
     star_destroyer_passengers = Sw::Value.new("n/a")
 
