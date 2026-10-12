@@ -3,18 +3,32 @@
 require "test_helper"
 
 class TestCharacters < Minitest::Test
-  include RatatuiRuby::TestHelper
+  include ViewTestHelper
+
+  def setup
+    @luke = Sw::Character.new(name: "Luke Skywalker")
+    @ackbar = Sw::Character.new(name: "Ackbar")
+  end
+
+  def test_init_selects_ackbar_the_first_alphabetically
+    model = Sw::Characters::Init.(characters: Sw::Collection.new([@luke, @ackbar]))
+
+    assert_equal @ackbar, model.selected
+  end
 
   def test_ackbar_is_listed_before_luke_skywalker
-    luke = Sw::Character.new(name: "Luke Skywalker")
-    ackbar = Sw::Character.new(name: "Ackbar")
+    model = Sw::Characters::Init.(characters: Sw::Collection.new([@luke, @ackbar]))
 
-    with_test_terminal do
-      RatatuiRuby.draw do |frame|
-        frame.render_widget(Sw::Characters::View.call(Sw::Collection.new([luke, ackbar]), RatatuiRuby::TUI.new), frame.area)
-      end
-
+    with_rendered(Sw::Characters::View.call(model, tui)) do
       assert_operator row_of("Ackbar"), :<, row_of("Luke Skywalker")
+    end
+  end
+
+  def test_the_selected_character_is_highlighted
+    model = Sw::Characters::Init.(characters: Sw::Collection.new([@luke, @ackbar])).with(selected: @luke)
+
+    with_rendered(Sw::Characters::View.call(model, tui)) do
+      assert_reversed(1, row_of("Luke Skywalker"))
     end
   end
 

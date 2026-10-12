@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "sw"
 require "rooibos/test_helper"
 require_relative "support/fixture_server"
+require_relative "support/view_test_helper"
 
 require "minitest/autorun"
 

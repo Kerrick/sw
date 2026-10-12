@@ -12,7 +12,7 @@ maps the API's `people`.
 - [x] Record the root and six collections from swapi.info as fixtures (ask before touching the live API)
 - [x] A local `TCPServer` test helper serves the fixtures
 - [x] `exe/sw` fetches the root, then the collections in parallel, and lists all 82 names alphabetically
-- [ ] The wireframe layout: title, list, Selected Character showing the highlighted name, and empty Films, Starships, and Vehicles boxes
+- [x] The wireframe layout: title, list, Selected Character showing the highlighted name, and empty Films, Starships, and Vehicles boxes
 - [ ] A status line: a slot on the left for one status word, and key help for the focused panel filling the rest
 - [ ] `q` and Ctrl-C quit
 - [x] End-to-end test: against the fixture server, the list shows Ackbar

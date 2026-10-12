@@ -4,13 +4,13 @@ module Sw
   API_URL: String
 
   class Model < Data
-    attr_reader characters: Collection[Character]
-    def initialize: (characters: Collection[Character]) -> void
-    def with: (?characters: Collection[Character]) -> Model
+    attr_reader characters: Characters::Model
+    def initialize: (characters: Characters::Model) -> void
+    def with: (?characters: Characters::Model) -> Model
   end
 
   Init: ^() -> [Model, Load]
-  View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
+  View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
   Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
 
   class Character < Data
@@ -53,6 +53,14 @@ module Sw
   end
 
   module Characters
-    View: ^(Collection[Character], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
+    class Model < Data
+      attr_reader collection: Collection[Character]
+      attr_reader selected: Character?
+      def initialize: (collection: Collection[Character], selected: Character?) -> void
+      def with: (?collection: Collection[Character], ?selected: Character?) -> Model
+    end
+
+    Init: ^(characters: Collection[Character]) -> Model
+    View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
   end
 end
