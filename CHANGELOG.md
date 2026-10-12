@@ -6,6 +6,7 @@
 - Lay out the screen as the brief's wireframe does, with the highlighted character's name beside the list.
 - Quit with q or Ctrl-C.
 - Show the keys you can press on the bottom line.
+- Show why the download failed when the first launch has no network.
 
 ## [0.1.0] - 2026-10-12
 

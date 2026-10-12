@@ -10,18 +10,28 @@ class TestLoad < Minitest::Test
   end
 
   def test_crawling_from_the_root_loads_all_82_characters
-    assert_equal 82, loaded.characters.count
+    assert_equal 82, finished.characters.count
   end
 
   def test_crawling_from_the_root_loads_all_39_vehicles
-    assert_equal 39, loaded.vehicles.count
+    assert_equal 39, finished.vehicles.count
   end
 
-  private def loaded
+  def test_a_refused_connection_fails_naming_the_address
+    url = unreachable_url
+    failed = delivered(url)
+
+    assert_equal "Sw::Load::Failed", failed.class.name
+    assert_includes failed.reason, URI(url).authority
+  end
+
+  private def finished = delivered(FIXTURE_SERVER.url)
+
+  private def delivered(url)
     with_test_terminal do
       inject_sync
       inject_key(:ctrl_c)
-      Rooibos::Runtime.run(model: :loading, view: ClearView, update: KeepLastMessage, command: Sw::Load.new(url: FIXTURE_SERVER.url))
+      Rooibos::Runtime.run(model: :loading, view: ClearView, update: KeepLastMessage, command: Sw::Load.new(url:))
     end
   end
 end

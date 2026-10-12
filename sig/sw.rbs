@@ -5,8 +5,9 @@ module Sw
 
   class Model < Data
     attr_reader characters: Characters::Model
-    def initialize: (characters: Characters::Model) -> void
-    def with: (?characters: Characters::Model) -> Model
+    attr_reader failure: String?
+    def initialize: (characters: Characters::Model, ?failure: String?) -> void
+    def with: (?characters: Characters::Model, ?failure: String?) -> Model
   end
 
   Init: ^() -> [Model, Load]
@@ -31,19 +32,25 @@ module Sw
             | () -> Enumerator[T, Array[T]]
   end
 
-  class Loaded < Data
-    include Rooibos::Message::Predicates
-    attr_reader characters: Collection[Character]
-    attr_reader vehicles: Collection[Vehicle]
-    def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle]) -> void
-  end
-
   class Load < Data
     include Rooibos::Command::Custom
     Command: singleton(Rooibos::Command)
     attr_reader url: String
     def initialize: (url: String) -> void
     def call: (Rooibos::Command::Outlet out, Concurrent::Cancellation token) -> void
+
+    class Finished < Data
+      include Rooibos::Message::Predicates
+      attr_reader characters: Collection[Character]
+      attr_reader vehicles: Collection[Vehicle]
+      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle]) -> void
+    end
+
+    class Failed < Data
+      include Rooibos::Message::Predicates
+      attr_reader reason: String
+      def initialize: (reason: String) -> void
+    end
 
     class Mapper
       def links: (String root) -> Hash[Symbol, String]

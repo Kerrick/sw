@@ -39,6 +39,22 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_app_knows_why_the_download_failed
+    model, = Sw::Init.call
+
+    updated, = Sw::Update.call(Sw::Load::Failed.new(reason: "Connection refused"), model)
+
+    assert_equal "Connection refused", updated.failure
+  end
+
+  def test_the_screen_shows_why_the_download_failed
+    model, = Sw::Init.call
+
+    with_rendered(Sw::View.call(model.with(failure: "Connection refused"), tui)) do
+      assert_includes buffer_content.join("\n"), "Connection refused"
+    end
+  end
+
   def test_q_quits
     model, = Sw::Init.call
 

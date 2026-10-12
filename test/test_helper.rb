@@ -20,3 +20,15 @@ module PointAtFixtureServer
   end
 end
 Minitest::Test.include(PointAtFixtureServer)
+
+# Tests that need a network failure ask for an address nothing listens on.
+module UnreachableUrl
+  # A port that was open a moment ago and now refuses connections.
+  private def unreachable_url
+    server = TCPServer.new("127.0.0.1", 0)
+    port = server.addr[1]
+    server.close
+    "http://127.0.0.1:#{port}/api"
+  end
+end
+Minitest::Test.include(UnreachableUrl)
