@@ -24,14 +24,19 @@ guide for Ruby. Implementation work follows the
 Both are quite new and may change between minor versions. Do not guess their APIs.
 The installed gems ship `lib/` and `sig/` only (`bundle exec gem contents rooibos`);
 guides and example apps live upstream (github.com/setdef/Rooibos,
-github.com/setdef/RatatuiRuby). Read before writing code in the same area:
+github.com/setdef/RatatuiRuby). Prefer their RDoc and guides to their
+runtime source; read the source only when the docs are thin. Read before
+writing code in the same area:
 
 - `examples/tutorial/08_multi_fragment_layout`: panel modules, keys → intents.
 - `examples/app_fractal_dashboard`: modal input capture, text input fragment.
 - `examples/app_tabbed_fragments`: Router DSL reference, `Command.bubble`, custom messages.
+- `doc/scaling_up/fractal_architecture.md`: fragments, model composition, and
+  each View taking its own fragment's `Model`.
 - `doc/best_practices/no_stateful_widgets.md`: scrolling without `ListState`.
 - `lib/rooibos/command/outlet.rb`, `command/all.rb`, `command/http.rb`.
-- RatatuiRuby `lib/ratatui_ruby/test_helper/*.rb`.
+- RatatuiRuby `doc/concepts/application_testing.md` and
+  `lib/ratatui_ruby/test_helper/*.rb`.
 
 Local checkouts (e.g. `~/Developer/rooibos`) may be ahead of `Gemfile.lock`.
 When an exact API matters, confirm it in the installed gem
@@ -125,7 +130,9 @@ doesn't need one.
 **Loading.** One or more custom commands, (`include Rooibos::Command::Custom`),
 responsible for crawling from the root URL (in parallel), caching the responses
 on disk, refreshing it after 7 days, parsing JSON, instantiating model classes,
-and making errors meaningful.
+and making errors meaningful. `Load::Mapper` is the Data Mapper: the only
+code that knows the API's JSON. Records come back in a `Collection`, an
+immutable, `Enumerable` record set.
 
 All-or-nothing: no progressive rendering. Detail panels need the joined data,
 and partial data looks like missing data. The whole download takes under a second.
@@ -144,7 +151,8 @@ under the platform-appropriate user cache directory from the `etcetera` gem.
 Cache age is an input in the loading tests, alongside network outcomes.
 
 **UI.** One module per panel. Only panels that take focus and keep state
-have `Init`/`Update`/Router. The rest are `View`-only modules. Key
+have `Init`/`Update`/Router. The rest are `View`-only modules. A
+fragment's View takes that fragment's own `Model`. Key
 bindings, focus order, and on-screen wording belong in the issues, not here.
 
 - The root model owns focus. The root Router handles focus with
@@ -187,6 +195,9 @@ The approach comes from five books. Apply them; don't cite them in code.
 - Fixtures are recorded real responses. The source is frozen, so they don't
   go stale; never hit the live API in the default suite. Recording them is
   the only time to touch the live API, and only after asking.
+- `test_helper.rb` starts one `FIXTURE_SERVER` for the whole suite and
+  resets `SW_API_URL`, which overrides the API root, to it before every
+  test. No test reaches swapi.info.
 - Test parsing and the domain model as plain Ruby against fixtures.
 - Test Update functions without a terminal: assert on the returned model and
   command *values*. Child fragments receive routed intents, not keys; the
@@ -196,7 +207,11 @@ The approach comes from five books. Apply them; don't cite them in code.
   assertions), as RatatuiRuby's application testing guide recommends.
   Don't inspect the widget tree a View returns. Unit tests assert
   behavior and style, never positions or box-drawing characters; layout
-  belongs to snapshots.
+  belongs to snapshots. Assert style or data, never copy, which product
+  decisions change. `ViewTestHelper#with_rendered` renders a View for
+  these assertions.
+- Don't unit-test framework wiring: Router dispatch, `Data#with`, or
+  generated placeholders. The end-to-end test covers it.
 - Test custom commands through the real runtime with `inject_sync`, against
   a local `TCPServer` serving fixtures, as Rooibos's own tests do. Don't add
   WebMock, mock `Net::HTTP`, or fake the `Outlet`.

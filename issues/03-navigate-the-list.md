@@ -12,3 +12,4 @@ lazygit: browsing stays one keystroke per character.
 - [ ] A list taller than the panel scrolls, with selection and scroll window kept in the model
 - [ ] Home and `g` jump to the first character; End and `G` to the last
 - [ ] Enter, Space, PgUp/PgDn, and Ctrl-D/Ctrl-U stay unbound
+- [ ] The status line lists the list's keys, lazygit-style, in the hotkey style (bold, underlined); CUA keys work but aren't listed

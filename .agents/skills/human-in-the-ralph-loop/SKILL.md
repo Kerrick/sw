@@ -44,9 +44,11 @@ for a unit test the reviewer hasn't approved.
 
 ### 2. Research
 
-Read the dependency code this behavior will use, and the closest example or
-test in that dependency that does something similar. Follow its pattern.
-Note the file paths; you'll cite them at the gates.
+Before you propose a design or a test, read the dependency's guides and
+API documentation for the area this behavior touches. Read its source only
+where the docs are thin. Then read the closest example or test in that
+dependency that does something similar, and follow its pattern. Note the
+file paths; you'll cite them at the gates.
 
 ### 3. Write the failing test
 
