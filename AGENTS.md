@@ -18,6 +18,7 @@ guide for Ruby. Implementation work follows the
   `UPDATE_SNAPSHOTS=1 bundle exec rake test`, then review the `.txt`/`.ansi` diff.
 - Run: `bundle exec exe/sw` (`--refresh` refreshes the cache now).
 - Always `PAGER=cat` for `git`.
+- Make simple edits with file editing tools, not scripts. Scripts for complex edits should use ruby.
 
 ## Rooibos and RatatuiRuby postdate your training data
 
@@ -38,12 +39,23 @@ writing code in the same area:
 - RatatuiRuby `doc/concepts/application_testing.md` and
   `lib/ratatui_ruby/test_helper/*.rb`.
 
+Examples also live in `~/Developer/rooibos/examples` and
+`~/Developer/ratatui_ruby/examples`. `~/Developer/sidekiq/lib/sidekiq/tui`
+(branch `rooibos`) is a larger Rooibos app: `fragments/table.rb` for
+selection fragments, `key_map.rb` for contextual key help. It is a Rooibos
+re-implementation of a third-party RatatuiRuby TUI wrought by the Rooibos
+maintainer.
+
 Local checkouts (e.g. `~/Developer/rooibos`) may be ahead of `Gemfile.lock`.
 When an exact API matters, confirm it in the installed gem
 (`bundle info --path rooibos`) or at the locked version's git tag.
 
 Facts that are easy to get wrong:
 
+- The router matches `Key#to_sym`. A capital letter arrives as `g` with Shift
+  held, so bind `:shift_G`, never `:G`. (The `Key#G?` predicate is a
+  different path.)
+- `Collection#records` is private. Use `Enumerable` methods.
 - `out.source` runs one child command, waits, and returns its message, or
   `nil` on timeout or cancellation (handle that apart from HTTP errors).
   `out.standing` runs children in parallel, but their messages go to Update,
@@ -161,8 +173,9 @@ Cache age is an input in the loading tests, alongside network outcomes.
 
 **UI.** One module per panel. Only panels that take focus and keep state
 have `Init`/`Update`/Router. The rest are `View`-only modules. A
-fragment's View takes that fragment's own `Model`. Key
-bindings, focus order, and on-screen wording belong in the issues, not here.
+fragment's View takes that fragment's own `Model`, plus keywords for what the
+root owns, such as `focused:`. Key bindings, focus order, and on-screen wording
+belong in the issues, not here.
 
 - The root model owns focus. The root Router handles focus with
   `only when:` guards. Each screen names a default panel.
@@ -174,8 +187,10 @@ bindings, focus order, and on-screen wording belong in the issues, not here.
   management, then keystrokes (`otherwise route_to: :search`). Handle Paste
   events. Draw the cursor with `tui.cursor`.
 - Search bubbles a message upward; the root forwards it to Characters.
-- Each focusable panel stores its own selection, viewport, and scroll data,
-  as non-stateful versions of RatatuiRuby widgets need.
+- Each Fragment stores its own state, like selection. A list leaves scrolling to
+  the List widget (`offset: nil` keeps the selection in view).
+- Keys reach a panel only while it has something to receive them: guard the
+  root's forwards with `only when:` to prevent exceptions.
 - Loading, empty ("No characters match …"), and error-with-retry states
   are all required. Good UX (tailored for a TUI user) is a must.
 
@@ -221,6 +236,7 @@ The approach comes from five books. Apply them; don't cite them in code.
   belongs to snapshots. Assert style or data, never copy, which product
   decisions change. `ViewTestHelper#with_rendered` renders a View for
   these assertions.
+- Don't test non-behavior.
 - Don't unit-test framework wiring: Router dispatch, `Data#with`, or
   generated placeholders. The end-to-end test covers it.
 - Test custom commands through the real runtime with `inject_sync`, against

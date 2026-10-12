@@ -31,7 +31,9 @@ not.
 Take the next unchecked item from the current issue. Say which issue and
 item you're on. The issue's checklist is the test list (Beck): add to it
 when you think of a case, and never silently drop one. If an item is too big
-for one failing test, split it and say how.
+for one failing test, split it and say how. If an item has no observable
+behavior, don't force a test for it. Say so and ask whether to drop the item or
+tick it with a note.
 
 A feature issue starts with one failing end-to-end test, named after the
 issue's key example (Freeman and Pryce; Adzic). It stays red while the
@@ -58,7 +60,10 @@ earlier test does (Tarlinder). Run it and watch it fail for the right
 reason: the behavior is missing. An undefined class or method is a right
 reason when it's the one the test is about. A typo, a wrong path, a missing
 `require` for code that exists, or a bug in the test is not. Write no
-production code before the gate, not even an empty class.
+production code before the gate, not even an empty class. A test that passes
+on arrival, because earlier code already does the job, is not a red run. Prove
+it isn't vacuous by temporarily breaking the code and watching it fail, then
+restore the code. Say so at the gate.
 
 ### 4. Gate one: TEST REVIEW
 

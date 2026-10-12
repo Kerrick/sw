@@ -15,4 +15,4 @@ the screen's default panel.
 - [ ] Pasted text goes into the query
 - [ ] A search with no matches says "No characters match …"
 - [ ] The cursor is drawn with `tui.cursor`
-- [ ] Status-line key help follows focus, alongside the global `r: Reload  q: Quit`, which Search hides because those keys type into it
+- [ ] Search shows its own key help and hides the global `r: Reload  q: Quit`, because those keys type into it

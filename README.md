@@ -84,7 +84,7 @@ mise x -- bundle exec exe/sw
 
 To refresh the cache now, run `mise x -- bundle exec exe/sw --refresh`.
 
-The focused panel has a highlighted border. Tab and Shift-Tab move between
+The focused panel has a green border. Tab and Shift-Tab move between
 panels. So do the number keys: 1 for Characters, 2 for the selected
 character, 3 for Search, then 4, 5, and 6 for Films, Starships, and
 Vehicles. A slash also jumps to Search. In the character list, the arrow keys
@@ -170,11 +170,11 @@ swapping in the new data in one step. If that refresh fails, it keeps the old
 data. Only a first launch without a network shows an error.
 
 The screen is made of one module per panel. Every panel takes focus, so
-any of them can scroll, and each keeps its own scroll position in its own
-model and update function. Smaller pieces inside them, like the attributes
-table, are only views. The top-level model records which panel has focus. The
-top-level router turns keys into intents, so the down arrow and `j` both
-mean "move down," and hands each intent to the focused panel.
+any of them can be driven from the keyboard. Each keeps its own state in its
+model. Smaller pieces inside them, like the attributes table, are only views.
+The top-level model records which panel has focus. The top-level router turns
+keys into intents, so the down arrow and `j` both mean "move down," and hands
+each intent to the focused panel.
 
 The brief needed one screen, centered on a character. Because panels are
 small modules over a shared domain model, a screen centered on a vehicle, a
@@ -225,7 +225,7 @@ cramped. Responsive design is possible with RatatuiRuby, but was deemed
 out-of-scope for a few hours.
 
 Rooibos recommends against stateful RatatuiRuby widgets, so the app keeps
-selection and scroll position in the model instead.
+selection in the model and uses the widget's default scrolling behavior.
 
 There is no Domain-Driven Design here, and no hexagonal architecture. In my
 Skills Assessment I recommended both for a legacy enterprise CMS.
