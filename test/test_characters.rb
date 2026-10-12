@@ -71,6 +71,14 @@ class TestCharacters < Minitest::Test
     assert_equal luke, filtered.selected
   end
 
+  def test_a_search_for_s_keeps_the_highlight_on_luke_though_han_solo_comes_first
+    s = Sw::Search::QueryChanged.new(query: "s")
+
+    filtered, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: s), three_characters(selected: luke))
+
+    assert_equal luke, filtered.selected
+  end
+
   def test_moving_down_or_up_after_a_search_for_grogu_highlights_no_one
     grogu = Sw::Search::QueryChanged.new(query: "Grogu")
     no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)

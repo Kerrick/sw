@@ -23,7 +23,7 @@ unbound until then.
 - [x] The list's keys work only while Characters has focus
 - [ ] The status line lists the focused panel's keys, with the global ones after them
 - [ ] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
-- [ ] When the highlighted character stops matching, the highlight moves to the first match
+- [x] When the highlighted character stops matching, the highlight moves to the first match
 - [ ] The list's keys move through the matches only
 - [ ] A reload keeps the search
 - [x] Backspace deletes the query's last character, and does nothing to an empty query

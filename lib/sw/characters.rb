@@ -32,8 +32,8 @@ module Sw
     receive_routed :move_up, -> (_, model) { Select.call(:-, model) }
 
     receive_routed :filter, -> (message, model) {
-      filtered = model.with(query: message.event.query)
-      filtered.with(selected: filtered.matches.first)
+      matches = model.with(query: message.event.query).matches
+      model.with(query: message.event.query, selected: matches.include?(model.selected) ? model.selected : matches.first)
     }
 
     receive_routed :move_first, -> (_, model) { model.with(selected: model.collection.first) }
