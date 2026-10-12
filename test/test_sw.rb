@@ -39,6 +39,14 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_q_quits
+    model, = Sw::Init.call
+
+    _, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "q"), model)
+
+    assert_equal Rooibos::Command.exit, command
+  end
+
   private def shown_in_bold?(text)
     buffer_content.each_with_index.any? do |line, y|
       x = line.index(text)

@@ -51,7 +51,7 @@ module Sw
 
   action :quit, -> { Rooibos::Command.exit }
 
-  receive_events :ctrl_c, :quit
+  receive_events %i[q ctrl_c], :quit
 
   receive_instances_of Loaded, -> (message, model) {
     model.with(characters: Characters::Init.(characters: message.characters))

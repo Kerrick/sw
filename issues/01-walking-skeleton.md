@@ -14,6 +14,6 @@ maps the API's `people`.
 - [x] `exe/sw` fetches the root, then the collections in parallel, and lists all 82 names alphabetically
 - [x] The wireframe layout: title, list, Selected Character showing the highlighted name, and empty Films, Starships, and Vehicles boxes
 - [ ] A status line: a slot on the left for one status word, and key help for the focused panel filling the rest
-- [ ] `q` and Ctrl-C quit
+- [x] `q` and Ctrl-C quit
 - [x] End-to-end test: against the fixture server, the list shows Ackbar
 - [ ] CI runs `bundle exec rake` on Linux, macOS, and Windows on every push
