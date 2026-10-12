@@ -16,4 +16,4 @@ maps the API's `people`.
 - [x] A status line: a slot on the left for one status word, and key help for the focused panel filling the rest
 - [x] `q` and Ctrl-C quit
 - [x] End-to-end test: against the fixture server, the list shows Ackbar
-- [ ] CI runs `bundle exec rake` on Linux, macOS, and Windows on every push
+- [x] CI runs `bundle exec rake` on Linux, macOS, and Windows on every push

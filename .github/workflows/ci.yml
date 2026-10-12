@@ -1,0 +1,34 @@
+name: CI
+
+on: push
+
+jobs:
+  rake:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # mise can't build a working Ruby on Windows, so bin/setup.ps1 expects
+      # RubyInstaller's. setup-ruby provides it, so the script skips winget.
+      - if: runner.os == 'Windows'
+        uses: ruby/setup-ruby@v1
+
+      - uses: jdx/mise-action@v5
+        with:
+          install: false
+
+      - if: runner.os != 'Windows'
+        run: bin/setup
+
+      - if: runner.os == 'Windows'
+        run: ./bin/setup.ps1
+
+      - if: runner.os != 'Windows'
+        run: mise x -- bundle exec rake
+
+      - if: runner.os == 'Windows'
+        run: bundle exec rake
