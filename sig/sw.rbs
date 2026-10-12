@@ -38,7 +38,8 @@ module Sw
     attr_reader vehicle_class: String
     attr_reader crew: Count
     attr_reader passengers: Count
-    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Count, passengers: Count) -> void
+    attr_reader pilots: Collection[Character]
+    def initialize: (name: String, model: String, manufacturer: String, vehicle_class: String, crew: Count, passengers: Count, ?pilots: Collection[Character]) -> void
   end
 
   class Collection[T] < Data

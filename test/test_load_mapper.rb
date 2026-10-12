@@ -24,6 +24,24 @@ class TestLoadMapper < Minitest::Test
     assert_equal ["Snowspeeder", "Imperial Speeder Bike"], luke.vehicles.map(&:name)
   end
 
+  def test_the_snowspeeder_is_piloted_by_luke_skywalker_and_wedge_antilles
+    snowspeeder = records.fetch(:characters).first.vehicles.first
+
+    assert_equal ["Luke Skywalker", "Wedge Antilles"], snowspeeder.pilots.map(&:name)
+  end
+
+  def test_every_pilot_and_every_piloted_vehicle_list_each_other
+    characters, vehicles = records.values_at(:characters, :vehicles)
+    unlisted_vehicles = characters.flat_map do |character|
+      character.vehicles.reject { |vehicle| vehicle.pilots.include?(character) }.map { |vehicle| "#{vehicle.name} omits #{character.name}" }
+    end
+    unlisted_pilots = vehicles.flat_map do |vehicle|
+      vehicle.pilots.reject { |pilot| pilot.vehicles.include?(vehicle) }.map { |pilot| "#{pilot.name} omits #{vehicle.name}" }
+    end
+
+    assert_empty unlisted_vehicles + unlisted_pilots
+  end
+
   def test_the_snowspeeder_is_an_incom_t47_airspeeder_for_a_crew_of_two_and_no_passengers
     snowspeeder = records.fetch(:characters).first.vehicles.first
 

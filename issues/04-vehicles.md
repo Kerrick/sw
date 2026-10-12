@@ -16,7 +16,7 @@ Selected Character, `3` Search, `4` Films, `5` Starships, `6` Vehicles. Each
 panel's story binds its own key.
 
 - [x] Luke's vehicles: Snowspeeder and Imperial Speeder Bike, with model, manufacturer, class, crew, and passengers
-- [ ] A vehicle's pilots link back, and both directions agree
+- [x] A vehicle's pilots link back, and both directions agree
 - [ ] Passengers `"unknown"`
 - [ ] A character who pilots no vehicle sees an empty state
 - [ ] `6`, Tab, and Shift-Tab focus Vehicles
