@@ -3,12 +3,15 @@
 module Sw
   # The panel that shows the vehicles a record links to, as the mockup does.
   module Vehicles
+    # A count as text, dimmed when the data doesn't know it.
+    CountSpan = -> (count, tui) { tui.text_span(content: count.to_s, style: (tui.style(modifiers: [:dim]) if count.unknown?)) }
+
     # One vehicle's three rows. Every vehicle after the first has a rule above it.
     Vehicle = -> (vehicle, tui, first:) {
       tui.table(
         rows: [
           [tui.text_span(content: vehicle.name, style: tui.style(modifiers: [:bold])), vehicle.vehicle_class],
-          ["Crew / Passengers:", "#{vehicle.crew} / #{vehicle.passengers}"],
+          ["Crew / Passengers:", tui.text_line(spans: [CountSpan.(vehicle.crew, tui), tui.text_span(content: " / "), CountSpan.(vehicle.passengers, tui)])],
           ["Model / Manufacturer:", "#{vehicle.model} / #{vehicle.manufacturer}"],
         ],
         widths: [tui.constraint_length(22), tui.constraint_fill(1)],

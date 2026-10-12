@@ -29,6 +29,7 @@ module Sw
     def initialize: (String text) -> void
                   | (text: String) -> void
     def to_s: () -> String
+    def unknown?: () -> bool
   end
 
   class Vehicle < Data
@@ -97,6 +98,7 @@ module Sw
   end
 
   module Vehicles
+    CountSpan: ^(Count, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
     Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end

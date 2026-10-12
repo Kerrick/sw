@@ -38,6 +38,22 @@ class TestVehiclesPanel < Minitest::Test
     end
   end
 
+  def test_the_emergency_firespeeder_passengers_are_dimmed_as_unknown
+    with_rendered(Sw::Vehicles::View.call(Sw::Collection.new([emergency_firespeeder]), tui)) do
+      y = buffer_content.index { |line| line.include?("unknown") && !line.include?("Fire suppression speeder") }
+
+      refute_nil y, "Expected the unknown passengers on screen"
+      assert_dim(buffer_content[y].index("unknown"), y)
+    end
+  end
+
+  private def emergency_firespeeder
+    Sw::Vehicle.new(
+      name: "Emergency Firespeeder", model: "Fire suppression speeder", manufacturer: "unknown",
+      vehicle_class: "fire suppression ship", crew: Sw::Count.new("2"), passengers: Sw::Count.new("unknown")
+    )
+  end
+
   private def sand_crawler
     Sw::Vehicle.new(
       name: "Sand Crawler", model: "Digger Crawler", manufacturer: "Corellia Mining Corporation",
