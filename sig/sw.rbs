@@ -1,4 +1,58 @@
 module Sw
   VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+
+  API_URL: String
+
+  class Model < Data
+    attr_reader characters: Collection[Character]
+    def initialize: (characters: Collection[Character]) -> void
+    def with: (?characters: Collection[Character]) -> Model
+  end
+
+  Init: ^() -> [Model, Load]
+  View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
+  Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
+
+  class Character < Data
+    attr_reader name: String
+    def initialize: (name: String) -> void
+  end
+
+  class Vehicle < Data
+    attr_reader name: String
+    def initialize: (name: String) -> void
+  end
+
+  class Collection[T] < Data
+    include Enumerable[T]
+    attr_reader records: Array[T]
+    def initialize: (Array[T] records) -> void
+    def each: () { (T) -> void } -> Array[T]
+            | () -> Enumerator[T, Array[T]]
+  end
+
+  class Loaded < Data
+    include Rooibos::Message::Predicates
+    attr_reader characters: Collection[Character]
+    attr_reader vehicles: Collection[Vehicle]
+    def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle]) -> void
+  end
+
+  class Load < Data
+    include Rooibos::Command::Custom
+    Command: singleton(Rooibos::Command)
+    attr_reader url: String
+    def initialize: (url: String) -> void
+    def call: (Rooibos::Command::Outlet out, Concurrent::Cancellation token) -> void
+
+    class Mapper
+      def links: (String root) -> Hash[Symbol, String]
+      def characters: (String people) -> Collection[Character]
+      def vehicles: (String vehicles) -> Collection[Vehicle]
+    end
+  end
+
+  module Characters
+    View: ^(Collection[Character], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::List
+  end
 end

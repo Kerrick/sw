@@ -3,13 +3,19 @@
 require "test_helper"
 
 class TestSw < Minitest::Test
-  include Rooibos::TestHelper
+  def test_init_loads_from_the_root_in_sw_api_url
+    ENV["SW_API_URL"] = "http://localhost:3000/api"
 
-  def test_it_exits_with_ctrl_c
-    with_test_terminal do
-      inject_key(:ctrl_c)
-      Rooibos.run(Sw)
-      assert true, "Should reach this point without hanging."
-    end
+    _, command = Sw::Init.call
+
+    assert_equal Sw::Load.new(url: "http://localhost:3000/api"), command
+  end
+
+  def test_init_loads_from_swapi_info_by_default
+    ENV.delete("SW_API_URL")
+
+    _, command = Sw::Init.call
+
+    assert_equal Sw::Load.new(url: "https://swapi.info/api"), command
   end
 end

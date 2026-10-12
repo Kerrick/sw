@@ -1,0 +1,40 @@
+┌Characters────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│Ackbar                                                                                                                │
+│Adi Gallia                                                                                                            │
+│Anakin Skywalker                                                                                                      │
+│Arvel Crynyd                                                                                                          │
+│Ayla Secura                                                                                                           │
+│Bail Prestor Organa                                                                                                   │
+│Barriss Offee                                                                                                         │
+│Ben Quadinaros                                                                                                        │
+│Beru Whitesun lars                                                                                                    │
+│Bib Fortuna                                                                                                           │
+│Biggs Darklighter                                                                                                     │
+│Boba Fett                                                                                                             │
+│Bossk                                                                                                                 │
+│C-3PO                                                                                                                 │
+│Chewbacca                                                                                                             │
+│Cliegg Lars                                                                                                           │
+│Cordé                                                                                                                 │
+│Darth Maul                                                                                                            │
+│Darth Vader                                                                                                           │
+│Dexter Jettster                                                                                                       │
+│Dooku                                                                                                                 │
+│Dormé                                                                                                                 │
+│Dud Bolt                                                                                                              │
+│Eeth Koth                                                                                                             │
+│Finis Valorum                                                                                                         │
+│Gasgano                                                                                                               │
+│Greedo                                                                                                                │
+│Gregar Typho                                                                                                          │
+│Grievous                                                                                                              │
+│Han Solo                                                                                                              │
+│IG-88                                                                                                                 │
+│Jabba Desilijic Tiure                                                                                                 │
+│Jango Fett                                                                                                            │
+│Jar Jar Binks                                                                                                         │
+│Jek Tono Porkins                                                                                                      │
+│Jocasta Nu                                                                                                            │
+│Ki-Adi-Mundi                                                                                                          │
+│Kit Fisto                                                                                                             │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘

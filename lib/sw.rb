@@ -1,13 +1,31 @@
 # frozen_string_literal: true
 
 require "rooibos"
-require "rooibos/welcome"
+require_relative "sw/character"
+require_relative "sw/vehicle"
+require_relative "sw/collection"
+require_relative "sw/loaded"
+require_relative "sw/load"
+require_relative "sw/load/mapper"
+require_relative "sw/characters"
 
-# To get started, replace the following lines with your own code
-# and remove the `require "rooibos/welcome"` line from above
+# The Star Wars Character Datapad.
 module Sw
-  Model  = Rooibos::Welcome::Model
-  View   = Rooibos::Welcome::View
-  Update = Rooibos::Welcome::Update
-  Init   = Rooibos::Welcome::Init
+  include Rooibos::Router
+
+  API_URL = "https://swapi.info/api"
+
+  Model = Data.define(:characters)
+
+  Init = -> { [Model.new(characters: Collection.new([])), Load.new(url: ENV.fetch("SW_API_URL", API_URL))] }
+
+  View = -> (model, tui) { Characters::View.call(model.characters, tui) }
+
+  action :quit, -> { Rooibos::Command.exit }
+
+  receive_events :ctrl_c, :quit
+
+  receive_instances_of Loaded, -> (message, model) { model.with(characters: message.characters) }
+
+  Update = from_router
 end
