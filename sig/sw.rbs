@@ -100,6 +100,7 @@ module Sw
 
   module Vehicles
     ValueSpan: ^(Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
+    ValuePair: ^(Value, Value, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
     Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end

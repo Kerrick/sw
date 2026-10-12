@@ -18,7 +18,7 @@ panel's story binds its own key.
 - [x] Luke's vehicles: Snowspeeder and Imperial Speeder Bike, with model, manufacturer, class, crew, and passengers
 - [x] A vehicle's pilots link back, and both directions agree
 - [x] Passengers `"unknown"`
-- [ ] Any unknown field reads dimmed (the Emergency Firespeeder's manufacturer)
+- [x] Any unknown field reads dimmed (the Emergency Firespeeder's manufacturer)
 - [ ] A character who pilots no vehicle sees an empty state
 - [ ] `6`, Tab, and Shift-Tab focus Vehicles
 - [ ] The list's keys work only while Characters has focus

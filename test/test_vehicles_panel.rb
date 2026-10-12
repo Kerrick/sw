@@ -47,6 +47,15 @@ class TestVehiclesPanel < Minitest::Test
     end
   end
 
+  def test_the_emergency_firespeeder_manufacturer_is_dimmed_as_unknown
+    with_rendered(Sw::Vehicles::View.call(Sw::Collection.new([emergency_firespeeder]), tui)) do
+      y = buffer_content.index { |line| line.include?("Fire suppression speeder") }
+
+      refute_nil y, "Expected the Firespeeder's model and manufacturer on screen"
+      assert_dim(buffer_content[y].index("unknown"), y)
+    end
+  end
+
   private def emergency_firespeeder
     Sw::Vehicle.new(
       name: Sw::Value.new("Emergency Firespeeder"), model: Sw::Value.new("Fire suppression speeder"), manufacturer: Sw::Value.new("unknown"),
