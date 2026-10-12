@@ -10,7 +10,9 @@ error-free.
 
 - [x] A first launch without a network shows the reason on an error screen
 - [x] A loading screen while the download runs
-- [ ] An HTTP error status shows a meaningful error with a retry key
+- [x] An HTTP error status on the root shows a meaningful error with a retry key
+- [x] An HTTP error status on a collection shows a meaningful error with a retry key
+- [x] A network error on a collection shows a meaningful error with a retry key
 - [ ] A malformed JSON response shows a meaningful error with a retry key
 - [ ] A timeout or cancellation (a `nil` message) is handled apart from HTTP errors
 - [x] Retry downloads again

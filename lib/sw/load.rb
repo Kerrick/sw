@@ -19,19 +19,23 @@ module Sw
 
     def call(out, token)
       root = out.source(Command.http(:get, url, :root), token)
-      return out.put(Failed.new(reason: root.error)) if root.error?
+      return report_failure(out, root, url) unless root.success?
 
-      bodies = crawl(out, token, root)
+      links = mapper.links(root.body)
+      fetches = links.map { |name, link| Command.http(:get, link, name) }
+      responses = out.source(Command.all(:collections, fetches), token).results
+      refused = responses.find { |response| !response.success? }
+      return report_failure(out, refused, links.fetch(refused.envelope)) if refused
+
+      bodies = responses.to_h { |response| [response.envelope, response.body] }
       out.put(Finished.new(
         characters: mapper.characters(bodies.fetch(:people)),
         vehicles: mapper.vehicles(bodies.fetch(:vehicles))
       ))
     end
 
-    private def crawl(out, token, root)
-      fetches = mapper.links(root.body).map { |name, link| Command.http(:get, link, name) }
-      collections = out.source(Command.all(:collections, fetches), token)
-      collections.results.to_h { |response| [response.envelope, response.body] }
+    private def report_failure(out, response, from)
+      out.put(Failed.new(reason: (response.error || "HTTP #{response.status} from #{from}").freeze))
     end
 
     private def mapper = Mapper.new

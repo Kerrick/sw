@@ -10,10 +10,28 @@ class FixtureServer
 
   def initialize
     @server = TCPServer.new("127.0.0.1", 0)
+    @refused = []
+    @dropped = []
     @thread = Thread.new { serve }
   end
 
   def url = "http://127.0.0.1:#{@server.addr[1]}/api"
+
+  # Answers 404 for the path while the block runs, as if the API had lost it.
+  def refusing(path)
+    @refused << path
+    yield
+  ensure
+    @refused.delete(path)
+  end
+
+  # Closes the connection without answering the path while the block runs, as a dying network would.
+  def dropping(path)
+    @dropped << path
+    yield
+  ensure
+    @dropped.delete(path)
+  end
 
   def close
     @server.close
@@ -32,8 +50,11 @@ class FixtureServer
   private def respond(client)
     path = client.gets.split[1]
     nil until client.gets.chomp.empty?
+    return if @dropped.include?(path)
+
     file = File.join(FIXTURES, "#{path}.json")
-    client.print(File.file?(file) ? ok(File.read(file).gsub(RECORDED_URL, url)) : not_found)
+    served = File.file?(file) && !@refused.include?(path)
+    client.print(served ? ok(File.read(file).gsub(RECORDED_URL, url)) : not_found)
   ensure
     client.close
   end

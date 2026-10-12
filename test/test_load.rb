@@ -25,6 +25,30 @@ class TestLoad < Minitest::Test
     assert_includes failed.reason, URI(url).authority
   end
 
+  def test_a_404_from_the_root_fails_naming_the_status_and_the_url
+    url = "#{FIXTURE_SERVER.url}/missing"
+    failed = delivered(url)
+
+    assert_equal "Sw::Load::Failed", failed.class.name
+    assert_includes failed.reason, "404"
+    assert_includes failed.reason, url
+  end
+
+  def test_a_404_from_the_vehicles_collection_fails_naming_the_status_and_the_url
+    failed = FIXTURE_SERVER.refusing("/api/vehicles") { delivered(FIXTURE_SERVER.url) }
+
+    assert_equal "Sw::Load::Failed", failed.class.name
+    assert_includes failed.reason, "404"
+    assert_includes failed.reason, "#{FIXTURE_SERVER.url}/vehicles"
+  end
+
+  def test_a_dropped_connection_on_the_vehicles_collection_fails
+    failed = FIXTURE_SERVER.dropping("/api/vehicles") { delivered(FIXTURE_SERVER.url) }
+
+    assert_equal "Sw::Load::Failed", failed.class.name
+    refute_empty failed.reason
+  end
+
   private def finished = delivered(FIXTURE_SERVER.url)
 
   private def delivered(url)
