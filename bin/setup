@@ -3,6 +3,16 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
-bundle install
+if ! command -v mise >/dev/null 2>&1; then
+  echo "mise isn't installed. Please install it to continue: https://mise.jdx.dev" >&2
+  exit 1
+fi
 
-# Do any other automated setup that you need to do here
+mise install
+mise x -- gem install bundler:4.0.22
+
+if [ "${CI:-}" = "true" ]; then
+  mise x -- bundle config set --local frozen 'true'
+fi
+
+mise x -- bundle install
