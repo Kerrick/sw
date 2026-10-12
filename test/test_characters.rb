@@ -55,6 +55,38 @@ class TestCharacters < Minitest::Test
     assert_equal luke, moved(:move_last, three_characters).selected
   end
 
+  def test_filtering_by_sky_matches_only_luke_skywalker
+    sky = Sw::Search::QueryChanged.new(query: "sky")
+
+    filtered, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: sky), three_characters)
+
+    assert_equal [luke], filtered.matches.to_a
+  end
+
+  def test_a_search_for_sky_moves_the_highlight_from_ackbar_to_luke
+    sky = Sw::Search::QueryChanged.new(query: "sky")
+
+    filtered, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: sky), three_characters)
+
+    assert_equal luke, filtered.selected
+  end
+
+  def test_moving_down_or_up_after_a_search_for_grogu_highlights_no_one
+    grogu = Sw::Search::QueryChanged.new(query: "Grogu")
+    no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)
+
+    %i[move_down move_up].each { |intent| assert_nil moved(intent, no_one).selected, "Expected #{intent} to highlight no one" }
+  end
+
+  def test_a_search_for_sky_lists_luke_skywalker_without_ackbar
+    searched_for_sky = three_characters(selected: luke).with(query: "sky")
+
+    with_rendered(Sw::Characters::View.call(searched_for_sky, tui)) do
+      refute_nil text_position("Luke Skywalker")
+      assert_nil text_position("Ackbar")
+    end
+  end
+
   private def moved(intent, model)
     model, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: intent, event: nil), model)
     model

@@ -8,8 +8,9 @@ module Sw
     attr_reader failure: String?
     attr_reader loading: bool
     attr_reader focus: Symbol
-    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol) -> void
-    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol) -> Model
+    attr_reader search: Search::Model
+    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> void
+    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> Model
     def loading?: () -> bool
   end
 
@@ -88,8 +89,10 @@ module Sw
     class Model < Data
       attr_reader collection: Collection[Character]
       attr_reader selected: Character?
-      def initialize: (collection: Collection[Character], selected: Character?) -> void
-      def with: (?collection: Collection[Character], ?selected: Character?) -> Model
+      attr_reader query: String
+      def initialize: (collection: Collection[Character], selected: Character?, ?query: String) -> void
+      def with: (?collection: Collection[Character], ?selected: Character?, ?query: String) -> Model
+      def matches: () -> Collection[Character]
     end
 
     Init: ^(characters: Collection[Character]) -> Model
@@ -98,8 +101,26 @@ module Sw
     View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> RatatuiRuby::Widgets::List
   end
 
+  module Search
+    class Model < Data
+      attr_reader query: String
+      def initialize: (query: String) -> void
+      def with: (?query: String) -> Model
+    end
+
+    class QueryChanged < Data
+      include Rooibos::Message::Predicates
+      attr_reader query: String
+      def initialize: (query: String) -> void
+    end
+
+    Init: ^() -> Model
+    Typed: ^(Rooibos::message, Model) -> bool
+    Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
+  end
+
   module SelectedCharacter
-    View: ^(Character, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+    View: ^(Character?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 
   module Films
@@ -117,6 +138,6 @@ module Sw
     Vehicle: ^(Sw::Vehicle, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     Stack: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
     Empty: ^(RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
-    View: ^(Collection[Sw::Vehicle], RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+    View: ^(Collection[Sw::Vehicle]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 end

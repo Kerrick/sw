@@ -5,7 +5,14 @@ module Sw
   module Characters
     include Rooibos::Router
 
-    Model = Data.define(:collection, :selected)
+    Model = Data.define(:collection, :selected, :query) do
+      def initialize(collection:, selected:, query: "") = super
+
+      # The characters whose names contain the query, ignoring case.
+      def matches
+        Collection.new(collection.select { |character| character.name.to_s.downcase.include?(query.downcase) })
+      end
+    end
 
     Init = -> (characters:) {
       sorted = Collection.new(characters.sort_by(&:name))
@@ -14,6 +21,8 @@ module Sw
 
     # Moves the selection one step by an operator (:+ or :-) and stops at either end.
     Select = -> (operator, model) {
+      return model unless model.selected
+
       records = model.collection.to_a
       new_index = records.index(model.selected).public_send(operator, 1)
       model.with(selected: records[new_index.clamp(0, records.length - 1)])
@@ -21,6 +30,11 @@ module Sw
 
     receive_routed :move_down, -> (_, model) { Select.call(:+, model) }
     receive_routed :move_up, -> (_, model) { Select.call(:-, model) }
+
+    receive_routed :filter, -> (message, model) {
+      filtered = model.with(query: message.event.query)
+      filtered.with(selected: filtered.matches.first)
+    }
 
     receive_routed :move_first, -> (_, model) { model.with(selected: model.collection.first) }
 
@@ -33,9 +47,10 @@ module Sw
 
     # A List takes only strings and text, unlike a block title, so each name's Value becomes a String here.
     View = -> (model, tui, focused: false) {
+      matches = model.matches
       tui.list(
-        items: model.collection.map { |character| character.name.to_s },
-        selected_index: model.collection.find_index(model.selected),
+        items: matches.map { |character| character.name.to_s },
+        selected_index: matches.find_index(model.selected),
         highlight_style: tui.style(modifiers: [:reversed]),
         block: tui.block(title: "Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))
       )

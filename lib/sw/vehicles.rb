@@ -47,7 +47,10 @@ module Sw
       )
     }
 
+    # Without a record to show, as when no character matches a search, the panel is an empty box.
     View = -> (vehicles, tui) {
+      return tui.block(title: "Vehicles", borders: [:all]) unless vehicles
+
       tui.block(title: "Vehicles", borders: [:all], children: [vehicles.any? ? Stack.(vehicles, tui) : Empty.(tui)])
     }
   end

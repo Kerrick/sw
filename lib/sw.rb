@@ -8,6 +8,7 @@ require_relative "sw/collection"
 require_relative "sw/load"
 require_relative "sw/load/mapper"
 require_relative "sw/characters"
+require_relative "sw/search"
 require_relative "sw/selected_character"
 require_relative "sw/films"
 require_relative "sw/starships"
@@ -19,8 +20,8 @@ module Sw
 
   API_URL = "https://swapi.info/api"
 
-  Model = Data.define(:characters, :failure, :loading, :focus) do
-    def initialize(characters:, failure: nil, loading: false, focus: :characters) = super
+  Model = Data.define(:characters, :failure, :loading, :focus, :search) do
+    def initialize(characters:, failure: nil, loading: false, focus: :characters, search: Search::Init.call) = super
 
     alias_method :loading?, :loading
   end
@@ -121,9 +122,9 @@ module Sw
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
-          children: [Starships::View.call(tui), Vehicles::View.call(selected.vehicles, tui)]
+          children: [Starships::View.call(tui), Vehicles::View.call(selected&.vehicles, tui)]
         ),
-        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: Characters::Keys),
+        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? Characters::Keys : []),
       ]
     )
   }
@@ -136,12 +137,25 @@ module Sw
   receive_events %i[r f5], :reload
 
   route :characters, to: Characters
+  route :search, to: Search
+
+  forward_instances_of Search::QueryChanged, to: :characters, as: :filter
 
   only when: -> (_, model) { model.characters } do
-    forward_events %i[down j], to: :characters, as: :move_down
-    forward_events %i[up k], to: :characters, as: :move_up
-    forward_events %i[home g], to: :characters, as: :move_first
-    forward_events %i[end shift_G], to: :characters, as: :move_last
+    receive_events %i[1 /], -> (_, model) { model.with(focus: :search) }
+    receive_events :"2", -> (_, model) { model.with(focus: :characters) }
+
+    only when: -> (_, model) { model.focus == :characters } do
+      forward_events %i[down j], to: :characters, as: :move_down
+      forward_events %i[up k], to: :characters, as: :move_up
+      forward_events %i[home g], to: :characters, as: :move_first
+      forward_events %i[end shift_G], to: :characters, as: :move_last
+    end
+
+    # Search takes every keystroke nothing above answered.
+    only when: -> (_, model) { model.focus == :search } do
+      otherwise route_to: :search
+    end
   end
 
   receive_instances_of Load::Finished, -> (message, model) {

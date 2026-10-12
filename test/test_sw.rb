@@ -60,6 +60,23 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_status_line_hides_the_list_keys_while_search_has_focus
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    with_rendered(Sw::View.call(searching, tui)) do
+      %w[k/j g/G].each { |keys| assert_nil text_position(keys), "Expected #{keys} hidden" }
+    end
+  end
+
+  def test_a_search_for_grogu_still_draws_the_screen
+    grogu = Sw::Search::QueryChanged.new(query: "Grogu")
+    no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)
+
+    with_rendered(Sw::View.call(Sw::Model.new(characters: no_one, focus: :search), tui)) do
+      refute_nil text_position("Characters")
+    end
+  end
+
   def test_the_screen_tells_the_user_the_download_is_under_way
     model, = Sw::Init.call
 
@@ -191,6 +208,31 @@ class TestSw < Minitest::Test
 
       assert_equal luke, model.characters.selected, "Expected #{key} to select Luke"
     end
+  end
+
+  def test_slash_and_1_focus_search
+    ["/", "1"].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters))
+
+      assert_equal :search, model.focus, "Expected #{key} to focus Search"
+    end
+  end
+
+  def test_slash_does_nothing_while_the_download_is_under_way
+    loading, = Sw::Init.call
+
+    model, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "/"), loading)
+
+    assert_equal loading, model
+    assert_nil command
+  end
+
+  def test_the_down_arrow_leaves_the_highlight_on_ackbar_while_search_has_focus
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "down"), searching)
+
+    assert_equal ackbar, model.characters.selected
   end
 
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way
