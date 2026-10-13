@@ -27,6 +27,7 @@ module Sw
   # it as public.
   module DomainObject
     def same_as?: (DomainObject other) -> bool
+    def inspect: () -> String
   end
 
   class Character < Data

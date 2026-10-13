@@ -9,5 +9,9 @@ module Sw
     def self.included(domain_class) = domain_class.class_eval { protected :url }
 
     def same_as?(other) = other.is_a?(self.class) && url == other.url
+
+    # Data's own inspect follows every link through a cyclic graph, so a failing test would print the whole galaxy.
+    # Every kind's first member names it.
+    def inspect = "#<#{self.class} #{public_send(self.class.members.first)}>"
   end
 end
