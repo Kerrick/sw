@@ -101,7 +101,9 @@ module Sw
     Init: ^(characters: Collection[Character]) -> Model
     Select: ^(Symbol, Model) -> Model
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
-    View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> RatatuiRuby::Widgets::List
+    EMPTY: String
+    Empty: ^(String, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Paragraph
+    View: ^(Model, RatatuiRuby::TUI, ?focused: bool) -> (RatatuiRuby::Widgets::List | RatatuiRuby::Widgets::Block)
   end
 
   module Search

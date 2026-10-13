@@ -116,6 +116,16 @@ class TestCharacters < Minitest::Test
     end
   end
 
+  def test_a_search_for_grogu_says_dimly_that_nothing_matches_grogu_in_dim_yellow
+    grogu = Sw::Search::QueryChanged.new(query: "Grogu")
+    no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)
+
+    with_rendered(Sw::Characters::View.call(no_one, tui)) do
+      assert_text_style Sw::Characters::EMPTY, modifiers: [:dim]
+      assert_text_style "Grogu", fg: :yellow, modifiers: [:dim]
+    end
+  end
+
   private def moved(intent, model)
     model, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: intent, event: nil), model)
     model

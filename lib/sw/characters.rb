@@ -44,14 +44,30 @@ module Sw
 
     Update = from_router
 
+    # What the panel says, above the query, when no character matches it.
+    EMPTY = "No match for"
+
+    Empty = -> (query, tui) {
+      tui.paragraph(
+        text: [
+          tui.text_line(spans: [tui.text_span(content: EMPTY, style: tui.style(modifiers: [:dim]))]),
+          tui.text_line(spans: [tui.text_span(content: query, style: tui.style(fg: :yellow, modifiers: [:dim]))]),
+        ],
+        wrap: true
+      )
+    }
+
     # A List takes only strings and text, unlike a block title, so each name's Value becomes a String here.
     View = -> (model, tui, focused: false) {
       matches = model.matches
+      block = tui.block(title: "Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))
+      return block.with(children: [Empty.(model.query, tui)]) if matches.none?
+
       tui.list(
         items: matches.map { |character| character.name.to_s },
         selected_index: matches.find_index(model.selected),
         highlight_style: tui.style(modifiers: [:reversed]),
-        block: tui.block(title: "Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))
+        block:
       )
     }
   end
