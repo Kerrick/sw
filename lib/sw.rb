@@ -26,6 +26,12 @@ module Sw
     alias_method :loading?, :loading
   end
 
+  # The panels that take focus, in reading order. Tab moves through them.
+  FocusOrder = %i[search characters].freeze
+
+  # Moves focus forward (1) or back (-1) through FocusOrder, wrapping around at either end.
+  FocusStep = -> (model, step) { model.with(focus: FocusOrder[(FocusOrder.index(model.focus) + step) % FocusOrder.size]) }
+
   Download = -> { Load.new(url: ENV.fetch("SW_API_URL", API_URL)) }
 
   Init = -> { [Model.new(characters: nil, loading: true), Download.call] }
@@ -144,6 +150,8 @@ module Sw
   only when: -> (_, model) { model.characters } do
     receive_events %i[1 /], -> (_, model) { model.with(focus: :search) }
     receive_events :"2", -> (_, model) { model.with(focus: :characters) }
+    receive_events :tab, -> (_, model) { FocusStep.(model, 1) }
+    receive_events %i[back_tab shift_back_tab], -> (_, model) { FocusStep.(model, -1) }
 
     # Esc clears the search from either panel and lands on the list.
     observe_events :esc, -> (_, model) { model.with(focus: :characters) }

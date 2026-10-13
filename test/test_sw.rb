@@ -245,6 +245,30 @@ class TestSw < Minitest::Test
     assert_equal skywalkers, model.characters
   end
 
+  def test_tab_from_a_search_for_sky_moves_on_to_the_list_still_showing_the_skywalkers
+    skywalkers = three_characters(selected: luke).with(query: "sky")
+    searching = Sw::Model.new(characters: skywalkers, focus: :search)
+
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "tab"), searching)
+
+    assert_equal :characters, model.focus
+    assert_equal skywalkers, model.characters
+  end
+
+  def test_tab_from_the_list_wraps_around_to_search
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "tab"), Sw::Model.new(characters: three_characters))
+
+    assert_equal :search, model.focus
+  end
+
+  def test_shift_tab_from_the_list_moves_back_to_search
+    [{ code: "back_tab" }, { code: "back_tab", modifiers: ["shift"] }].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(characters: three_characters))
+
+      assert_equal :search, model.focus, "Expected #{key} to focus Search"
+    end
+  end
+
   def test_esc_from_a_search_for_sky_lands_on_the_list_with_every_character_back
     skywalkers = three_characters(selected: luke).with(query: "sky")
     searching = Sw::Model.new(characters: skywalkers, focus: :search, search: Sw::Search::Init.call.with(query: "sky"))
