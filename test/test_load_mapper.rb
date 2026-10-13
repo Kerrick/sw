@@ -39,6 +39,12 @@ class TestLoadMapper < Minitest::Test
     assert_equal "Tatooine", luke.homeworld.name.to_s
   end
 
+  def test_polis_massa_has_an_unknown_diameter_rather_than_none
+    polis_massa = records.fetch(:planets).find { |planet| planet.name.to_s == "Polis Massa" }
+
+    assert_predicate polis_massa.diameter, :unknown?
+  end
+
   def test_the_snowspeeder_is_piloted_by_luke_skywalker_and_wedge_antilles
     snowspeeder = records.fetch(:characters).first.vehicles.first
 

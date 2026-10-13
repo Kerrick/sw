@@ -128,6 +128,7 @@ class Collection[T] < Data
       COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Starship) | singleton(Film) | singleton(Planet)]]
       LINKS: Array[Symbol]
       NUMERALS: Array[Symbol]
+      NEVER_ZERO: Array[Symbol]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
       def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Starship | Film | Planet]]

@@ -27,6 +27,9 @@ module Sw
       # Which members the API sends as numbers but that represent Roman numerals.
       NUMERALS = %i[episode_id].freeze
 
+      # Which members can't be zero, so the API's "0" there means it doesn't know. Planets aren't black holes.
+      NEVER_ZERO = %i[diameter].freeze
+
       def links(root)
         JSON.parse(root, freeze: true).transform_keys(&:to_sym)
       end
@@ -64,11 +67,12 @@ module Sw
         end
 
         # Every array in the API is a list of links, a LINKS field is one link, and a NUMERALS field is a RomanNumeral.
-        # Every other field is a Value, which may be unknown.
+        # Every other field is a Value, which may be unknown, as a NEVER_ZERO field's "0" is.
         private def field(member, value)
           return links_to(value) if value.is_a?(Array)
           return @by_url.fetch(value) if LINKS.include?(member)
           return RomanNumeral.new(value) if NUMERALS.include?(member)
+          return Value.new("unknown") if NEVER_ZERO.include?(member) && value == "0"
 
           Value.new(value)
         end

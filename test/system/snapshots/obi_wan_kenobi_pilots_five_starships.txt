@@ -7,7 +7,7 @@ k/j: Prev/Next  g/G: First/Last  esc: Clear search  r: Reload  q: Quit          
 │                         ││                                                             │Terrain:         grass      ││
 │                         ││                                                             │Climate:         temperate  ││
 │                         ││                                                             │Surface water:   unknown    ││
-│                         ││                                                             │Diameter:        0 km       ││
+│                         ││                                                             │Diameter:        unknown    ││
 │                         ││                                                             │Rotation period: unknown    ││
 │                         ││                                                             │Orbital period:  unknown    ││
 │                         ││                                                             │Gravity:         1 standard ││
