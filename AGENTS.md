@@ -119,24 +119,13 @@ code. Every film has an episode number. Don't build for films without one
 model free of character-centric assumptions, so future screens (one
 vehicle, one film) can reuse it and the panel modules.
 
-Quirks every parser must handle. Each is an equivalence class with a test:
+Two quirks hold for every parser. Each is an equivalence class with a test:
 
 - `"unknown"` = missing. `"n/a"` = not applicable (droid hair).
   `"none"` is a real answer (bald).
-- Numbers: `"172"`, `"78.2"`, `"1,358"` (Jabba), `"843,342"`; ranges like
-  crew `"30-165"`; `"unknown"`.
-- Multi-valued colors: `"auburn, grey"`.
-- Birth years: `"19BBY"`, `"41.9BBY"`, `"unknown"`.
-- `species: []` for 32 of 82 people, including Luke; species/1 (Human) does
-  not list him. Most of the 32 are human, but not all (R4-P17 is a droid,
-  Sly Moore an Umbaran). Show an empty species as unknown and never infer
-  one; it's a data problem to fix at the source.
-- A planet literally named `"unknown"` (planets/28) is the homeworld of Yoda,
-  IG-88, and others. Treat it as an unknown homeworld, not a place.
-- A planet's diameter, rotation period, or orbital period of `"0"` means
-  unknown (Polis Massa, Stewjon, planets/28, and others); planets aren't
-  black holes.
 - Links are URLs; match them with or without a trailing `/`.
+
+A quirk of one kind of data belongs to the issue that handles it, not here.
 
 ## Architecture
 
@@ -235,7 +224,8 @@ The approach comes from five books. Apply them; don't cite them in code.
   (`test_luke_appears_in_episodes_three_through_six`), so the suite reads as
   the specification. Name a test in a product owner's words, with a subject
   that can do the verb: `test_the_app_knows_why_the_download_failed`, not
-  `test_a_failed_download_keeps_the_failure`. A test named for an example
+  `test_a_failed_download_keeps_the_failure`. Leave plumbing, like the order
+  a source lists things in, out of the name. A test named for an example
   shows that example in its body, through an explaining variable:
   `emergency_firespeeder_passengers = Sw::Value.new("unknown")`.
 - Shore, *The Art of Agile Development* (2nd ed.): stories are small
@@ -267,7 +257,9 @@ The approach comes from five books. Apply them; don't cite them in code.
 - Don't test non-behavior.
 - Don't repeat the app's logic in a test, as by looping over the constant
   under test. Name what you expect. Keys are behavior, not copy, so name
-  them.
+  them. Nor assert that a View shows what a method returns, as `film.episode`:
+  that tests the call, not the data. Assert a literal from the real data, and
+  let the domain object's own test pin its wording.
 - Don't unit-test framework wiring: Router dispatch, `Data#with`, or
   generated placeholders. The end-to-end test covers it.
 - Test custom commands through the real runtime with `inject_sync`, against
