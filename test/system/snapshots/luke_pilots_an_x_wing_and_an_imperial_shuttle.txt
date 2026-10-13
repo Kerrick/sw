@@ -1,0 +1,40 @@
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │                         │
+k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
+┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
+│  Greedo                 ││                                                                                           │
+│  Gregar Typho           ││                                                                                           │
+│  Grievous               ││                                                                                           │
+│  Han Solo               ││                                                                                           │
+│  IG-88                  ││                                                                                           │
+│  Jabba Desilijic Tiure  ││                                                                                           │
+│  Jango Fett             ││                                                                                           │
+│  Jar Jar Binks          ││                                                                                           │
+│  Jek Tono Porkins       ││                                                                                           │
+│  Jocasta Nu             ││                                                                                           │
+│  Ki-Adi-Mundi           ││                                                                                           │
+│  Kit Fisto              ││                                                                                           │
+│  Lama Su                ││                                                                                           │
+│  Lando Calrissian       ││                                                                                           │
+│  Leia Organa            ││                                                                                           │
+│  Lobot                  ││                                                                                           │
+│> Luke Skywalker         ││                                                                                           │
+└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
+┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
+│      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
+│                                                                                                                      │
+│                                                                                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
+│X-wing                 Starfighter                        ││Snowspeeder            airspeeder                         │
+│Crew / Passengers:     1 / 0                              ││Crew / Passengers:     2 / 0                              │
+│Model / Manufacturer:  T-65 X-wing / Incom Corporation    ││Model / Manufacturer:  t-47 airspeeder / Incom corporation│
+│──────────────────────────────────────────────────────────││──────────────────────────────────────────────────────────│
+│Imperial shuttle       Armed government transport         ││Imperial Speeder Bike  speeder                            │
+│Crew / Passengers:     6 / 20                             ││Crew / Passengers:     1 / 1                              │
+│Model / Manufacturer:  Lambda-class T-4a shuttle / Sienar ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulso│
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘

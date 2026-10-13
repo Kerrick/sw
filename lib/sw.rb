@@ -4,6 +4,7 @@ require "rooibos"
 require_relative "sw/character"
 require_relative "sw/value"
 require_relative "sw/vehicle"
+require_relative "sw/starship"
 require_relative "sw/film"
 require_relative "sw/collection"
 require_relative "sw/load"
@@ -148,7 +149,7 @@ module Sw
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
-          children: [Starships::View.call(tui), Vehicles::View.call(selected&.vehicles, tui)]
+          children: [Starships::View.call(selected&.starships, tui), Vehicles::View.call(selected&.vehicles, tui)]
         ),
       ]
     )

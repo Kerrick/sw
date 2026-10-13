@@ -366,7 +366,7 @@ class TestSw < Minitest::Test
 
   def test_a_reload_after_searching_for_sky_still_shows_only_luke
     searched_for_sky = Sw::Model.new(films:, characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
-    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), films: Sw::Collection.new([]))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]), films: Sw::Collection.new([]))
 
     model, = Sw::Update.call(reloaded, searched_for_sky)
 
@@ -375,7 +375,7 @@ class TestSw < Minitest::Test
 
   def test_a_reload_after_searching_for_sky_highlights_luke_not_the_hidden_ackbar
     searched_for_sky = Sw::Model.new(films:, characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
-    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), films: Sw::Collection.new([]))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]), films: Sw::Collection.new([]))
 
     model, = Sw::Update.call(reloaded, searched_for_sky)
 
@@ -384,7 +384,7 @@ class TestSw < Minitest::Test
 
   def test_the_app_keeps_the_films_the_download_delivered
     downloaded = Sw::Load::Finished.new(
-      characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]),
+      characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]),
       films: Sw::Collection.new([a_new_hope, revenge_of_the_sith])
     )
     loading, = Sw::Init.call

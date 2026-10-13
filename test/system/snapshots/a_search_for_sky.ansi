@@ -27,14 +27,14 @@
 [0m│                                                                                                                      │[0m
 [0m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m
 [0m┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐[0m
-[0m│                                                          ││[0m[1mZephyr-G swoop bike[0m    repulsorcraft                      │[0m
-[0m│                                                          ││Crew / Passengers:     1 / 1                              │[0m
-[0m│                                                          ││Model / Manufacturer:  Zephyr-G swoop bike / Mobquet Swoop│[0m
-[0m│                                                          ││──────────────────────────────────────────────────────────│[0m
-[0m│                                                          ││[0m[1mXJ-6 airspeeder[0m        airspeeder                         │[0m
-[0m│                                                          ││Crew / Passengers:     1 / 1                              │[0m
-[0m│                                                          ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│[0m
-[0m│                                                          ││                                                          │[0m
-[0m│                                                          ││                                                          │[0m
-[0m│                                                          ││                                                          │[0m
+[0m│[0m[1mNaboo fighter[0m          Starfighter                        ││[0m[1mZephyr-G swoop bike[0m    repulsorcraft                      │[0m
+[0m│Crew / Passengers:     1 / 0                              ││Crew / Passengers:     1 / 1                              │[0m
+[0m│Model / Manufacturer:  N-1 starfighter / Theed Palace Spac││Model / Manufacturer:  Zephyr-G swoop bike / Mobquet Swoop│[0m
+[0m│──────────────────────────────────────────────────────────││──────────────────────────────────────────────────────────│[0m
+[0m│[0m[1mTrade Federation cruis[0m capital ship                       ││[0m[1mXJ-6 airspeeder[0m        airspeeder                         │[0m
+[0m│Crew / Passengers:     600 / 48,247                       ││Crew / Passengers:     1 / 1                              │[0m
+[0m│Model / Manufacturer:  Providence-class carrier/destroyer ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│[0m
+[0m│──────────────────────────────────────────────────────────││                                                          │[0m
+[0m│[0m[1mJedi Interceptor[0m       starfighter                        ││                                                          │[0m
+[0m│Crew / Passengers:     1 / 0                              ││                                                          │[0m
 [0m└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘[0m

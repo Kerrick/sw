@@ -11,7 +11,7 @@ module Sw
     class Mapper
       # Each API collection, with the name the app uses for it and the class of its records. A new collection needs
       # only an entry here and a Data class.
-      COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle], films: [:films, Film] }.freeze
+      COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle], starships: [:starships, Starship], films: [:films, Film] }.freeze
 
       # Which members the API sends as numbers but that represent Roman numerals.
       NUMERALS = %i[episode_id].freeze

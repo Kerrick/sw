@@ -27,14 +27,14 @@ enter: Finish search  esc: Clear search                                         
 │                                                                                                                      │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
-│                                                          ││Zephyr-G swoop bike    repulsorcraft                      │
-│                                                          ││Crew / Passengers:     1 / 1                              │
-│                                                          ││Model / Manufacturer:  Zephyr-G swoop bike / Mobquet Swoop│
-│                                                          ││──────────────────────────────────────────────────────────│
-│                                                          ││XJ-6 airspeeder        airspeeder                         │
-│                                                          ││Crew / Passengers:     1 / 1                              │
-│                                                          ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│
-│                                                          ││                                                          │
-│                                                          ││                                                          │
-│                                                          ││                                                          │
+│Naboo fighter          Starfighter                        ││Zephyr-G swoop bike    repulsorcraft                      │
+│Crew / Passengers:     1 / 0                              ││Crew / Passengers:     1 / 1                              │
+│Model / Manufacturer:  N-1 starfighter / Theed Palace Spac││Model / Manufacturer:  Zephyr-G swoop bike / Mobquet Swoop│
+│──────────────────────────────────────────────────────────││──────────────────────────────────────────────────────────│
+│Trade Federation cruis capital ship                       ││XJ-6 airspeeder        airspeeder                         │
+│Crew / Passengers:     600 / 48,247                       ││Crew / Passengers:     1 / 1                              │
+│Model / Manufacturer:  Providence-class carrier/destroyer ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│
+│──────────────────────────────────────────────────────────││                                                          │
+│Jedi Interceptor       starfighter                        ││                                                          │
+│Crew / Passengers:     1 / 0                              ││                                                          │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘

@@ -29,8 +29,9 @@ module Sw
   class Character < Data
     attr_reader name: Value
     attr_reader vehicles: Collection[Vehicle]
+    attr_reader starships: Collection[Starship]
     attr_reader films: Collection[Film]
-    def initialize: (name: Value, ?vehicles: Collection[Vehicle], ?films: Collection[Film]) -> void
+    def initialize: (name: Value, ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
   end
 
   class Film < Data
@@ -62,7 +63,18 @@ module Sw
     def initialize: (name: Value, model: Value, manufacturer: Value, vehicle_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
   end
 
-  class Collection[T] < Data
+class Starship < Data
+  attr_reader name: Value
+  attr_reader model: Value
+  attr_reader manufacturer: Value
+  attr_reader starship_class: Value
+  attr_reader crew: Value
+  attr_reader passengers: Value
+  attr_reader pilots: Collection[Character]
+  def initialize: (name: Value, model: Value, manufacturer: Value, starship_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
+end
+
+class Collection[T] < Data
     include Enumerable[T]
     def initialize: (Array[T] items) -> void
     def each: () { (T) -> void } -> Array[T]
@@ -84,8 +96,9 @@ module Sw
       include Rooibos::Message::Predicates
       attr_reader characters: Collection[Character]
       attr_reader vehicles: Collection[Vehicle]
+      attr_reader starships: Collection[Starship]
       attr_reader films: Collection[Film]
-      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], films: Collection[Film]) -> void
+      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], starships: Collection[Starship], films: Collection[Film]) -> void
     end
 
     class Failed < Data
@@ -95,11 +108,11 @@ module Sw
     end
 
     class Mapper
-      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Film)]]
+      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Starship) | singleton(Film)]]
       NUMERALS: Array[Symbol]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
-      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Film]]
+      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Starship | Film]]
     end
   end
 
@@ -152,7 +165,9 @@ module Sw
   end
 
   module Starships
-    View: ^(RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+    Starship: ^(Sw::Starship, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
+    Stack: ^(Collection[Sw::Starship], RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
+    View: ^(Collection[Sw::Starship]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 
   module Values

@@ -27,13 +27,13 @@
 [0m│                                                                                                                                                              │[0m
 [0m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m
 [0m┌Starships─────────────────────────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────────────────────────┐[0m
-[0m│                                                                              ││[0m[1mSnowspeeder[0m            airspeeder                                             │[0m
-[0m│                                                                              ││Crew / Passengers:     2 / 0                                                  │[0m
-[0m│                                                                              ││Model / Manufacturer:  t-47 airspeeder / Incom corporation                    │[0m
-[0m│                                                                              ││──────────────────────────────────────────────────────────────────────────────│[0m
-[0m│                                                                              ││[0m[1mImperial Speeder Bike[0m  speeder                                                │[0m
-[0m│                                                                              ││Crew / Passengers:     1 / 1                                                  │[0m
-[0m│                                                                              ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulsor Company           │[0m
+[0m│[0m[1mX-wing[0m                 Starfighter                                            ││[0m[1mSnowspeeder[0m            airspeeder                                             │[0m
+[0m│Crew / Passengers:     1 / 0                                                  ││Crew / Passengers:     2 / 0                                                  │[0m
+[0m│Model / Manufacturer:  T-65 X-wing / Incom Corporation                        ││Model / Manufacturer:  t-47 airspeeder / Incom corporation                    │[0m
+[0m│──────────────────────────────────────────────────────────────────────────────││──────────────────────────────────────────────────────────────────────────────│[0m
+[0m│[0m[1mImperial shuttle[0m       Armed government transport                             ││[0m[1mImperial Speeder Bike[0m  speeder                                                │[0m
+[0m│Crew / Passengers:     6 / 20                                                 ││Crew / Passengers:     1 / 1                                                  │[0m
+[0m│Model / Manufacturer:  Lambda-class T-4a shuttle / Sienar Fleet Systems       ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulsor Company           │[0m
 [0m│                                                                              ││                                                                              │[0m
 [0m│                                                                              ││                                                                              │[0m
 [0m│                                                                              ││                                                                              │[0m

@@ -6,6 +6,7 @@ class TestLoadMapper < Minitest::Test
   PEOPLE = File.read(File.join(FixtureServer::FIXTURES, "api/people.json")).freeze
   VEHICLES = File.read(File.join(FixtureServer::FIXTURES, "api/vehicles.json")).freeze
   FILMS = File.read(File.join(FixtureServer::FIXTURES, "api/films.json")).freeze
+  STARSHIPS = File.read(File.join(FixtureServer::FIXTURES, "api/starships.json")).freeze
 
   def test_the_first_person_is_luke_skywalker
     assert_equal "Luke Skywalker", records.fetch(:characters).first.name.to_s
@@ -23,6 +24,12 @@ class TestLoadMapper < Minitest::Test
     luke = records.fetch(:characters).first
 
     assert_equal ["Snowspeeder", "Imperial Speeder Bike"], luke.vehicles.map { |vehicle| vehicle.name.to_s }
+  end
+
+  def test_luke_pilots_the_x_wing_and_the_imperial_shuttle
+    luke = records.fetch(:characters).first
+
+    assert_equal ["X-wing", "Imperial shuttle"], luke.starships.map { |starship| starship.name.to_s }
   end
 
   def test_the_snowspeeder_is_piloted_by_luke_skywalker_and_wedge_antilles
@@ -105,6 +112,6 @@ class TestLoadMapper < Minitest::Test
 
   private def records
     mapper = Sw::Load::Mapper.new
-    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS))
+    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS), starships: mapper.parse(STARSHIPS))
   end
 end
