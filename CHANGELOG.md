@@ -11,6 +11,7 @@
 - Show the keys you can press under the title, with the list's keys first, dimmed so that status words like Loading and Error stand out.
 - Show the vehicles the highlighted character pilots in the Vehicles panel, each with its class, crew and passengers, model, and manufacturer, as the wireframe does.
 - Show every film in the Films panel, in episode order, dimming the ones the highlighted character isn't in.
+- Show each film's episode, such as Episode III, beneath its title.
 - Dim any value the data doesn't know, such as a vehicle's unknown passengers or manufacturer.
 - Say so in the Vehicles panel, dimmed, when the highlighted character pilots no vehicles.
 - Search the characters by name: press / or 1, then type or paste to narrow the list as you go. Say so when nothing matches.

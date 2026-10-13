@@ -8,4 +8,4 @@ films without one are out of scope (YAGNI).
 
 - [x] Luke's four films are lit and the other two dimmed, in episode order
 - [x] A film's characters link back, and both directions agree
-- [ ] Each film shows its episode beneath its title, as "Episode III"
+- [x] Each film shows its episode beneath its title, as "Episode III"

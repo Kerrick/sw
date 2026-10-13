@@ -4,8 +4,15 @@ module Sw
   # The panel that shows every film, lit for the ones its screen's subject appears in.
   module Films
     Column = -> (film, lit, tui) {
-      style = tui.style(modifiers: lit ? [:bold] : [:bold, :dim])
-      tui.paragraph(text: [tui.text_line(spans: [tui.text_span(content: film.title.to_s, style:)])], alignment: :center)
+      title_style = tui.style(modifiers: lit ? [:bold] : [:bold, :dim])
+      episode_style = tui.style(modifiers: lit ? [] : [:dim])
+      tui.paragraph(
+        text: [
+          tui.text_line(spans: [tui.text_span(content: film.title.to_s, style: title_style)]),
+          tui.text_line(spans: [tui.text_span(content: film.episode, style: episode_style)]),
+        ],
+        alignment: :center
+      )
     }
 
     # No subject arrives when no character matches a search.

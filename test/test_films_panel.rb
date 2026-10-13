@@ -18,6 +18,22 @@ class TestFilmsPanel < Minitest::Test
     end
   end
 
+  def test_the_films_panel_shows_episode_three_beneath_revenge_of_the_sith
+    with_rendered(Sw::Films::View.call(films, luke.films, tui), width: 160) do
+      _, title_row = text_position("Revenge of the Sith")
+
+      refute_nil text_position("Episode III", line: title_row + 1)
+    end
+  end
+
+  def test_the_films_panel_dims_episode_one_beneath_the_phantom_menace_which_luke_is_not_in
+    with_rendered(Sw::Films::View.call(films, luke.films, tui), width: 160) do
+      _, title_row = text_position("The Phantom Menace")
+
+      assert_text_style "Episode I", line: title_row + 1, modifiers: [:dim]
+    end
+  end
+
   def test_the_films_panel_shows_episodes_one_through_six_from_left_to_right
     with_rendered(Sw::Films::View.call(films, luke.films, tui), width: 160) do
       episodes_one_through_six = ["The Phantom Menace", "Attack of the Clones", "Revenge of the Sith", "A New Hope", "The Empire Strikes Back", "Return of the Jedi"]

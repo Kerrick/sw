@@ -38,6 +38,7 @@ module Sw
     attr_reader episode_id: RomanNumeral
     attr_reader characters: Collection[Character]
     def initialize: (title: Value, episode_id: RomanNumeral, ?characters: Collection[Character]) -> void
+    def episode: () -> String
   end
 
   class Value < Data
