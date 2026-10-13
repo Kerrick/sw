@@ -29,12 +29,19 @@ module Sw
 
   class Character < Data
     attr_reader name: Value
+    attr_reader height: Value
+    attr_reader mass: Value
+    attr_reader hair_color: Value
+    attr_reader skin_color: Value
+    attr_reader eye_color: Value
+    attr_reader birth_year: Value
+    attr_reader gender: Value
     attr_reader homeworld: Planet?
     attr_reader species: Collection[Species]
     attr_reader vehicles: Collection[Vehicle]
     attr_reader starships: Collection[Starship]
     attr_reader films: Collection[Film]
-    def initialize: (name: Value, ?homeworld: Planet?, ?species: Collection[Species], ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
+    def initialize: (name: Value, ?height: Value, ?mass: Value, ?hair_color: Value, ?skin_color: Value, ?eye_color: Value, ?birth_year: Value, ?gender: Value, ?homeworld: Planet?, ?species: Collection[Species], ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
   end
 
   class Planet < Data
@@ -199,6 +206,11 @@ class Collection[T] < Data
     UNKNOWN: String
     Title: ^(Planet, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
     View: ^(Planet, RatatuiRuby::TUI) -> (RatatuiRuby::Widgets::Table | RatatuiRuby::Widgets::Block)
+  end
+
+  module AttributesBox
+    LABEL: String
+    View: ^(Character, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Table
   end
 
   module SpeciesBox

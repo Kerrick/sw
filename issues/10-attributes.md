@@ -11,6 +11,7 @@ wireframe's units: "172 cm" and "77 kg". Every panel already dims `"n/a"`,
 as it does `"unknown"`, so R2-D2's items are about telling `"n/a"` from
 `"none"`, not about dimming.
 
+- [x] Luke's attributes: 19BBY, male, 172 cm, 77 kg, blue eyes, blond hair, and fair skin
 - [ ] Birth years `"19BBY"`, `"41.9BBY"`, and `"unknown"`
 - [ ] Jabba's mass of `"1,358"`
 - [ ] R2-D2's hair color `"n/a"` (doesn't apply) versus Mace Windu's `"none"` (a real answer)

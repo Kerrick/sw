@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                                                                      │                         │
 k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                                                                  └─────────────────────────┘
 ┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│  Jar Jar Binks          ││                                            ┌Species──────────────────────────────────┐┌Homeworld: Tatooine───────────────────────┐│
-│  Jek Tono Porkins       ││                                            │                                         ││Population:      200,000                  ││
-│  Jocasta Nu             ││                                            │                                         ││Terrain:         desert                   ││
-│  Ki-Adi-Mundi           ││                                            │                                         ││Climate:         arid                     ││
-│  Kit Fisto              ││                                            │                                         ││Surface water:   1%                       ││
-│  Lama Su                ││                                            │                 unknown                 ││Diameter:        10,465 km                ││
-│  Lando Calrissian       ││                                            │                                         ││Rotation period: 23 hr                    ││
-│  Leia Organa            ││                                            │                                         ││Orbital period:  304 d                    ││
-│  Lobot                  ││                                            │                                         ││Gravity:         1 standard               ││
-│> Luke Skywalker         ││                                            └─────────────────────────────────────────┘└──────────────────────────────────────────┘│
+│  Jar Jar Binks          ││┌Attributes────────────────────────────────┐┌Species──────────────────────────────────┐┌Homeworld: Tatooine───────────────────────┐│
+│  Jek Tono Porkins       │││Birth year: 19BBY                         ││                                         ││Population:      200,000                  ││
+│  Jocasta Nu             │││Gender:     male                          ││                                         ││Terrain:         desert                   ││
+│  Ki-Adi-Mundi           │││Height:     172 cm                        ││                                         ││Climate:         arid                     ││
+│  Kit Fisto              │││Mass:       77 kg                         ││                                         ││Surface water:   1%                       ││
+│  Lama Su                │││Eye color:  blue                          ││                 unknown                 ││Diameter:        10,465 km                ││
+│  Lando Calrissian       │││Hair color: blond                         ││                                         ││Rotation period: 23 hr                    ││
+│  Leia Organa            │││Skin color: fair                          ││                                         ││Orbital period:  304 d                    ││
+│  Lobot                  │││                                          ││                                         ││Gravity:         1 standard               ││
+│> Luke Skywalker         ││└──────────────────────────────────────────┘└─────────────────────────────────────────┘└──────────────────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │    The Phantom Menace       Attack of the Clones        Revenge of the Sith           A New Hope          The Empire Strikes Back      Return of the Jedi    │

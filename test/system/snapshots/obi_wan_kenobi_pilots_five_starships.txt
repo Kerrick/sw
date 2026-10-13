@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                              │obi                      │
 k/j: Prev/Next  g/G: First/Last  esc: Clear search  r: Reload  q: Quit                       └─────────────────────────┘
 ┌[2] Characters───────────┐┌Obi-Wan Kenobi─────────────────────────────────────────────────────────────────────────────┐
-│> Obi-Wan Kenobi         ││                              ┌Species──────────────────────┐┌Homeworld: Stewjon──────────┐│
-│                         ││                              │                             ││Population:      unknown    ││
-│                         ││                              │                             ││Terrain:         grass      ││
-│                         ││                              │                             ││Climate:         temperate  ││
-│                         ││                              │                             ││Surface water:   unknown    ││
-│                         ││                              │           unknown           ││Diameter:        unknown    ││
-│                         ││                              │                             ││Rotation period: unknown    ││
-│                         ││                              │                             ││Orbital period:  unknown    ││
-│                         ││                              │                             ││Gravity:         1 standard ││
-│                         ││                              └─────────────────────────────┘└────────────────────────────┘│
+│> Obi-Wan Kenobi         ││┌Attributes──────────────────┐┌Species──────────────────────┐┌Homeworld: Stewjon──────────┐│
+│                         │││Birth year: 57BBY           ││                             ││Population:      unknown    ││
+│                         │││Gender:     male            ││                             ││Terrain:         grass      ││
+│                         │││Height:     182 cm          ││                             ││Climate:         temperate  ││
+│                         │││Mass:       77 kg           ││                             ││Surface water:   unknown    ││
+│                         │││Eye color:  blue-gray       ││           unknown           ││Diameter:        unknown    ││
+│                         │││Hair color: auburn, white   ││                             ││Rotation period: unknown    ││
+│                         │││Skin color: fair            ││                             ││Orbital period:  unknown    ││
+│                         │││                            ││                             ││Gravity:         1 standard ││
+│                         ││└────────────────────────────┘└─────────────────────────────┘└────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │

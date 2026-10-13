@@ -1,0 +1,40 @@
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │                         │
+k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
+┌[2] Characters───────────┐┌Jabba Desilijic Tiure──────────────────────────────────────────────────────────────────────┐
+│  Dud Bolt               ││┌Attributes──────────────────┐┌Species: Hutt────────────────┐┌Homeworld: Nal Hutta────────┐│
+│  Eeth Koth              │││Birth year: 600BBY          ││Classification:   gastropod  ││Population:      7,000,000,0││
+│  Finis Valorum          │││Gender:     hermaphrodite   ││Designation:      sentient   ││Terrain:         urban, ocea││
+│  Gasgano                │││Height:     175 cm          ││Average height:   300 cm     ││Climate:         temperate  ││
+│  Greedo                 │││Mass:       1,358 kg        ││Average lifespan: 1,000 yr   ││Surface water:   unknown    ││
+│  Gregar Typho           │││Eye color:  orange          ││Language:         Huttese    ││Diameter:        12,150 km  ││
+│  Grievous               │││Hair color: n/a             ││                             ││Rotation period: 87 hr      ││
+│  Han Solo               │││Skin color: green-tan, brown││                             ││Orbital period:  413 d      ││
+│  IG-88                  │││                            ││                             ││Gravity:         1 standard ││
+│> Jabba Desilijic Tiure  ││└────────────────────────────┘└─────────────────────────────┘└────────────────────────────┘│
+└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
+┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
+│      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                       No starships                       ││                        No vehicles                       │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘

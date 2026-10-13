@@ -25,6 +25,7 @@
 - Show the highlighted character's species beside their homeworld, with its classification, designation, average height, average lifespan, and language, as the wireframe does.
 - Show the species of a character the data gives none, such as Luke, dimmed as unknown, rather than guessing.
 - Show a unit only after a number, so a droid's indefinite lifespan reads without years.
+- Show the highlighted character's attributes beside their species, with their birth year, gender, height, mass, and eye, hair, and skin colors, as the wireframe does.
 - Search the characters by name: press / or 1, then type or paste to narrow the list as you go. Say so when nothing matches.
 - Keep the search and return to the list with Enter, or clear it with Esc from either place. Backspace deletes a character, and Ctrl-U clears the query.
 - Move between Search and the list with Tab and Shift-Tab, keeping the search.
