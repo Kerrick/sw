@@ -16,12 +16,12 @@ module Sw
       end
 
       def call
-        refresh unless cache.complete?(*BODIES)
+        reload unless cache.complete?(*BODIES)
         finished
       end
 
       # The cache changes only if the download maps, so a bad response never replaces a good cache.
-      private def refresh
+      private def reload
         bodies = download
         @finished = map(bodies)
         cache.write(bodies)

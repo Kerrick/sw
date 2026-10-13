@@ -17,7 +17,7 @@ not here. Implementation work follows the
 - Tests only: `bundle exec rake test`
 - Refresh snapshots after an *intended* rendering change:
   `UPDATE_SNAPSHOTS=1 bundle exec rake test`, then review the `.txt`/`.ansi` diff.
-- Run: `bundle exec exe/sw` (`--refresh` refreshes the cache now).
+- Run: `bundle exec exe/sw`.
 - Always `PAGER=cat` for `git`.
 - Make simple edits with file editing tools, not scripts. Scripts for complex edits should use ruby.
 
@@ -103,6 +103,8 @@ which the domain keeps: a vehicle's `pilots`, a planet's `residents`, a
 species' `people`. Every member reads the API field of its own name, with no
 renaming. The domain model has domain objects with attributes and
 associations, never "records"; "record" belongs to the loader and the data.
+Say "reload" for downloading the data again, whether the user asks or the
+cache is stale; never "refresh."
 
 ## The data source
 
@@ -168,7 +170,7 @@ build an Identity Map.
 
 **Loading.** One or more custom commands, (`include Rooibos::Command::Custom`),
 responsible for crawling from the root URL (in parallel), caching the responses
-on disk, refreshing it after 7 days, parsing JSON, instantiating model classes,
+on disk, reloading it after 7 days, parsing JSON, instantiating model classes,
 and making errors meaningful. `Load::Mapper` is the Data Mapper: the only
 code that knows the API's JSON. Domain objects come back in a `Collection`,
 an `Enumerable` set, frozen by whoever builds it.
@@ -184,12 +186,12 @@ and partial data looks like missing data. The whole download takes under a secon
 under the platform-appropriate user cache directory from the `etcetera` gem.
 
 - Fresh cache: use it; no network.
-- Cache older than 7 days: show it immediately, refresh in the background,
-  and swap the new data in with one message. If the refresh fails, keep the
+- Cache older than 7 days: show it immediately, reload in the background,
+  and swap the new data in with one message. If the reload fails, keep the
   old data and say so quietly (e.g. a status line). Never show the error
   screen while any cache exists.
 - No cache: loading screen, then data or the error screen with retry.
-- `--refresh`: download now, even if fresh.
+- A reload the user asks for: download now, even if fresh.
 
 Cache age is an input in the loading tests, alongside network outcomes.
 

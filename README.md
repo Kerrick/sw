@@ -73,7 +73,7 @@ RubyInstaller instead, because mise can't build a working Ruby there.
 Precompiled `ratatui_ruby` gems exist for macOS on Apple Silicon, x86_64
 Linux, and 64-bit Windows. On other platforms, Bundler builds the gem from
 source, which needs a [Rust toolchain](https://rustup.rs). The first launch
-needs the network. After that, the app refreshes its cache weekly when it
+needs the network. After that, the app reloads its cache weekly when it
 can, and keeps using the old cache when it can't.
 
 ```sh
@@ -81,8 +81,6 @@ git clone https://github.com/Kerrick/sw.git && cd sw
 bin/setup        # or bin/setup.ps1 on Windows
 mise x -- bundle exec exe/sw
 ```
-
-To refresh the cache now, run `mise x -- bundle exec exe/sw --refresh`.
 
 The app opens with the character list focused, and a green border marks
 whichever panel has focus. Tab and Shift-Tab move focus between the list and
@@ -103,7 +101,7 @@ all three desktop platforms, and my reasons for choosing it are above.
 
 Should the app expect its data to change? No. I checked swapi.info,
 swapi.dev, and swapi.tech, and all three stop at six films. The app downloads
-once and refreshes its cache only after seven days.
+once and reloads its cache only after seven days.
 
 Should it expect the data to stay this way forever? No. It's built for
 a frozen dataset, but not for this particular one. Nothing in it assumes six
@@ -167,8 +165,8 @@ standard cache directory, found with the
 [`etcetera`](https://rubygems.org/gems/etcetera) gem, and build the
 domain model away from the interface. The interface hears about it once: the
 data loaded, or it failed for a reason it can show. When the cache is more
-than a week old, the app shows it anyway and refreshes in the background,
-swapping in the new data in one step. If that refresh fails, it keeps the old
+than a week old, the app shows it anyway and reloads in the background,
+swapping in the new data in one step. If that reload fails, it keeps the old
 data. Only a first launch without a network shows an error.
 
 The screen is made of one module per panel. The list and Search take focus,
