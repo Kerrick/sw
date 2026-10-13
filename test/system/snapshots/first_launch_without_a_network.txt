@@ -13,8 +13,8 @@ Error r: Reload  q: Quit
                                                                                                                         
                                                                                                                         
                         ┌Couldn't load the data────────────────────────────────────────────────┐                        
-                        │Failed to open TCP connection to 127.0.0.1:NNNNN (Connection refused -│                        
-                        │connect(2) for "127.0.0.1" port NNNNN)                                │                        
+                        │Failed to open TCP connection to 127.0.0.1:NNNNN (the OS's reason)    │                        
+                        │                                                                      │                        
                         │                                                                      │                        
                         │                                                                      │                        
                         │                                                                      │                        
