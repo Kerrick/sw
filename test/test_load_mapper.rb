@@ -100,6 +100,18 @@ class TestLoadMapper < Minitest::Test
     assert_empty unlisted_films + unlisted_characters
   end
 
+  def test_every_character_and_their_homeworld_list_each_other
+    characters, planets = records.values_at(:characters, :planets)
+    unlisted_residents = characters.reject { |character| character.homeworld.residents.include?(character) }.map do |character|
+      "#{character.homeworld.name} omits #{character.name}"
+    end
+    misplaced_residents = planets.flat_map do |planet|
+      planet.residents.reject { |resident| resident.homeworld == planet }.map { |resident| "#{resident.name} isn't from #{planet.name}" }
+    end
+
+    assert_empty unlisted_residents + misplaced_residents
+  end
+
   def test_the_snowspeeder_is_an_incom_t47_airspeeder_for_a_crew_of_two_and_no_passengers
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
