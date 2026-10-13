@@ -27,8 +27,9 @@ module Sw
       # Which members the API sends as numbers but that represent Roman numerals.
       NUMERALS = %i[episode_id].freeze
 
-      # Which members can't be zero, so the API's "0" there means it doesn't know. Planets aren't black holes.
-      NEVER_ZERO = %i[diameter].freeze
+      # Which members can't be zero, so the API's "0" there means it doesn't know. Every planet has a size, turns, and
+      # orbits.
+      NEVER_ZERO = %i[diameter rotation_period orbital_period].freeze
 
       def links(root)
         JSON.parse(root, freeze: true).transform_keys(&:to_sym)

@@ -45,6 +45,13 @@ class TestLoadMapper < Minitest::Test
     assert_predicate polis_massa.diameter, :unknown?
   end
 
+  def test_yodas_unknown_homeworld_turns_and_orbits_in_an_unknown_time_rather_than_none
+    yodas_homeworld = records.fetch(:characters).find { |character| character.name.to_s == "Yoda" }.homeworld
+
+    assert_predicate yodas_homeworld.rotation_period, :unknown?
+    assert_predicate yodas_homeworld.orbital_period, :unknown?
+  end
+
   def test_the_snowspeeder_is_piloted_by_luke_skywalker_and_wedge_antilles
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
