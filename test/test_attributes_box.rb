@@ -38,5 +38,21 @@ class TestAttributesBox < Minitest::Test
     end
   end
 
+  def test_r2_d2s_hair_color_reads_dimmed_because_it_doesnt_apply
+    r2_d2 = character("R2-D2")
+
+    with_rendered(Sw::AttributesBox::View.call(r2_d2, tui)) do
+      assert_text_style "n/a", on_line_with: "Hair color:", modifiers: [:dim]
+    end
+  end
+
+  def test_mace_windus_hair_color_of_none_reads_as_a_real_answer
+    mace_windu = character("Mace Windu")
+
+    with_rendered(Sw::AttributesBox::View.call(mace_windu, tui)) do
+      assert_text_style "none", on_line_with: "Hair color:", modifiers: []
+    end
+  end
+
   private def character(name) = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == name }
 end
