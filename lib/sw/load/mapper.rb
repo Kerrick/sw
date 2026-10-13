@@ -42,7 +42,7 @@ module Sw
       def records(**collections) = Mapping.new.call(collections)
 
       # One run of #records. It remembers each record by its URL, and each link to fill once every record exists,
-      # then freezes the whole graph. Records hold each other directly, with no IDs, and the index of URLs is gone
+      # then freezes the whole graph. Records hold each other directly, never by URL, and the index of URLs is gone
       # when the run ends.
       class Mapping
         def initialize

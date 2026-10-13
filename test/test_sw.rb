@@ -402,6 +402,17 @@ class TestSw < Minitest::Test
     assert_equal luke, model.characters.selected
   end
 
+  def test_han_solo_stays_highlighted_through_a_reload
+    browsing_han = Sw::Model.new(films:, characters: three_characters(selected: han), loading: true)
+
+    reload = reloaded
+    reloaded_han = reload.characters.find { |character| character.name.to_s == "Han Solo" }
+
+    model, = Sw::Update.call(reload, browsing_han)
+
+    assert_same reloaded_han, model.characters.selected
+  end
+
   def test_the_app_keeps_the_films_the_download_delivered
     downloaded = Sw::Load::Finished.new(
       characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]),

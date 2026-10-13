@@ -205,7 +205,8 @@ module Sw
   end
 
   receive_instances_of Load::Finished, -> (message, model) {
-    loaded = model.with(characters: Characters::Init.call(characters: message.characters, query: model.search.query), films: message.films, loading: message.stale)
+    characters = Characters::Init.call(characters: message.characters, query: model.search.query, selected: model.characters&.selected)
+    loaded = model.with(characters:, films: message.films, loading: message.stale)
     message.stale ? [loaded, Load.new(reload: true)] : loaded
   }
 

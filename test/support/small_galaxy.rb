@@ -9,7 +9,8 @@ require "json"
 module SmallGalaxy
   CHARACTERS = ["Ackbar", "Han Solo", "Luke Skywalker"].freeze
 
-  RECORDS = begin
+  # Each call maps the recorded responses again, into new objects, as a reload does.
+  BUILD = -> {
     fixture_for = -> (name) { JSON.parse(File.read(File.join(FixtureServer::FIXTURES, "api/#{name}.json"))) }
     people = fixture_for.call("people").select { |person| CHARACTERS.include?(person["name"]) }
     people_urls = people.map { |person| person["url"] }
@@ -18,7 +19,9 @@ module SmallGalaxy
     urls = people_urls + films.map { |film| film["url"] }
     kept = -> (records) { records.map { |record| record.transform_values { |value| value.is_a?(Array) ? value & urls : value } } }
     Sw::Load::Mapper.new.records(people: kept.call(people), vehicles: [], films: kept.call(films), planets: kept.call(planets))
-  end
+  }
+
+  RECORDS = BUILD.call
 
   private def ackbar = character("Ackbar")
 
@@ -37,6 +40,19 @@ module SmallGalaxy
   private def three_characters(selected: nil)
     panel = Sw::Characters::Init.call(characters: Sw::Collection.new([luke, ackbar, han]))
     selected ? panel.with(selected:) : panel
+  end
+
+  # The same galaxy as a reload delivers it: the same data, in new objects.
+  private def reloaded
+    records = BUILD.call
+    Sw::Load::Finished.new(
+      characters: records.fetch(:characters),
+      vehicles: records.fetch(:vehicles),
+      starships: Sw::Collection.new([]),
+      films: records.fetch(:films),
+      planets: records.fetch(:planets),
+      species: Sw::Collection.new([])
+    )
   end
 
   private def character(name) = RECORDS.fetch(:characters).find { |character| character.name.to_s == name }

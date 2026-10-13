@@ -23,7 +23,14 @@ module Sw
   View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
   Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
 
+  # The supertype of every domain object. Each one keeps its url protected; RBS has no protected, so the classes list
+  # it as public.
+  module DomainObject
+    def same_as?: (DomainObject other) -> bool
+  end
+
   class Character < Data
+    include DomainObject
     attr_reader name: Value
     attr_reader height: Value
     attr_reader mass: Value
@@ -37,10 +44,12 @@ module Sw
     attr_reader vehicles: Collection[Vehicle]
     attr_reader starships: Collection[Starship]
     attr_reader films: Collection[Film]
-    def initialize: (name: Value, ?height: Value, ?mass: Value, ?hair_color: Value, ?skin_color: Value, ?eye_color: Value, ?birth_year: Value, ?gender: Value, ?homeworld: Planet?, ?species: Collection[Species], ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
+    attr_reader url: Value?
+    def initialize: (name: Value, ?height: Value, ?mass: Value, ?hair_color: Value, ?skin_color: Value, ?eye_color: Value, ?birth_year: Value, ?gender: Value, ?homeworld: Planet?, ?species: Collection[Species], ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film], ?url: Value?) -> void
   end
 
   class Planet < Data
+    include DomainObject
     attr_reader name: Value
     attr_reader population: Value
     attr_reader terrain: Value
@@ -51,10 +60,12 @@ module Sw
     attr_reader orbital_period: Value
     attr_reader gravity: Value
     attr_reader residents: Collection[Character]
-    def initialize: (name: Value, population: Value, terrain: Value, climate: Value, surface_water: Value, diameter: Value, rotation_period: Value, orbital_period: Value, gravity: Value, ?residents: Collection[Character]) -> void
+    attr_reader url: Value?
+    def initialize: (name: Value, population: Value, terrain: Value, climate: Value, surface_water: Value, diameter: Value, rotation_period: Value, orbital_period: Value, gravity: Value, ?residents: Collection[Character], ?url: Value?) -> void
   end
 
   class Species < Data
+    include DomainObject
     attr_reader name: Value
     attr_reader classification: Value
     attr_reader designation: Value
@@ -62,14 +73,17 @@ module Sw
     attr_reader average_lifespan: Value
     attr_reader language: Value
     attr_reader people: Collection[Character]
-    def initialize: (name: Value, classification: Value, designation: Value, average_height: Value, average_lifespan: Value, language: Value, ?people: Collection[Character]) -> void
+    attr_reader url: Value?
+    def initialize: (name: Value, classification: Value, designation: Value, average_height: Value, average_lifespan: Value, language: Value, ?people: Collection[Character], ?url: Value?) -> void
   end
 
   class Film < Data
+    include DomainObject
     attr_reader title: Value
     attr_reader episode_id: RomanNumeral
     attr_reader characters: Collection[Character]
-    def initialize: (title: Value, episode_id: RomanNumeral, ?characters: Collection[Character]) -> void
+    attr_reader url: Value?
+    def initialize: (title: Value, episode_id: RomanNumeral, ?characters: Collection[Character], ?url: Value?) -> void
     def episode: () -> String
   end
 
@@ -86,6 +100,7 @@ module Sw
   end
 
   class Vehicle < Data
+    include DomainObject
     attr_reader name: Value
     attr_reader model: Value
     attr_reader manufacturer: Value
@@ -93,10 +108,12 @@ module Sw
     attr_reader crew: Value
     attr_reader passengers: Value
     attr_reader pilots: Collection[Character]
-    def initialize: (name: Value, model: Value, manufacturer: Value, vehicle_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
+    attr_reader url: Value?
+    def initialize: (name: Value, model: Value, manufacturer: Value, vehicle_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character], ?url: Value?) -> void
   end
 
 class Starship < Data
+  include DomainObject
   attr_reader name: Value
   attr_reader model: Value
   attr_reader manufacturer: Value
@@ -104,7 +121,8 @@ class Starship < Data
   attr_reader crew: Value
   attr_reader passengers: Value
   attr_reader pilots: Collection[Character]
-  def initialize: (name: Value, model: Value, manufacturer: Value, starship_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character]) -> void
+  attr_reader url: Value?
+  def initialize: (name: Value, model: Value, manufacturer: Value, starship_class: Value, crew: Value, passengers: Value, ?pilots: Collection[Character], ?url: Value?) -> void
 end
 
 class Collection[T] < Data
@@ -184,7 +202,7 @@ class Collection[T] < Data
       def matches: () -> Collection[Character]
     end
 
-    Init: ^(characters: Collection[Character], ?query: String) -> Model
+    Init: ^(characters: Collection[Character], ?query: String, ?selected: Character?) -> Model
     Select: ^(Symbol, Model) -> Model
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
     EMPTY: String

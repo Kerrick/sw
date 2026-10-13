@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rooibos"
+require_relative "sw/domain_object"
 require_relative "sw/planet"
 require_relative "sw/character"
 require_relative "sw/species"

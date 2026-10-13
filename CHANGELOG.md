@@ -39,6 +39,7 @@
 - Keep the characters on screen when a reload fails, with a red Reload failed status word, rather than showing the error screen.
 - Show a cache more than a week old at once, with a blue Reloading status word, and reload it in the background.
 - Say Reloading, not Loading, while r or F5 reloads with characters on screen.
+- Keep the highlighted character highlighted when a reload finishes, as long as the new data still has them.
 
 ## [0.1.0] - 2026-10-12
 

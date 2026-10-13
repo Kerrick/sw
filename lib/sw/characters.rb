@@ -13,10 +13,12 @@ module Sw
       end
     end
 
-    Init = -> (characters:, query: "") {
+    # A reload passes the character selected before it, so the selection stays put if the new data has them.
+    Init = -> (characters:, query: "", selected: nil) {
       sorted = Collection.new(characters.sort_by(&:name))
       model = Model.new(collection: sorted, selected: nil, query:)
-      Ractor.make_shareable(model.with(selected: model.matches.first))
+      kept = selected && model.matches.find { |character| character.same_as?(selected) }
+      Ractor.make_shareable(model.with(selected: kept || model.matches.first))
     }
 
     # Moves the selection one step by an operator (:+ or :-) and stops at either end.

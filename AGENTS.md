@@ -168,8 +168,10 @@ No kind of object is the center. Every object keeps its associations in both
 directions (a character's films and a film's characters, a planet's
 residents and a resident's homeworld) as direct references, each to-many
 association a `Collection`, so `luke.vehicles.first.pilots` reads naturally.
-Objects carry no IDs. The graph has cycles, and that's fine: the cache holds
-raw JSON, so no object is ever serialized. The API's two directions agree
+Objects link to each other directly, never by ID. Each keeps its API URL,
+protected, only so a reload can find the same object in the new data
+(`DomainObject#same_as?`). The graph has cycles, and that's fine: the cache
+holds raw JSON, so no object is ever serialized. The API's two directions agree
 today; if a source ever disagrees, that's a data quirk with a test. A
 screen's View hands the object it centers on to its panels. Don't name or
 build an Identity Map.

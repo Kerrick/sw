@@ -193,6 +193,21 @@ class TestLoadMapper < Minitest::Test
     assert_equal "Sand Crawler", records.fetch(:vehicles).first.name.to_s
   end
 
+  def test_a_reload_knows_the_x_wing_snowspeeder_tatooine_human_and_a_new_hope_again
+    before = records
+    reloaded = records
+
+    assert_operator named(reloaded, :starships, "X-wing"), :same_as?, named(before, :starships, "X-wing")
+    assert_operator named(reloaded, :vehicles, "Snowspeeder"), :same_as?, named(before, :vehicles, "Snowspeeder")
+    assert_operator named(reloaded, :planets, "Tatooine"), :same_as?, named(before, :planets, "Tatooine")
+    assert_operator named(reloaded, :species, "Human"), :same_as?, named(before, :species, "Human")
+    assert_operator titled(reloaded, "A New Hope"), :same_as?, titled(before, "A New Hope")
+  end
+
+  private def named(records, collection, name) = records.fetch(collection).find { |object| object.name.to_s == name }
+
+  private def titled(records, title) = records.fetch(:films).find { |film| film.title.to_s == title }
+
   private def records
     mapper = Sw::Load::Mapper.new
     mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS), starships: mapper.parse(STARSHIPS), planets: mapper.parse(PLANETS), species: mapper.parse(SPECIES))
