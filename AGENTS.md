@@ -194,9 +194,6 @@ issues, not here.
 
 - The root model owns focus. The root Router handles focus with
   `only when:` guards. Each screen names a default panel.
-- Number keys count only the panels that take focus, in reading order. Once
-  a panel has a number, it keeps it; a panel that takes focus later gets the
-  next one.
 - Keys map to **intents** at the root:
   `forward_events %i[down j], to: :characters, as: :move_down`.
   Characters' Update handles `:move_down`, never raw keys. Support both

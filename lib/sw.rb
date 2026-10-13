@@ -26,7 +26,7 @@ module Sw
     alias_method :loading?, :loading
   end
 
-  # The panels that take focus, in reading order. Tab moves through them.
+  # The panels that take focus, in reading order. Tab moves through them, and the number keys count them from 1.
   FocusOrder = %i[search characters].freeze
 
   # Moves focus forward (1) or back (-1) through FocusOrder, wrapping around at either end.
@@ -148,8 +148,10 @@ module Sw
   forward_instances_of Search::QueryChanged, to: :characters, as: :filter
 
   only when: -> (_, model) { model.characters } do
-    receive_events %i[1 /], -> (_, model) { model.with(focus: :search) }
-    receive_events :"2", -> (_, model) { model.with(focus: :characters) }
+    receive_events :/, -> (_, model) { model.with(focus: :search) }
+    FocusOrder.each.with_index(1) do |panel, number|
+      receive_events :"#{number}", -> (_, model) { model.with(focus: panel) }
+    end
     receive_events :tab, -> (_, model) { FocusStep.(model, 1) }
     receive_events %i[back_tab shift_back_tab], -> (_, model) { FocusStep.(model, -1) }
 
