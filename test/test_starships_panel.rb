@@ -15,6 +15,14 @@ class TestStarshipsPanel < Minitest::Test
     end
   end
 
+  def test_ackbar_who_pilots_no_starship_sees_a_dimmed_empty_state
+    ackbars_starships = Sw::Collection.new([])
+
+    with_rendered(Sw::Starships::View.call(ackbars_starships, tui)) do
+      assert_text_style Sw::Starships::EMPTY, modifiers: [:dim]
+    end
+  end
+
   def test_the_aa9_coruscant_freighter_crew_is_dimmed_as_unknown_beside_its_30_000_passengers
     aa9_coruscant_freighter = EntireGalaxy::RECORDS.fetch(:starships).find { |starship| starship.name.to_s == "AA-9 Coruscant freighter" }
 

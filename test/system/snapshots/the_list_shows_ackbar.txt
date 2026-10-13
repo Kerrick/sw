@@ -32,7 +32,7 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
-│                                                          ││                        No vehicles                       │
+│                       No starships                       ││                        No vehicles                       │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │

@@ -165,8 +165,10 @@ class Collection[T] < Data
   end
 
   module Starships
+    EMPTY: String
     Starship: ^(Sw::Starship, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     Stack: ^(Collection[Sw::Starship], RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
+    Empty: ^(RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
     View: ^(Collection[Sw::Starship]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 

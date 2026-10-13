@@ -15,6 +15,7 @@
 - Show each film's episode, such as Episode III, beneath its title.
 - Dim any value the data doesn't know, such as a vehicle's unknown passengers or manufacturer.
 - Say so in the Vehicles panel, dimmed, when the highlighted character pilots no vehicles.
+- Say so in the Starships panel, dimmed, when the highlighted character pilots no starships.
 - Search the characters by name: press / or 1, then type or paste to narrow the list as you go. Say so when nothing matches.
 - Keep the search and return to the list with Enter, or clear it with Esc from either place. Backspace deletes a character, and Ctrl-U clears the query.
 - Move between Search and the list with Tab and Shift-Tab, keeping the search.
