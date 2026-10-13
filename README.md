@@ -121,7 +121,8 @@ named "unknown," which it treats as an unknown homeworld rather than a place.
 Can a planet measure zero? No. Six planets have a diameter of "0," and the
 planet named "unknown" also takes zero hours to turn and zero days to orbit.
 Planets aren't black holes, so the app treats a zero diameter, rotation
-period, or orbital period as unknown.
+period, or orbital period as unknown. A planet can be empty, though. Tund's
+population of zero is real: its last Sorcerer killed everything living there.
 
 What is Luke's species? Unknown, because the data doesn't say. Thirty-two
 of the 82 characters, Luke among them, have no species, and the Human

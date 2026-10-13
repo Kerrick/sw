@@ -196,7 +196,9 @@ are `View`-only modules. A fragment's View takes that fragment's own
 `Collection`, or nothing. Parts inside a panel are `View`-only too, as
 lambdas in the panel's module or as modules of their own; file length
 decides. Key bindings, focus order, and on-screen wording belong in the
-issues, not here.
+issues, not here. The brief is `tmp/brief.pdf`, uncommitted; its wireframe,
+on page 3, settles a panel's labels, order, and units unless an issue says
+otherwise.
 
 - The root model owns focus. The root Router handles focus with
   `only when:` guards. Each screen names a default panel.
@@ -318,8 +320,10 @@ mockup.
   *why*. End with your own harness's attribution lines (naming your model,
   not one copied from history), in the format earlier commits use. A commit
   that repairs behavior is a `fix:`, even when an unpushed commit in the
-  same issue added that behavior. A decision the reviewer reverses is not a
-  repair; the skill's rule for corrections applies.
+  same issue added that behavior: if the commit before it showed something
+  wrong ("0 km", a planet named "unknown"), it is a `fix:`; if it showed
+  nothing, a `feat:`. A decision the reviewer reverses is not a repair; the
+  skill's rule for corrections applies.
 - User-visible changes go under `## [Unreleased]` in `CHANGELOG.md`
   (Keep a Changelog). Tests, refactors, and tooling do not. Each entry is one
   capability; add an entry rather than growing an old one.
