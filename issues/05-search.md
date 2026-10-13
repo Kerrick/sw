@@ -32,7 +32,7 @@ unbound until then.
 - [x] Enter keeps the filter and focuses the searched list
 - [x] Esc clears the filter and focuses the default panel
 - [x] Esc in the list clears an active search too
-- [ ] Key help shows `esc: Clear search` in Search, and in the list only while a search is active
+- [x] Key help shows `esc: Clear search` in Search, and in the list only while a search is active
 - [x] Tab and Shift-Tab keep the filter and move focus on
 - [x] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it
 - [x] Pasted text goes into the query

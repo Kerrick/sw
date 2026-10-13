@@ -123,6 +123,7 @@ module Sw
     end
 
     Init: ^() -> Model
+    ClearKey: [String, String]
     Keys: Array[[String, String]]
     Typed: ^(Rooibos::message, Model) -> bool
     View: ^(Model, RatatuiRuby::TUI, focused: bool, number: Integer) -> RatatuiRuby::Widgets::Paragraph

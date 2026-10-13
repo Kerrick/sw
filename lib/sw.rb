@@ -131,7 +131,7 @@ module Sw
       children: [
         Header.call(
           tui,
-          StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *GlobalKeys] : Search::Keys),
+          StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *GlobalKeys] : Search::Keys),
           Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1)
         ),
         tui.layout(

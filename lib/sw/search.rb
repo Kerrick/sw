@@ -36,7 +36,9 @@ module Sw
 
     receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
 
-    Keys = [["enter", "Finish search"], ["esc", "Clear search"]].freeze
+    ClearKey = ["esc", "Clear search"].freeze
+
+    Keys = [["enter", "Finish search"], ClearKey].freeze
 
     Update = from_router
 

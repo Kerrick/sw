@@ -86,6 +86,20 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_list_shows_esc_as_a_hotkey_while_a_search_for_sky_is_active
+    browsing_skywalkers = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+
+    with_rendered(Sw::View.call(browsing_skywalkers, tui)) do
+      assert_text_style "esc:", modifiers: [:bold, :dim, :underlined]
+    end
+  end
+
+  def test_the_list_shows_no_esc_hotkey_without_a_search
+    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+      assert_nil text_position("esc:")
+    end
+  end
+
   def test_the_status_line_hides_r_and_q_while_search_has_focus
     searching = Sw::Model.new(characters: three_characters, focus: :search)
 
