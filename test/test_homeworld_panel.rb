@@ -14,4 +14,12 @@ class TestHomeworldPanel < Minitest::Test
       end
     end
   end
+
+  def test_yodas_homeworld_reads_dimmed_as_unknown_rather_than_as_a_planet_named_unknown
+    yoda = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == "Yoda" }
+
+    with_rendered(Sw::Homeworld::View.call(yoda.homeworld, tui)) do
+      assert_text_style Sw::Homeworld::UNKNOWN, modifiers: [:dim]
+    end
+  end
 end

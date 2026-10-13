@@ -18,6 +18,7 @@
 - Make the Starships and Vehicles panels tall enough for every craft any character pilots, such as Obi-Wan's five starships.
 - Say so in the Starships panel, dimmed, when the highlighted character pilots no starships.
 - Show the highlighted character's homeworld beside their name, with its population, terrain, climate, surface water, diameter, rotation and orbital periods, and gravity, as the wireframe does.
+- Show a homeworld the data calls "unknown", such as Yoda's, dimmed as unknown rather than as a planet of that name.
 - Search the characters by name: press / or 1, then type or paste to narrow the list as you go. Say so when nothing matches.
 - Keep the search and return to the list with Enter, or clear it with Esc from either place. Backspace deletes a character, and Ctrl-U clears the query.
 - Move between Search and the list with Tab and Shift-Tab, keeping the search.

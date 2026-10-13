@@ -179,8 +179,9 @@ class Collection[T] < Data
 
   module Homeworld
     LABEL: String
+    UNKNOWN: String
     Title: ^(Planet, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
-    View: ^(Planet, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Table
+    View: ^(Planet, RatatuiRuby::TUI) -> (RatatuiRuby::Widgets::Table | RatatuiRuby::Widgets::Block)
   end
 
   module Films

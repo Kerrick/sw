@@ -10,7 +10,12 @@ module Sw
       tui.text_line(spans: [tui.text_span(content: "#{LABEL}: "), tui.text_span(content: planet.name.to_s, style: tui.style(modifiers: [:bold]))])
     }
 
+    # What the box says for a planet the data names "unknown", which stands for no planet at all.
+    UNKNOWN = "unknown"
+
     View = -> (planet, tui) {
+      return tui.block(title: LABEL, borders: [:all], children: [Empty::View.(UNKNOWN, tui)]) if planet.name.unknown?
+
       tui.table(
         rows: [
           ["Population:", Values::Span.(planet.population, tui)],
