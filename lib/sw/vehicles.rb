@@ -13,7 +13,7 @@ module Sw
       tui.block(
         title: "Vehicles",
         borders: [:all],
-        children: [vehicles.any? ? Craft::Stack.(vehicles, :vehicle_class, tui) : Craft::Empty.(EMPTY, tui)]
+        children: [vehicles.any? ? Craft::Stack.(vehicles, :vehicle_class, tui) : Empty::View.(EMPTY, tui)]
       )
     }
   end

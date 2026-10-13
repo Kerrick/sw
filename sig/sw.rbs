@@ -188,13 +188,16 @@ class Collection[T] < Data
     View: ^(Collection[Film], Collection[Film]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 
+  module Empty
+    View: ^(String, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
+  end
+
   module Craft
     type craft = Sw::Vehicle | Sw::Starship
     Widths: ^(RatatuiRuby::TUI) -> Array[RatatuiRuby::Layout::Constraint]
     Heading: ^(craft, Symbol, RatatuiRuby::TUI) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
     Entry: ^(craft, Symbol, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     Stack: ^(Collection[craft], Symbol, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
-    Empty: ^(String, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
   end
 
   module Starships
