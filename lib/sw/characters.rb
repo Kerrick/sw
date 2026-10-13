@@ -51,8 +51,22 @@ module Sw
     Empty = -> (query, tui) {
       tui.paragraph(
         text: [
-          tui.text_line(spans: [tui.text_span(content: EMPTY, style: tui.style(modifiers: [:dim]))]),
-          tui.text_line(spans: [tui.text_span(content: query, style: tui.style(fg: :yellow, modifiers: [:dim]))]),
+          tui.text_line(
+            spans: [
+              tui.text_span(
+                content: EMPTY,
+                style: tui.style(modifiers: [:dim])
+              ),
+            ]
+          ),
+          tui.text_line(
+            spans: [
+              tui.text_span(
+                content: query,
+                style: tui.style(fg: :yellow, modifiers: [:dim])
+              ),
+            ]
+          ),
         ],
         wrap: true
       )
@@ -61,7 +75,11 @@ module Sw
     # A List takes only strings and text, unlike a block title, so each name's Value becomes a String here.
     View = -> (model, tui, number:, focused: false) {
       matches = model.matches
-      block = tui.block(title: "[#{number}] Characters", borders: [:all], border_style: tui.style(fg: (:green if focused)))
+      block = tui.block(
+        title: "[#{number}] Characters",
+        borders: [:all],
+        border_style: tui.style(fg: (:green if focused))
+      )
       return block.with(children: [Empty.(model.query, tui)]) if matches.none?
 
       tui.list(

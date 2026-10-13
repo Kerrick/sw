@@ -209,6 +209,7 @@ class Collection[T] < Data
     ClearKey: [String, String]
     Keys: Array[[String, String]]
     Typed: ^(Rooibos::message, Model) -> bool
+    Cursor: ^(RatatuiRuby::TUI) -> RatatuiRuby::Text::Span
     View: ^(Model, RatatuiRuby::TUI, focused: bool, number: Integer) -> RatatuiRuby::Widgets::Paragraph
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
   end

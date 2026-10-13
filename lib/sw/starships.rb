@@ -13,7 +13,9 @@ module Sw
       tui.block(
         title: "Starships",
         borders: [:all],
-        children: [starships.any? ? Craft::Stack.(starships, :starship_class, tui) : Empty::View.(EMPTY, tui)]
+        children: [
+          starships.any? ? Craft::Stack.(starships, :starship_class, tui) : Empty::View.(EMPTY, tui),
+        ]
       )
     }
   end

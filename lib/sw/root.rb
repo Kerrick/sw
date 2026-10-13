@@ -25,24 +25,45 @@ module Sw
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(3), tui.constraint_fill(1)],
-      children: [Header::View.call(tui, StatusLine::View.call(tui, status:, keys: StatusLine::GlobalKeys)), body]
+      children: [
+        Header::View.call(
+          tui,
+          StatusLine::View.call(tui, status:, keys: StatusLine::GlobalKeys)
+        ),
+        body,
+      ]
     )
   }
 
   LoadingView = -> (tui) {
     spacer = tui.paragraph(text: "")
-    box = tui.paragraph(text: "Loading the Datapad…", alignment: :center, block: tui.block(borders: [:all]))
     Wrapper.call(
       tui,
       tui.layout(
         direction: :vertical,
-        constraints: [tui.constraint_fill(1), tui.constraint_length(3), tui.constraint_fill(1)],
+        constraints: [
+          tui.constraint_fill(1),
+          tui.constraint_length(3),
+          tui.constraint_fill(1),
+        ],
         children: [
           spacer,
           tui.layout(
             direction: :horizontal,
-            constraints: [tui.constraint_fill(1), tui.constraint_length(30), tui.constraint_fill(1)],
-            children: [spacer, box, spacer]
+            constraints: [
+              tui.constraint_fill(1),
+              tui.constraint_length(30),
+              tui.constraint_fill(1),
+            ],
+            children: [
+              spacer,
+              tui.paragraph(
+                text: "Loading the Datapad…",
+                alignment: :center,
+                block: tui.block(borders: [:all])
+              ),
+              spacer,
+            ]
           ),
           spacer,
         ]
@@ -58,7 +79,11 @@ module Sw
         child: tui.paragraph(
           text: model.failure,
           wrap: true,
-          block: tui.block(title: "Couldn't load the data", title_style: tui.style(modifiers: [:bold]), borders: [:all])
+          block: tui.block(
+            title: "Couldn't load the data",
+            title_style: tui.style(modifiers: [:bold]),
+            borders: [:all]
+          )
         ),
         width_percent: 60,
         height_percent: 40
@@ -80,21 +105,41 @@ module Sw
     else
       []
     end
+    keys = if model.focus == :characters
+      [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *StatusLine::GlobalKeys]
+    else
+      Search::Keys
+    end
 
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_length(Craft::Height.(model.characters.collection))],
+      constraints: [
+        tui.constraint_length(3),
+        tui.constraint_fill(3),
+        tui.constraint_fill(1),
+        tui.constraint_length(Craft::Height.(model.characters.collection)),
+      ],
       children: [
         Header::View.call(
           tui,
-          StatusLine::View.call(tui, status:, keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *StatusLine::GlobalKeys] : Search::Keys),
-          Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1)
+          StatusLine::View.call(tui, status:, keys:),
+          Search::View.call(
+            model.search,
+            tui,
+            focused: model.focus == :search,
+            number: FocusOrder.index(:search) + 1
+          )
         ),
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_length(ListWidth), tui.constraint_fill(1)],
           children: [
-            Characters::View.call(model.characters, tui, number: FocusOrder.index(:characters) + 1, focused: model.focus == :characters),
+            Characters::View.call(
+              model.characters,
+              tui,
+              number: FocusOrder.index(:characters) + 1,
+              focused: model.focus == :characters
+            ),
             SelectedCharacter::View.call(selected, tui),
           ]
         ),
@@ -102,7 +147,10 @@ module Sw
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
-          children: [Starships::View.call(selected&.starships, tui), Vehicles::View.call(selected&.vehicles, tui)]
+          children: [
+            Starships::View.call(selected&.starships, tui),
+            Vehicles::View.call(selected&.vehicles, tui),
+          ]
         ),
       ]
     )

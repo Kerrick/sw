@@ -13,8 +13,16 @@ module Sw
         children: [
           tui.layout(
             direction: :horizontal,
-            constraints: [tui.constraint_fill(1), tui.constraint_fill(1), tui.constraint_fill(1)],
-            children: [AttributesBox::View.(character, tui), SpeciesBox::View.(character.species.first, tui), HomeworldBox::View.(character.homeworld, tui)]
+            constraints: [
+              tui.constraint_fill(1),
+              tui.constraint_fill(1),
+              tui.constraint_fill(1),
+            ],
+            children: [
+              AttributesBox::View.(character, tui),
+              SpeciesBox::View.(character.species.first, tui),
+              HomeworldBox::View.(character.homeworld, tui),
+            ]
           ),
         ]
       )

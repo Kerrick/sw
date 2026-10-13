@@ -7,8 +7,20 @@ module Sw
       spacer = tui.paragraph(text: "")
       tui.layout(
         direction: :vertical,
-        constraints: [tui.constraint_fill(1), tui.constraint_length(1), tui.constraint_fill(1)],
-        children: [spacer, tui.paragraph(text:, alignment: :center, style: tui.style(modifiers: [:dim])), spacer]
+        constraints: [
+          tui.constraint_fill(1),
+          tui.constraint_length(1),
+          tui.constraint_fill(1),
+        ],
+        children: [
+          spacer,
+          tui.paragraph(
+            text:,
+            alignment: :center,
+            style: tui.style(modifiers: [:dim])
+          ),
+          spacer,
+        ]
       )
     }
   end

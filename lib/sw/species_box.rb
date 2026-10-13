@@ -7,14 +7,30 @@ module Sw
 
     # Selected Character has no row to spare, so the species' name shares the border with the label.
     Title = -> (species, tui) {
-      tui.text_line(spans: [tui.text_span(content: "#{LABEL}: "), tui.text_span(content: species.name.to_s, style: tui.style(modifiers: [:bold]))])
+      tui.text_line(
+        spans: [
+          tui.text_span(content: "#{LABEL}: "),
+          tui.text_span(
+            content: species.name.to_s,
+            style: tui.style(modifiers: [:bold])
+          ),
+        ]
+      )
     }
 
     # What the box says for a character the data gives no species.
     UNKNOWN = "unknown"
 
     View = -> (species, tui) {
-      return tui.block(title: LABEL, borders: [:all], children: [Empty::View.(UNKNOWN, tui)]) unless species
+      unless species
+        return tui.block(
+          title: LABEL,
+          borders: [:all],
+          children: [
+            Empty::View.(UNKNOWN, tui),
+          ]
+        )
+      end
 
       tui.table(
         rows: [
@@ -25,7 +41,10 @@ module Sw
           ["Language:", Values::Span.(species.language, tui)],
         ],
         widths: [tui.constraint_length(17), tui.constraint_fill(1)],
-        block: tui.block(titles: [{ content: Title.(species, tui) }], borders: [:all])
+        block: tui.block(
+          titles: [{ content: Title.(species, tui) }],
+          borders: [:all]
+        )
       )
     }
   end

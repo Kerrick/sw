@@ -10,12 +10,24 @@ module Sw
     View = -> (tui, status_line, search = nil) {
       title_and_status = tui.layout(
         direction: :vertical,
-        constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-        children: [Title.call(tui), tui.paragraph(text: ""), status_line]
+        constraints: [
+          tui.constraint_length(1),
+          tui.constraint_fill(1),
+          tui.constraint_length(1),
+        ],
+        children: [
+          Title.call(tui),
+          tui.paragraph(text: ""),
+          status_line,
+        ]
       )
       return title_and_status unless search
 
-      tui.layout(direction: :horizontal, constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)], children: [title_and_status, search])
+      tui.layout(
+        direction: :horizontal,
+        constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)],
+        children: [title_and_status, search]
+      )
     }
   end
 end
