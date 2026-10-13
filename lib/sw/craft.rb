@@ -31,5 +31,12 @@ module Sw
         children: [*crafts.each_with_index.map { |craft, index| Entry.(craft, class_member, tui, first: index.zero?) }, tui.paragraph(text: "")]
       )
     }
+
+    # Starships and Vehicles take no focus, so they can't scroll. Their row is tall enough for the most of either that
+    # any character pilots, each in three rows and a rule, so it holds still as the highlight moves.
+    Height = -> (characters) {
+      most = characters.map { |character| [character.vehicles.count, character.starships.count].max }.max.to_i
+      ([most, 1].max * 4) + 1
+    }
   end
 end

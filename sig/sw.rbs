@@ -17,7 +17,6 @@ module Sw
 
   FocusOrder: Array[Symbol]
   ListWidth: Integer
-  CraftHeight: ^(Collection[Character]) -> Integer
   FocusStep: ^(Model, Integer) -> Model
   Searching: ^(Rooibos::message, Model) -> bool
   Init: ^() -> [Model, Load]
@@ -265,6 +264,7 @@ class Collection[T] < Data
     Heading: ^(craft, Symbol, RatatuiRuby::TUI) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
     Entry: ^(craft, Symbol, RatatuiRuby::TUI, first: bool) -> RatatuiRuby::Widgets::Table
     Stack: ^(Collection[craft], Symbol, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
+    Height: ^(Collection[Character]) -> Integer
   end
 
   module Starships

@@ -67,13 +67,6 @@ module Sw
     )
   }
 
-  # Starships and Vehicles take no focus, so they can't scroll. Their row is tall enough for the most of either that any
-  # character pilots, each in three rows and a rule, so it holds still as the highlight moves.
-  CraftHeight = -> (characters) {
-    most = characters.map { |character| [character.vehicles.count, character.starships.count].max }.max.to_i
-    ([most, 1].max * 4) + 1
-  }
-
   View = -> (model, tui) {
     # The error screen is only for having no data. A failed reload leaves the old data on screen.
     return FailureView.call(model, tui) if model.failure && !model.characters
@@ -90,7 +83,7 @@ module Sw
 
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_length(CraftHeight.(model.characters.collection))],
+      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_length(Craft::Height.(model.characters.collection))],
       children: [
         Header::View.call(
           tui,

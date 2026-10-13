@@ -230,7 +230,7 @@ otherwise.
   (tailored for a TUI user) is a must.
 - Never show less of the data to make it fit. A panel that takes no focus
   can't scroll, so its height comes from the largest case in the whole
-  dataset (`CraftHeight`), never from the selected object, and the layout
+  dataset (`Craft::Height`), never from the selected object, and the layout
   holds still while browsing. Snapshots run at 120×40; say how a layout
   change behaves in a taller terminal too.
 - When a panel draws what another already draws, share all of it, as
