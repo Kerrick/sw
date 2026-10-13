@@ -29,7 +29,6 @@ module Sw
   # The panels that take focus, in reading order. Tab moves through them, and the number keys count them from 1.
   FocusOrder = %i[search characters].freeze
 
-  # Moves focus forward (1) or back (-1) through FocusOrder, wrapping around at either end.
   FocusStep = -> (model, step) { model.with(focus: FocusOrder[(FocusOrder.index(model.focus) + step) % FocusOrder.size]) }
 
   Download = -> { Load.new(url: ENV.fetch("SW_API_URL", API_URL)) }
@@ -49,7 +48,6 @@ module Sw
 
   GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
 
-  # The focused panel's keys come first, then the keys that work everywhere.
   StatusLine = -> (tui, status: [], keys: []) {
     hotkeys = [*keys, *GlobalKeys].map { |key, label| Hotkey.call(tui, key, label) }
     tui.paragraph(text: [
@@ -66,7 +64,6 @@ module Sw
     )
   }
 
-  # A one-line box, centered both ways. Its height fits its text, so the text is centered too.
   LoadingView = -> (tui) {
     spacer = tui.paragraph(text: "")
     box = tui.paragraph(text: "Loading the Datapad…", alignment: :center, block: tui.block(borders: [:all]))
@@ -177,7 +174,6 @@ module Sw
       forward_events %i[end shift_G], to: :characters, as: :move_last
     end
 
-    # Search takes every keystroke nothing above answered.
     only when: Searching do
       receive_events :enter, -> (_, model) { model.with(focus: :characters) }
       otherwise route_to: :search

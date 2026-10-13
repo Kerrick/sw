@@ -8,7 +8,6 @@ module Sw
     Model = Data.define(:collection, :selected, :query) do
       def initialize(collection:, selected:, query: "") = super
 
-      # The characters whose names contain the query, ignoring case.
       def matches
         Collection.new(collection.select { |character| character.name.to_s.downcase.include?(query.downcase) })
       end

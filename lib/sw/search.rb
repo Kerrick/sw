@@ -14,7 +14,6 @@ module Sw
 
     Init = -> { Ractor.make_shareable(Model.new(query: "")) }
 
-    # Sets the query and tells the screen about it.
     Change = -> (model, query) {
       query = query.freeze
       [model.with(query:), Rooibos::Command.bubble(QueryChanged.new(query:))]
@@ -26,7 +25,7 @@ module Sw
 
     receive_routed :clear, -> (_, model) { Change.(model, "") }
 
-    # A key that types one character. Ctrl and Alt chords are commands, not text, though Shift types capitals.
+    # Ctrl and Alt chords are commands, not text, though Shift types capitals.
     Typed = -> (message, _) {
       message.respond_to?(:text?) && message.text? && message.code.length == 1 && !message.ctrl? && !message.alt?
     }

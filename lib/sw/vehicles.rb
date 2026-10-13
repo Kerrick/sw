@@ -6,10 +6,8 @@ module Sw
     # What the panel says when the record links to no vehicles.
     EMPTY = "No vehicles"
 
-    # A value as text, dimmed when the data doesn't know it.
     ValueSpan = -> (value, tui) { tui.text_span(content: value.to_s, style: (tui.style(modifiers: [:dim]) if value.unknown?)) }
 
-    # Two related values with a slash between them.
     ValuePair = -> (first, second, tui) {
       tui.text_line(spans: [ValueSpan.(first, tui), tui.text_span(content: " / "), ValueSpan.(second, tui)])
     }
@@ -28,7 +26,6 @@ module Sw
       )
     }
 
-    # The vehicles, one above the next, with the rest of the panel left blank.
     Stack = -> (vehicles, tui) {
       tui.layout(
         direction: :vertical,
@@ -37,7 +34,6 @@ module Sw
       )
     }
 
-    # What the panel shows when the record links to no vehicles: EMPTY, dimmed and centered both ways.
     Empty = -> (tui) {
       spacer = tui.paragraph(text: "")
       tui.layout(
@@ -47,7 +43,7 @@ module Sw
       )
     }
 
-    # Without a record to show, as when no character matches a search, the panel is an empty box.
+    # No record arrives when no character matches a search.
     View = -> (vehicles, tui) {
       return tui.block(title: "Vehicles", borders: [:all]) unless vehicles
 
