@@ -138,11 +138,9 @@ code. Every film has an episode number. Don't build for films without one
 model free of character-centric assumptions, so future screens (one
 vehicle, one film) can reuse it and the panel modules.
 
-Two quirks hold for every parser. Each is an equivalence class with a test:
-
-- `"unknown"` = missing. `"n/a"` = not applicable (droid hair).
-  `"none"` is a real answer (bald).
-- Links are URLs; match them with or without a trailing `/`.
+One quirk holds for every parser, an equivalence class with a test:
+`"unknown"` = missing. `"n/a"` = not applicable (droid hair). `"none"` is a
+real answer (bald).
 
 A quirk of one kind of data belongs to the issue that handles it, not here.
 
