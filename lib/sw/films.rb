@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 module Sw
-  # The panel that shows every film, lit for the ones a record appears in.
+  # The panel that shows every film, lit for the ones its screen's subject appears in.
   module Films
     Column = -> (film, lit, tui) {
       style = tui.style(modifiers: lit ? [:bold] : [:bold, :dim])
       tui.paragraph(text: [tui.text_line(spans: [tui.text_span(content: film.title.to_s, style:)])], alignment: :center)
     }
 
-    # No record arrives when no character matches a search.
+    # No subject arrives when no character matches a search.
     View = -> (films, appearing_in, tui) {
       return tui.block(title: "Films", borders: [:all]) unless appearing_in
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Sw
-  # One field as the API writes it, which may be "unknown". Every field of a record that isn't a link is a Value,
-  # names included.
+  # One attribute of a domain object, as text, which may be "unknown". Every attribute that isn't an association or
+  # a number is a Value, names included.
   Value = Data.define(:text) do
     include Comparable
 

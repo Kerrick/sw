@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 module Sw
-  # The panel that shows the vehicles a record links to.
+  # The panel that shows the vehicles its screen's subject is linked to.
   module Vehicles
-    # What the panel says when the record links to no vehicles.
+    # What the panel says when its subject is linked to no vehicles.
     EMPTY = "No vehicles"
 
     ValueSpan = -> (value, tui) { tui.text_span(content: value.to_s, style: (tui.style(modifiers: [:dim]) if value.unknown?)) }
@@ -43,7 +43,7 @@ module Sw
       )
     }
 
-    # No record arrives when no character matches a search.
+    # No subject arrives when no character matches a search.
     View = -> (vehicles, tui) {
       return tui.block(title: "Vehicles", borders: [:all]) unless vehicles
 

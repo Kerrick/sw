@@ -124,8 +124,8 @@ Planets aren't black holes, so the app treats a zero diameter, rotation
 period, or orbital period as unknown.
 
 What is Luke's species? Unknown, because the data doesn't say. Thirty-two
-of the 82 characters, Luke among them, have no species, and the record for
-Humans doesn't list him. The wireframe shows him as Human, and most of the 32
+of the 82 characters, Luke among them, have no species, and the Human
+species doesn't list him. The wireframe shows him as Human, and most of the 32
 are. But R4-P17 is a droid, and Sly Moore is an Umbaran, so guessing Human
 would make the app wrong about them. The app shows an empty species as
 unknown. That's a problem in the data, and the place to fix it is the source.
@@ -150,14 +150,14 @@ background.
 The model starts with the API's JSON. The app parses it into immutable
 classes (`Character`, `Planet` and the rest) and cleans up the data's quirks
 on the way in. A small Domain Model, in Martin Fowler's sense from *Patterns of Enterprise
-Application Architecture*, holds those records and answers questions about
-them, like which films a character appears in. Records keep the API's
-links in both directions, so a character lists its films and a film lists its
-characters, and they point straight at each other. No kind of record is the
-center. Asking who pilots a vehicle is as easy as asking what a character
-pilots, which eases the addition of future screens. The records refer to each
+Application Architecture*, holds those domain objects and answers questions about
+them, like which films a character appears in. Every object keeps its
+associations in both directions, so a character lists its films and a film lists its
+characters, and they point straight at each other. No type of object is a
+"center": asking who pilots a vehicle is as easy as asking what a character
+pilots, which eases the addition of future screens. The objects refer to each
 other in circles, which is safe because they never change and the cache
-stores raw JSON rather than objects. Each screen hands the record it centers
+stores raw JSON rather than objects. Each screen hands the object it centers
 on to its panels.
 
 Loading happens in custom Rooibos commands. They fetch the API's root, then

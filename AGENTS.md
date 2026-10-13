@@ -92,9 +92,10 @@ Facts that are easy to get wrong:
 
 Vocabulary: a Rooibos unit is a **fragment**, never a "component" (reserved
 for the Kit library). "Widget" means a RatatuiRuby render primitive. Write
-"message" and "command", not "msg"/"cmd". The records are characters
+"message" and "command", not "msg"/"cmd". The people are characters
 (`Character`, `characters`) everywhere but the loader, which maps the API's
-`people`.
+`people`. The domain model has domain objects with attributes and
+associations, never "records"; "record" belongs to the loader and the data.
 
 ## The data source
 
@@ -148,29 +149,29 @@ Application Architecture* (Fowler), *Design Patterns* (Gang of Four),
 *Pattern-Oriented Software Architecture* (Buschmann), *Domain-Driven Design*
 (Evans), *Refactoring* (Fowler), *Data Access Patterns* (Nock), *xUnit Test
 Patterns* (Meszaros), and others--and only for patterns the code actually uses.
-The records and their collections are a small **Domain Model** in Fowler's sense.
+The domain objects and their collections are a small **Domain Model** in Fowler's sense.
 
 **Model.** Every model is a `Data.define` class, never a hash from
 `JSON.parse`. Name each for what it is, not `Model`. Parsing does the
-cleanup above. The domain model holds the records and answers derived
+cleanup above. The domain model holds the domain objects and answers derived
 questions (films in episode order, which films a character appears in).
 
-No record type is the center. Every record keeps the API's links in both
+No kind of object is the center. Every object keeps its associations in both
 directions (a character's films and a film's characters, a planet's
-residents and a resident's homeworld) as direct references, each to-many link
-a `Collection`, so `luke.vehicles.first.pilots` reads naturally. Records
-carry no IDs. The graph has cycles, and that's fine: the cache holds raw
-JSON, so no record is ever serialized. The API's two directions agree today;
-if a source ever disagrees, that's a data quirk with a test. A screen's View
-hands the record it centers on to its panels. Don't name or build an
-Identity Map.
+residents and a resident's homeworld) as direct references, each to-many
+association a `Collection`, so `luke.vehicles.first.pilots` reads naturally.
+Objects carry no IDs. The graph has cycles, and that's fine: the cache holds
+raw JSON, so no object is ever serialized. The API's two directions agree
+today; if a source ever disagrees, that's a data quirk with a test. A
+screen's View hands the object it centers on to its panels. Don't name or
+build an Identity Map.
 
 **Loading.** One or more custom commands, (`include Rooibos::Command::Custom`),
 responsible for crawling from the root URL (in parallel), caching the responses
 on disk, refreshing it after 7 days, parsing JSON, instantiating model classes,
 and making errors meaningful. `Load::Mapper` is the Data Mapper: the only
-code that knows the API's JSON. Records come back in a `Collection`, an
-`Enumerable` record set, frozen by whoever builds it.
+code that knows the API's JSON. Domain objects come back in a `Collection`,
+an `Enumerable` set, frozen by whoever builds it.
 
 Failures are messages, not exceptions. `Load` sends `Load::Finished` or
 `Load::Failed`, and the project defines no exception classes (no `Sw::Error`).
@@ -197,7 +198,7 @@ fractal architecture. A panel takes focus only when it has keys to answer,
 and only those panels keep state and have `Init`/`Update`/Router. The rest
 are `View`-only modules. A fragment's View takes that fragment's own
 `Model`, plus keywords for what the root owns, such as `focused:`. A
-`View`-only module takes whatever it needs, like props: a record, a
+`View`-only module takes whatever it needs, like props: a domain object, a
 `Collection`, or nothing. Parts inside a panel are `View`-only too, as
 lambdas in the panel's module or as modules of their own; file length
 decides. Key bindings, focus order, and on-screen wording belong in the

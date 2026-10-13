@@ -23,9 +23,9 @@ module Sw
     Select = -> (operator, model) {
       return model unless model.selected
 
-      records = model.matches.to_a
-      new_index = records.index(model.selected).public_send(operator, 1)
-      model.with(selected: records[new_index.clamp(0, records.length - 1)])
+      shown = model.matches.to_a
+      new_index = shown.index(model.selected).public_send(operator, 1)
+      model.with(selected: shown[new_index.clamp(0, shown.length - 1)])
     }
 
     receive_routed :move_down, -> (_, model) { Select.call(:+, model) }

@@ -63,13 +63,13 @@ module Sw
 
   class Collection[T] < Data
     include Enumerable[T]
-    def initialize: (Array[T] records) -> void
+    def initialize: (Array[T] items) -> void
     def each: () { (T) -> void } -> Array[T]
             | () -> Enumerator[T, Array[T]]
 
     private
 
-    attr_reader records: Array[T]
+    attr_reader items: Array[T]
   end
 
   class Load < Data
