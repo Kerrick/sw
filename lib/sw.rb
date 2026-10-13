@@ -135,12 +135,20 @@ module Sw
     )
   }
 
+  # While Search has focus, it types the keys other panels act on, so those panels skip them.
+  Searching = Ractor.shareable_lambda { |_, model| model.focus == :search }
+
   action :quit, -> { Rooibos::Command.exit }
 
   action :reload, -> (_, model) { [model.with(failure: nil, loading: true), Download.call] }
 
-  receive_events %i[q ctrl_c], :quit
-  receive_events %i[r f5], :reload
+  receive_events :ctrl_c, :quit
+  receive_events :f5, :reload
+
+  skip when: Searching do
+    receive_events :q, :quit
+    receive_events :r, :reload
+  end
 
   route :characters, to: Characters
   route :search, to: Search
@@ -148,10 +156,13 @@ module Sw
   forward_instances_of Search::QueryChanged, to: :characters, as: :filter
 
   only when: -> (_, model) { model.characters } do
-    receive_events :/, -> (_, model) { model.with(focus: :search) }
-    FocusOrder.each.with_index(1) do |panel, number|
-      receive_events :"#{number}", -> (_, model) { model.with(focus: panel) }
+    skip when: Searching do
+      receive_events :/, -> (_, model) { model.with(focus: :search) }
+      FocusOrder.each.with_index(1) do |panel, number|
+        receive_events :"#{number}", -> (_, model) { model.with(focus: panel) }
+      end
     end
+
     receive_events :tab, -> (_, model) { FocusStep.(model, 1) }
     receive_events %i[back_tab shift_back_tab], -> (_, model) { FocusStep.(model, -1) }
 
@@ -167,7 +178,7 @@ module Sw
     end
 
     # Search takes every keystroke nothing above answered.
-    only when: -> (_, model) { model.focus == :search } do
+    only when: Searching do
       receive_events :enter, -> (_, model) { model.with(focus: :characters) }
       otherwise route_to: :search
     end

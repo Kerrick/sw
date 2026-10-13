@@ -34,7 +34,7 @@ unbound until then.
 - [x] Esc in the list clears an active search too
 - [ ] Key help shows `esc: Clear search` in Search, and in the list only while a search is active
 - [x] Tab and Shift-Tab keep the filter and move focus on
-- [ ] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it
+- [x] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it
 - [ ] Pasted text goes into the query
 - [ ] A search with no matches says "No characters match …"
 - [ ] The cursor is drawn with `tui.cursor`

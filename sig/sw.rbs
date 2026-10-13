@@ -16,6 +16,7 @@ module Sw
 
   FocusOrder: Array[Symbol]
   FocusStep: ^(Model, Integer) -> Model
+  Searching: ^(Rooibos::message, Model) -> bool
   Download: ^() -> Load
   Init: ^() -> [Model, Load]
   View: ^(Model, RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout

@@ -12,7 +12,7 @@
 - Show the vehicles the highlighted character pilots in the Vehicles panel, each with its class, crew and passengers, model, and manufacturer, as the wireframe does.
 - Dim any value the data doesn't know, such as a vehicle's unknown passengers or manufacturer.
 - Say so in the Vehicles panel, dimmed, when the highlighted character pilots no vehicles.
-- Search the characters by name: press / or 1, then type to narrow the list as you go. Backspace deletes a character, and Ctrl-U clears the search. Enter returns to the list, still narrowed, and Esc clears the search and returns to the full list. Tab and Shift-Tab move between Search and the list, keeping the search.
+- Search the characters by name: press / or 1, then type to narrow the list as you go. Backspace deletes a character, and Ctrl-U clears the search. Enter returns to the list, still narrowed, and Esc clears the search and returns to the full list. Tab and Shift-Tab move between Search and the list, keeping the search. While you search, q, r, and the number keys type like any other key; Ctrl-C still quits and F5 still reloads.
 - Show a loading screen, with a blue Loading status word, while the data downloads.
 - Show why the download failed, with a red Error status word, when the first launch has no network or the server answers with an error, with something that isn't JSON, or with data the Datapad can't read.
 

@@ -269,6 +269,26 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_q_r_digits_slash_and_space_type_into_search_instead_of_acting
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    ["q", "r", "1", "2", "/", " "].each do |key|
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), searching)
+
+      assert_equal [:search, key], [model.focus, model.search.query], "Expected #{key.inspect} to type into Search"
+    end
+  end
+
+  def test_ctrl_c_quits_and_f5_reloads_from_search
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    _, quit = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "c", modifiers: ["ctrl"]), searching)
+    _, reload = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "f5"), searching)
+
+    assert_equal Rooibos::Command.exit, quit
+    assert_equal Sw::Download.call, reload
+  end
+
   def test_esc_from_a_search_for_sky_lands_on_the_list_with_every_character_back
     skywalkers = three_characters(selected: luke).with(query: "sky")
     searching = Sw::Model.new(characters: skywalkers, focus: :search, search: Sw::Search::Init.call.with(query: "sky"))
