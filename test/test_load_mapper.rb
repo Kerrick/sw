@@ -38,6 +38,12 @@ class TestLoadMapper < Minitest::Test
     assert_equal ["Luke Skywalker", "Wedge Antilles"], snowspeeder.pilots.map { |pilot| pilot.name.to_s }
   end
 
+  def test_the_x_wing_is_piloted_by_luke_biggs_wedge_and_porkins
+    x_wing = records.fetch(:characters).first.starships.first
+
+    assert_equal ["Luke Skywalker", "Biggs Darklighter", "Wedge Antilles", "Jek Tono Porkins"], x_wing.pilots.map { |pilot| pilot.name.to_s }
+  end
+
   def test_every_pilot_and_every_piloted_vehicle_list_each_other
     characters, vehicles = records.values_at(:characters, :vehicles)
     unlisted_vehicles = characters.flat_map do |character|
@@ -48,6 +54,18 @@ class TestLoadMapper < Minitest::Test
     end
 
     assert_empty unlisted_vehicles + unlisted_pilots
+  end
+
+  def test_every_pilot_and_every_piloted_starship_list_each_other
+    characters, starships = records.values_at(:characters, :starships)
+    unlisted_starships = characters.flat_map do |character|
+      character.starships.reject { |starship| starship.pilots.include?(character) }.map { |starship| "#{starship.name} omits #{character.name}" }
+    end
+    unlisted_pilots = starships.flat_map do |starship|
+      starship.pilots.reject { |pilot| pilot.starships.include?(starship) }.map { |pilot| "#{pilot.name} omits #{starship.name}" }
+    end
+
+    assert_empty unlisted_starships + unlisted_pilots
   end
 
   def test_every_film_and_every_character_in_it_list_each_other
