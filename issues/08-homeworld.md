@@ -11,7 +11,7 @@ and Attributes share those rows.
 
 - [x] Luke's homeworld resolves to Tatooine, with population, terrain, climate, surface water, diameter, rotation and orbital periods, and gravity
 - [x] A planet named `"unknown"` (planets/28, Yoda's) shows as an unknown homeworld, not a place
-- [ ] Planet numbers show with separators, as the wireframe does: `"200000"` as 200,000 and `"10465"` as 10,465 km; `"unknown"` as unknown
+- [x] Planet numbers show with separators, as the wireframe does: `"200000"` as 200,000 and `"10465"` as 10,465 km; `"unknown"` as unknown
 - [ ] A diameter, rotation period, or orbital period of `"0"` shows as unknown (Polis Massa's diameter; planets/28's periods)
 - [ ] A planet's residents link back, and both directions agree
 - [ ] Dagobah's gravity `"N/A"` reads dimmed, like unknown

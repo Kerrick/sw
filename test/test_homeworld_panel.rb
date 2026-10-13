@@ -15,6 +15,15 @@ class TestHomeworldPanel < Minitest::Test
     end
   end
 
+  def test_iridonias_unknown_diameter_reads_dimmed_with_no_kilometers
+    iridonia = EntireGalaxy::RECORDS.fetch(:planets).find { |planet| planet.name.to_s == "Iridonia" }
+
+    with_rendered(Sw::Homeworld::View.call(iridonia, tui)) do
+      assert_nil text_position("unknown km")
+      assert_text_style "unknown", modifiers: [:dim]
+    end
+  end
+
   def test_yodas_homeworld_reads_dimmed_as_unknown_rather_than_as_a_planet_named_unknown
     yoda = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == "Yoda" }
 
