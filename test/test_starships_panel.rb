@@ -15,6 +15,17 @@ class TestStarshipsPanel < Minitest::Test
     end
   end
 
+  # The panel's width in a 120×40 terminal.
+  def test_the_panel_is_tall_enough_for_obi_wan_kenobis_five_starships_in_full
+    characters = EntireGalaxy::RECORDS.fetch(:characters)
+    obi_wan = characters.find { |character| character.name.to_s == "Obi-Wan Kenobi" }
+    belbullab_22_model = "Belbullab-22 starfighter"
+
+    with_rendered(Sw::Starships::View.call(obi_wan.starships, tui), width: 60, height: Sw::CraftHeight.(characters)) do
+      refute_nil text_position(belbullab_22_model, on_line_with: "Model / Manufacturer:")
+    end
+  end
+
   def test_ackbar_who_pilots_no_starship_sees_a_dimmed_empty_state
     ackbars_starships = Sw::Collection.new([])
 

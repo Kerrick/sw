@@ -12,19 +12,10 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 │  Ben Quadinaros         ││                                                                                           │
 │  Beru Whitesun lars     ││                                                                                           │
 │  Bib Fortuna            ││                                                                                           │
-│  Biggs Darklighter      ││                                                                                           │
-│  Boba Fett              ││                                                                                           │
-│  Bossk                  ││                                                                                           │
-│  C-3PO                  ││                                                                                           │
-│  Chewbacca              ││                                                                                           │
-│  Cliegg Lars            ││                                                                                           │
-│  Cordé                  ││                                                                                           │
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
 │      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
-│                                                                                                                      │
-│                                                                                                                      │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
 │                                                          ││                                                          │
@@ -32,7 +23,16 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
 │                       No starships                       ││                        No vehicles                       │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │

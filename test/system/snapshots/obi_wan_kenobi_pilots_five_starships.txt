@@ -1,0 +1,40 @@
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │obi                      │
+k/j: Prev/Next  g/G: First/Last  esc: Clear search  r: Reload  q: Quit                       └─────────────────────────┘
+┌[2] Characters───────────┐┌Obi-Wan Kenobi─────────────────────────────────────────────────────────────────────────────┐
+│> Obi-Wan Kenobi         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+│                         ││                                                                                           │
+└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
+┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
+│      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
+│Jedi starfighter       Starfighter                        ││Tribubble bongo        submarine                          │
+│Crew / Passengers:     1 / 0                              ││Crew / Passengers:     1 / 2                              │
+│Model / Manufacturer:  Delta-7 Aethersprite-class intercep││Model / Manufacturer:  Tribubble bongo / Otoh Gunga Bongam│
+│──────────────────────────────────────────────────────────││                                                          │
+│Trade Federation cruis capital ship                       ││                                                          │
+│Crew / Passengers:     600 / 48,247                       ││                                                          │
+│Model / Manufacturer:  Providence-class carrier/destroyer ││                                                          │
+│──────────────────────────────────────────────────────────││                                                          │
+│Naboo star skiff       yacht                              ││                                                          │
+│Crew / Passengers:     3 / 3                              ││                                                          │
+│Model / Manufacturer:  J-type star skiff / Theed Palace Sp││                                                          │
+│──────────────────────────────────────────────────────────││                                                          │
+│Jedi Interceptor       starfighter                        ││                                                          │
+│Crew / Passengers:     1 / 0                              ││                                                          │
+│Model / Manufacturer:  Eta-2 Actis-class light interceptor││                                                          │
+│──────────────────────────────────────────────────────────││                                                          │
+│Belbullab-22 starfight starfighter                        ││                                                          │
+│Crew / Passengers:     1 / 0                              ││                                                          │
+│Model / Manufacturer:  Belbullab-22 starfighter / Feethan ││                                                          │
+└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘

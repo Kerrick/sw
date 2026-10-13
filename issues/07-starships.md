@@ -9,4 +9,4 @@ quirks among the related records.
 - [x] A starship's pilots link back, and both directions agree
 - [x] Crew and passengers with thousands separators (`"47,060"`, `"843,342"`), a range (`"30-165"`), and `"unknown"`
 - [x] A character who pilots no starship sees an empty state
-- [ ] Obi-Wan's five starships overflow the panel at 120×40: decide between a taller panel and showing less, since Starships takes no focus to scroll
+- [x] Obi-Wan's five starships overflow the panel at 120×40: decide between a taller panel and showing less, since Starships takes no focus to scroll. Decided: a taller panel, sized for the most craft any character pilots, so the layout holds still while browsing. The list gives up the rows.

@@ -2,13 +2,6 @@
 [0m                                                                                                                                     │                         │[0m
 [0m[0m[1;2;4mk/j[0m[2m: Prev/Next[0m  [0m[1;2;4mg/G[0m[2m: First/Last[0m  [0m[1;2;4mr[0m[2m: Reload[0m  [0m[1;2;4mq[0m[2m: Quit[0m                                                                                  └─────────────────────────┘[0m
 [0m[32m┌[2] Characters───────────┐┌[0m[1mLuke Skywalker[0m─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
-[0m[32m│  Greedo                 [32m││                                                                                                                                   │[0m
-[0m[32m│  Gregar Typho           [32m││                                                                                                                                   │[0m
-[0m[32m│  Grievous               [32m││                                                                                                                                   │[0m
-[0m[32m│  Han Solo               [32m││                                                                                                                                   │[0m
-[0m[32m│  IG-88                  [32m││                                                                                                                                   │[0m
-[0m[32m│  Jabba Desilijic Tiure  [32m││                                                                                                                                   │[0m
-[0m[32m│  Jango Fett             [32m││                                                                                                                                   │[0m
 [0m[32m│  Jar Jar Binks          [32m││                                                                                                                                   │[0m
 [0m[32m│  Jek Tono Porkins       [32m││                                                                                                                                   │[0m
 [0m[32m│  Jocasta Nu             [32m││                                                                                                                                   │[0m
@@ -23,8 +16,6 @@
 [0m┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
 [0m│    [0m[1;2mThe Phantom Menace[0m       [0m[1;2mAttack of the Clones[0m        [0m[1mRevenge of the Sith[0m           [0m[1mA New Hope[0m          [0m[1mThe Empire Strikes Back[0m      [0m[1mReturn of the Jedi[0m    │[0m
 [0m│         [0m[2mEpisode I[0m                [0m[2mEpisode II[0m                 Episode III               Episode IV                 Episode V                 Episode VI        │[0m
-[0m│                                                                                                                                                              │[0m
-[0m│                                                                                                                                                              │[0m
 [0m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m
 [0m┌Starships─────────────────────────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────────────────────────┐[0m
 [0m│[0m[1mX-wing[0m                 Starfighter                                            ││[0m[1mSnowspeeder[0m            airspeeder                                             │[0m
@@ -34,6 +25,15 @@
 [0m│[0m[1mImperial shuttle[0m       Armed government transport                             ││[0m[1mImperial Speeder Bike[0m  speeder                                                │[0m
 [0m│Crew / Passengers:     6 / 20                                                 ││Crew / Passengers:     1 / 1                                                  │[0m
 [0m│Model / Manufacturer:  Lambda-class T-4a shuttle / Sienar Fleet Systems       ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulsor Company           │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
+[0m│                                                                              ││                                                                              │[0m
 [0m│                                                                              ││                                                                              │[0m
 [0m│                                                                              ││                                                                              │[0m
 [0m│                                                                              ││                                                                              │[0m

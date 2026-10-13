@@ -2,13 +2,6 @@ Star Wars Character Datapad                                                     
                                                                                              │                         │
 k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
 ┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
-│  Greedo                 ││                                                                                           │
-│  Gregar Typho           ││                                                                                           │
-│  Grievous               ││                                                                                           │
-│  Han Solo               ││                                                                                           │
-│  IG-88                  ││                                                                                           │
-│  Jabba Desilijic Tiure  ││                                                                                           │
-│  Jango Fett             ││                                                                                           │
 │  Jar Jar Binks          ││                                                                                           │
 │  Jek Tono Porkins       ││                                                                                           │
 │  Jocasta Nu             ││                                                                                           │
@@ -23,8 +16,6 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
 │      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
-│                                                                                                                      │
-│                                                                                                                      │
 └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
 │X-wing                 Starfighter                        ││Snowspeeder            airspeeder                         │
@@ -34,6 +25,15 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 │Imperial shuttle       Armed government transport         ││Imperial Speeder Bike  speeder                            │
 │Crew / Passengers:     6 / 20                             ││Crew / Passengers:     1 / 1                              │
 │Model / Manufacturer:  Lambda-class T-4a shuttle / Sienar ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulso│
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
