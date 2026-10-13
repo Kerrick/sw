@@ -6,20 +6,14 @@ module Sw
     # What the panel says when its subject is linked to no vehicles.
     EMPTY = "No vehicles"
 
-    ValueSpan = -> (value, tui) { tui.text_span(content: value.to_s, style: (tui.style(modifiers: [:dim]) if value.unknown?)) }
-
-    ValuePair = -> (first, second, tui) {
-      tui.text_line(spans: [ValueSpan.(first, tui), tui.text_span(content: " / "), ValueSpan.(second, tui)])
-    }
-
     # One vehicle's three rows. A Table has no row separators, so each vehicle is a Table of its own, and every
     # one after the first draws its top border as a rule.
     Vehicle = -> (vehicle, tui, first:) {
       tui.table(
         rows: [
-          [tui.text_span(content: vehicle.name.to_s, style: tui.style(modifiers: [:bold])), ValueSpan.(vehicle.vehicle_class, tui)],
-          ["Crew / Passengers:", ValuePair.(vehicle.crew, vehicle.passengers, tui)],
-          ["Model / Manufacturer:", ValuePair.(vehicle.model, vehicle.manufacturer, tui)],
+          [tui.text_span(content: vehicle.name.to_s, style: tui.style(modifiers: [:bold])), Values::Span.(vehicle.vehicle_class, tui)],
+          ["Crew / Passengers:", Values::Pair.(vehicle.crew, vehicle.passengers, tui)],
+          ["Model / Manufacturer:", Values::Pair.(vehicle.model, vehicle.manufacturer, tui)],
         ],
         widths: [tui.constraint_length(22), tui.constraint_fill(1)],
         block: (tui.block(borders: [:top]) unless first)
