@@ -38,5 +38,5 @@ unbound until then.
 - [x] Pasted text goes into the query
 - [x] A paste drops its trailing line break
 - [x] A search with no matches says "No match for" over the query
-- [ ] The cursor is drawn with `tui.cursor`
+- [x] A blinking cursor follows the query while Search has focus (RatatuiRuby drops a nested `tui.cursor`)
 - [x] Search shows its own key help and hides the global `r: Reload  q: Quit`, because those keys type into it

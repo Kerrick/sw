@@ -1,5 +1,5 @@
 Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
-                                                                                             │sky                      │
+                                                                                             │sky_                     │
 enter: Finish search  esc: Clear search                                                      └─────────────────────────┘
 ┌[2] Characters───────────┐┌Anakin Skywalker───────────────────────────────────────────────────────────────────────────┐
 │> Anakin Skywalker       ││                                                                                           │

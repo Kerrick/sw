@@ -264,10 +264,12 @@ together, they describe the app.
 1. Add a responsive UI that works with screens as small as 80 columns wide and
 24 rows high.
 2. Add image support to RatatuiRuby, and then to this application.
-3. Add screens to browse each collection, and links between them.
-4. Improve accessibility, with respect for `NO_COLOR` and a
+3. Fix RatatuiRuby so a cursor drawn inside a panel moves the terminal's own
+   cursor, then use it in Search in place of the blinking underscore.
+4. Add screens to browse each collection, and links between them.
+5. Improve accessibility, with respect for `NO_COLOR` and a
    non-interactive (CLI) mode.
-5. Add mouse support.
+6. Add mouse support.
 
 ## How I used AI
 

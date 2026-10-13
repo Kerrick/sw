@@ -1,5 +1,5 @@
 Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
-                                                                                             │Grogu                    │
+                                                                                             │Grogu_                   │
 enter: Finish search  esc: Clear search                                                      └─────────────────────────┘
 ┌[2] Characters───────────┐┌───────────────────────────────────────────────────────────────────────────────────────────┐
 │No match for             ││                                                                                           │

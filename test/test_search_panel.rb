@@ -13,6 +13,23 @@ class TestSearchPanel < Minitest::Test
     end
   end
 
+  def test_a_blinking_cursor_follows_grogu_while_search_has_focus
+    searched_for_grogu = Sw::Search::Init.call.with(query: "Grogu")
+
+    with_rendered(Sw::Search::View.call(searched_for_grogu, tui, focused: true, number: 1)) do
+      x, y = text_position("Grogu")
+      assert_cell_style(x + "Grogu".length, y, symbol: "_", modifiers: [:slow_blink])
+    end
+  end
+
+  def test_no_cursor_follows_grogu_while_the_list_has_focus
+    searched_for_grogu = Sw::Search::Init.call.with(query: "Grogu")
+
+    with_rendered(Sw::Search::View.call(searched_for_grogu, tui, focused: false, number: 1)) do
+      assert_nil text_position("Grogu_")
+    end
+  end
+
   def test_search_is_titled_with_its_number_1
     with_rendered(Sw::Search::View.call(Sw::Search::Init.call, tui, focused: true, number: 1)) do
       refute_nil text_position("[1]")

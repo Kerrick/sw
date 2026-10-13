@@ -43,7 +43,10 @@ module Sw
     Update = from_router
 
     View = -> (model, tui, focused:, number:) {
-      tui.paragraph(text: model.query, block: tui.block(title: "[#{number}] Search", borders: [:all], border_style: tui.style(fg: (:green if focused))))
+      # RatatuiRuby drops a tui.cursor nested anywhere in a View, so the cursor is a span.
+      cursor = (tui.text_span(content: "_", style: tui.style(modifiers: [:slow_blink])) if focused)
+      text = tui.text_line(spans: [tui.text_span(content: model.query), *cursor])
+      tui.paragraph(text:, block: tui.block(title: "[#{number}] Search", borders: [:all], border_style: tui.style(fg: (:green if focused))))
     }
   end
 end
