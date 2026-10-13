@@ -154,6 +154,7 @@ module Sw
 
     # Search takes every keystroke nothing above answered.
     only when: -> (_, model) { model.focus == :search } do
+      receive_events :enter, -> (_, model) { model.with(focus: :characters) }
       otherwise route_to: :search
     end
   end

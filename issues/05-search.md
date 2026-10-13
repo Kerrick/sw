@@ -29,7 +29,7 @@ unbound until then.
 - [x] Backspace deletes the query's last character, and does nothing to an empty query
 - [x] Cmd-Backspace, or Ctrl-U, clears the query
 - [x] Ctrl and Alt chords don't type into the query
-- [ ] Enter keeps the filter and focuses the searched list
+- [x] Enter keeps the filter and focuses the searched list
 - [ ] Esc clears the filter and focuses the default panel
 - [ ] Tab and Shift-Tab keep the filter and move focus on
 - [ ] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it

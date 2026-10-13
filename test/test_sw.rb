@@ -235,6 +235,16 @@ class TestSw < Minitest::Test
     assert_equal ackbar, model.characters.selected
   end
 
+  def test_enter_after_searching_for_sky_returns_to_the_list_still_showing_the_skywalkers
+    skywalkers = three_characters(selected: luke).with(query: "sky")
+    searching = Sw::Model.new(characters: skywalkers, focus: :search)
+
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "enter"), searching)
+
+    assert_equal :characters, model.focus
+    assert_equal skywalkers, model.characters
+  end
+
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way
     loading, = Sw::Init.call
 
