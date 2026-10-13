@@ -48,6 +48,21 @@ class TestSearchPanel < Minitest::Test
     assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "")), command
   end
 
+  def test_pasting_skywalker_into_an_empty_search_makes_the_query_skywalker
+    model, command = Sw::Search::Update.call(RatatuiRuby::Event::Paste.new(content: "Skywalker"), Sw::Search::Init.call)
+
+    assert_equal "Skywalker", model.query
+    assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "Skywalker")), command
+  end
+
+  def test_pasting_yoda_with_a_trailing_newline_makes_the_query_yoda
+    yoda_copied_with_its_line_break = "Yoda\n"
+
+    model, = Sw::Search::Update.call(RatatuiRuby::Event::Paste.new(content: yoda_copied_with_its_line_break), Sw::Search::Init.call)
+
+    assert_equal "Yoda", model.query
+  end
+
   def test_ctrl_a_and_alt_b_leave_sky_as_it_was
     after_sky = Sw::Search::Init.call.with(query: "sky")
 

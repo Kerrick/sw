@@ -33,6 +33,8 @@ module Sw
 
     receive Typed, -> (message, model) { Change.(model, "#{model.query}#{message.code}") }
 
+    receive_instances_of RatatuiRuby::Event::Paste, -> (message, model) { Change.(model, message.content.chomp) }
+
     receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
 
     Update = from_router
