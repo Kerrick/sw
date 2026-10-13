@@ -17,6 +17,20 @@ class TestLoad < Minitest::Test
     assert_equal 39, finished.vehicles.count
   end
 
+  def test_a_download_lands_in_the_users_cache_directory
+    finished
+
+    refute_empty Dir.glob("**/*.json", base: @cache_home)
+  end
+
+  def test_a_fresh_cache_loads_all_82_characters_without_the_network
+    finished
+    cached = delivered(unreachable_url)
+
+    assert_equal "Sw::Load::Finished", cached.class.name
+    assert_equal 82, cached.characters.count
+  end
+
   def test_a_refused_connection_fails_naming_the_address
     url = unreachable_url
     failed = delivered(url)

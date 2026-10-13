@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary = "A Rooibos TUI application"
   spec.description = "A terminal user interface application built with Rooibos"
   spec.homepage = "https://www.rooibos.run"
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 4.0.0"
 
   # Uncomment the line below to require MFA for gem pushes.
   # This helps protect your gem from supply chain attacks by ensuring
@@ -43,4 +43,7 @@ Gem::Specification.new do |spec|
 
   # Roman numerals for episode numbers
   spec.add_runtime_dependency "roman", "~> 0.3"
+
+  # The platform's user cache directory
+  spec.add_runtime_dependency "etcetera", "~> 0.12"
 end

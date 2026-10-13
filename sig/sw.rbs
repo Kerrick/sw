@@ -126,6 +126,7 @@ class Collection[T] < Data
   class Load < Data
     include Rooibos::Command::Custom
     Command: singleton(Rooibos::Command)
+    CACHE: Etcetera::AppStrategy::AppStrategyArgs
     attr_reader url: String
     def initialize: (url: String) -> void
     def call: (Rooibos::Command::Outlet out, Concurrent::Cancellation token) -> void

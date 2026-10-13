@@ -2,6 +2,8 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "sw"
+require "tmpdir"
+require "fileutils"
 require "rooibos/test_helper"
 require_relative "support/fixture_server"
 require_relative "support/view_test_helper"
@@ -22,6 +24,26 @@ module PointAtFixtureServer
   end
 end
 Minitest::Test.include(PointAtFixtureServer)
+
+# Every test starts with an empty cache of its own, found the way the app finds the user's: under HOME on macOS,
+# XDG_CACHE_HOME on Linux, and LOCALAPPDATA on Windows.
+module EmptyCache
+  CACHE_HOMES = %w[HOME XDG_CACHE_HOME LOCALAPPDATA].freeze
+
+  def before_setup
+    super
+    @cache_home = Dir.mktmpdir("sw-cache")
+    @user_cache_homes = ENV.slice(*CACHE_HOMES)
+    CACHE_HOMES.each { |name| ENV[name] = @cache_home }
+  end
+
+  def after_teardown
+    CACHE_HOMES.each { |name| ENV[name] = @user_cache_homes[name] }
+    FileUtils.remove_entry(@cache_home)
+    super
+  end
+end
+Minitest::Test.include(EmptyCache)
 
 # Tests that need a network failure ask for an address nothing listens on.
 module UnreachableUrl

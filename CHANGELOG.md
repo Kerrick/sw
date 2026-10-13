@@ -35,6 +35,7 @@
 - List Enter and Esc in the key help while you search, and Esc in the list's key help while a search narrows it.
 - Show a loading screen, with a blue Loading status word, while the data downloads.
 - Show why the download failed, with a red Error status word, when the first launch has no network or the server answers with an error, with something that isn't JSON, or with data the Datapad can't read.
+- Keep the downloaded data in the platform's cache directory, so every launch after the first works offline.
 
 ## [0.1.0] - 2026-10-12
 
