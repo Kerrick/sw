@@ -57,7 +57,7 @@ class TestSw < Minitest::Test
 
   def test_the_status_line_shows_the_list_keys_as_hotkeys_while_the_list_has_focus
     with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
-      %w[k/j g/G].each { |keys| assert_text_style keys, line: -1, modifiers: [:bold, :underlined] }
+      %w[k/j g/G].each { |keys| assert_text_style keys, line: -1, modifiers: [:bold, :dim, :underlined] }
     end
   end
 
@@ -78,6 +78,14 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_status_line_dims_k_j_and_what_it_does
+    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+      x, y = text_position("k/j: ")
+      assert_includes get_cell(x, y).modifiers, :dim
+      assert_cell_style(x + "k/j".length, y, modifiers: [:dim])
+    end
+  end
+
   def test_the_status_line_hides_r_and_q_while_search_has_focus
     searching = Sw::Model.new(characters: three_characters, focus: :search)
 
@@ -90,7 +98,7 @@ class TestSw < Minitest::Test
     searching = Sw::Model.new(characters: three_characters, focus: :search)
 
     with_rendered(Sw::View.call(searching, tui)) do
-      %w[enter esc].each { |key| assert_text_style "#{key}:", modifiers: [:bold, :underlined] }
+      %w[enter esc].each { |key| assert_text_style "#{key}:", modifiers: [:bold, :dim, :underlined] }
     end
   end
 
@@ -128,11 +136,12 @@ class TestSw < Minitest::Test
     end
   end
 
-  def test_a_failed_download_shows_a_red_error_status_word
+  def test_a_failed_download_shows_a_red_error_status_word_at_full_strength
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model.with(failure: "Connection refused"), tui)) do
       assert_text_style "Error", line: -1, fg: :red
+      refute_includes get_cell(*text_position("Error", line: -1)).modifiers, :dim
     end
   end
 
@@ -142,7 +151,7 @@ class TestSw < Minitest::Test
     loaded = loading.with(characters: three_characters)
 
     [loading, failed, loaded].each do |model|
-      with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", line: -1, modifiers: [:bold, :underlined] }
+      with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", line: -1, modifiers: [:bold, :dim, :underlined] }
     end
   end
 
@@ -199,7 +208,7 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model, tui)) do
-      assert_text_style "q: ", line: -1, modifiers: [:bold, :underlined]
+      assert_text_style "q: ", line: -1, modifiers: [:bold, :dim, :underlined]
     end
   end
 

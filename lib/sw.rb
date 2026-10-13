@@ -45,7 +45,7 @@ module Sw
   }
 
   Hotkey = -> (tui, key, label) {
-    [tui.text_span(content: key, style: tui.style(modifiers: [:bold, :underlined])), tui.text_span(content: ": #{label}")]
+    [tui.text_span(content: key, style: tui.style(modifiers: [:bold, :underlined, :dim])), tui.text_span(content: ": #{label}", style: tui.style(modifiers: [:dim]))]
   }
 
   GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
