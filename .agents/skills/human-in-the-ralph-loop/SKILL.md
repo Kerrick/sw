@@ -68,7 +68,9 @@ fault (a changed operator, an off-by-one, a dropped statement) that the test's
 own assertion catches, not a crash on the way to it. A test that pins the data
 rather than the code needs no mutant: give it an input from the other
 equivalence class, outside the repository, and watch it fail. Say so at the
-gate.
+gate. A test that passes on arrival and that no plausible mutant can fail,
+because other tests already catch every mutant or the code can't reach the
+fault, isn't worth keeping. Tick the item with a note saying why.
 
 ### 4. Gate one: TEST REVIEW
 

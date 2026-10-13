@@ -73,6 +73,12 @@ Facts that are easy to get wrong:
   `out.standing` runs children in parallel, but their messages go to Update,
   not back to the parent. `Command.all` runs children in parallel and
   returns all their results together.
+- In a test, `inject_sync` waits for the commands under way, then hands
+  their messages to Update. It doesn't wait for the commands Update
+  returns; a second sync does. To hold a command in flight for a steady
+  screen, point it at a `TCPServer` that never answers.
+- `Time.now` is a side effect: call it in a command, never in Update or a
+  View. If Update needs the time, `Command.clock` delivers it as a message.
 - Everything in a message or the model must be Ractor-shareable
   (`Ractor.make_shareable`). The test helpers enable debug mode, which checks.
 - A command that raises does not fail cleanly. The runtime wraps the exception
@@ -298,7 +304,7 @@ The approach comes from five books. Apply them; don't cite them in code.
   exist yet passes on its first run and writes itself, so a snapshot alone
   can't make a test red. Assert on data first.
 - Point the cache at a temp directory via the environment, so tests exercise
-  real path resolution.
+  real path resolution. Age it with `age_cache`.
 - `with_test_terminal` times out after 2 s by default; keep each test small.
 
 ## Writing
