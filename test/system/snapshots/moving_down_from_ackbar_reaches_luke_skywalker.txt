@@ -1,6 +1,7 @@
-Star Wars Character Datapad                                                                                             
-┌Characters───────────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
-│  Greedo                 ││                                                                                           │
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │                         │
+                                                                                             └─────────────────────────┘
+┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
 │  Gregar Typho           ││                                                                                           │
 │  Grievous               ││                                                                                           │
 │  Han Solo               ││                                                                                           │
@@ -32,7 +33,6 @@ Star Wars Character Datapad
 │                                                          ││Imperial Speeder Bike  speeder                            │
 │                                                          ││Crew / Passengers:     1 / 1                              │
 │                                                          ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulso│
-│                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │

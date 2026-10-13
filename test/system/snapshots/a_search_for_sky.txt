@@ -1,9 +1,10 @@
-Star Wars Character Datapad                                                                                             
-┌Characters───────────────┐┌Anakin Skywalker───────────────────────────────────────────────────────────────────────────┐
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │sky                      │
+                                                                                             └─────────────────────────┘
+┌[2] Characters───────────┐┌Anakin Skywalker───────────────────────────────────────────────────────────────────────────┐
 │> Anakin Skywalker       ││                                                                                           │
 │  Luke Skywalker         ││                                                                                           │
 │  Shmi Skywalker         ││                                                                                           │
-│                         ││                                                                                           │
 │                         ││                                                                                           │
 │                         ││                                                                                           │
 │                         ││                                                                                           │
@@ -32,7 +33,6 @@ Star Wars Character Datapad
 │                                                          ││XJ-6 airspeeder        airspeeder                         │
 │                                                          ││Crew / Passengers:     1 / 1                              │
 │                                                          ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│
-│                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 │                                                          ││                                                          │

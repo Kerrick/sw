@@ -3,6 +3,31 @@
 require "test_helper"
 
 class TestSearchPanel < Minitest::Test
+  include ViewTestHelper
+
+  def test_a_search_for_grogu_shows_grogu
+    searched_for_grogu = Sw::Search::Init.call.with(query: "Grogu")
+
+    with_rendered(Sw::Search::View.call(searched_for_grogu, tui, focused: true, number: 1)) do
+      refute_nil text_position("Grogu")
+    end
+  end
+
+  def test_search_is_titled_with_its_number_1
+    with_rendered(Sw::Search::View.call(Sw::Search::Init.call, tui, focused: true, number: 1)) do
+      refute_nil text_position("[1]")
+    end
+  end
+
+  def test_the_border_is_green_only_while_search_has_focus
+    with_rendered(Sw::Search::View.call(Sw::Search::Init.call, tui, focused: true, number: 1)) do
+      assert_fg_color(:green, 0, 0)
+    end
+    with_rendered(Sw::Search::View.call(Sw::Search::Init.call, tui, focused: false, number: 1)) do
+      refute_equal :green, get_cell(0, 0).fg
+    end
+  end
+
   def test_typing_s_into_an_empty_search_makes_the_query_s
     model, = Sw::Search::Update.call(RatatuiRuby::Event::Key.new(code: "s"), Sw::Search::Init.call)
 

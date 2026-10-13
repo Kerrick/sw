@@ -37,6 +37,6 @@ unbound until then.
 - [x] Ctrl-C quits from Search and F5 reloads from it; `q`, `r`, digits, and Space type into it
 - [x] Pasted text goes into the query
 - [x] A paste drops its trailing line break
-- [ ] A search with no matches says "No characters match …"
+- [x] A search with no matches says "No match for" over the query
 - [ ] The cursor is drawn with `tui.cursor`
 - [ ] Search shows its own key help and hides the global `r: Reload  q: Quit`, because those keys type into it

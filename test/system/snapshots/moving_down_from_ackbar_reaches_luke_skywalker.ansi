@@ -1,6 +1,7 @@
-[0m[0m[1mStar Wars Character Datapad                                                                                             [0m
-[0m[32m┌Characters───────────────┐┌[0m[1mLuke Skywalker[0m─────────────────────────────────────────────────────────────────────────────┐[0m
-[0m[32m│  Greedo                 [32m││                                                                                           │[0m
+[0m[0m[1mStar Wars Character Datapad                                                                  [0m┌[1] Search───────────────┐[0m
+[0m[0m[1m                                                                                             [0m│                         │[0m
+[0m[0m[1m                                                                                             [0m└─────────────────────────┘[0m
+[0m[32m┌[2] Characters───────────┐┌[0m[1mLuke Skywalker[0m─────────────────────────────────────────────────────────────────────────────┐[0m
 [0m[32m│  Gregar Typho           [32m││                                                                                           │[0m
 [0m[32m│  Grievous               [32m││                                                                                           │[0m
 [0m[32m│  Han Solo               [32m││                                                                                           │[0m
@@ -32,7 +33,6 @@
 [0m│                                                          ││[0m[1mImperial Speeder Bike[0m  speeder                            │[0m
 [0m│                                                          ││Crew / Passengers:     1 / 1                              │[0m
 [0m│                                                          ││Model / Manufacturer:  74-Z speeder bike / Aratech Repulso│[0m
-[0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m

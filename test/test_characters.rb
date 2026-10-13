@@ -11,22 +11,28 @@ class TestCharacters < Minitest::Test
   end
 
   def test_ackbar_is_listed_before_luke_skywalker
-    with_rendered(Sw::Characters::View.call(three_characters, tui)) do
+    with_rendered(Sw::Characters::View.call(three_characters, tui, number: 2)) do
       assert_operator text_position("Ackbar").last, :<, text_position("Luke Skywalker").last
     end
   end
 
   def test_the_selected_character_is_highlighted
-    with_rendered(Sw::Characters::View.call(three_characters(selected: luke), tui)) do
+    with_rendered(Sw::Characters::View.call(three_characters(selected: luke), tui, number: 2)) do
       assert_text_style "Luke Skywalker", modifiers: [:reversed]
     end
   end
 
+  def test_the_list_is_titled_with_its_number_2
+    with_rendered(Sw::Characters::View.call(three_characters, tui, number: 2)) do
+      refute_nil text_position("[2]")
+    end
+  end
+
   def test_the_border_is_green_only_while_the_list_has_focus
-    with_rendered(Sw::Characters::View.call(three_characters, tui, focused: true)) do
+    with_rendered(Sw::Characters::View.call(three_characters, tui, number: 2, focused: true)) do
       assert_fg_color(:green, 0, 0)
     end
-    with_rendered(Sw::Characters::View.call(three_characters, tui, focused: false)) do
+    with_rendered(Sw::Characters::View.call(three_characters, tui, number: 2, focused: false)) do
       refute_equal :green, get_cell(0, 0).fg
     end
   end
@@ -110,7 +116,7 @@ class TestCharacters < Minitest::Test
   def test_a_search_for_sky_lists_luke_skywalker_without_ackbar
     searched_for_sky = three_characters(selected: luke).with(query: "sky")
 
-    with_rendered(Sw::Characters::View.call(searched_for_sky, tui)) do
+    with_rendered(Sw::Characters::View.call(searched_for_sky, tui, number: 2)) do
       refute_nil text_position("Luke Skywalker")
       assert_nil text_position("Ackbar")
     end
@@ -120,7 +126,7 @@ class TestCharacters < Minitest::Test
     grogu = Sw::Search::QueryChanged.new(query: "Grogu")
     no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)
 
-    with_rendered(Sw::Characters::View.call(no_one, tui)) do
+    with_rendered(Sw::Characters::View.call(no_one, tui, number: 2)) do
       assert_text_style Sw::Characters::EMPTY, modifiers: [:dim]
       assert_text_style "Grogu", fg: :yellow, modifiers: [:dim]
     end

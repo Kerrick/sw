@@ -35,7 +35,9 @@ module Sw
 
   Init = -> { [Model.new(characters: nil, loading: true), Download.call] }
 
-  Title = -> (tui) { tui.paragraph(text: "Star Wars Character Datapad", style: tui.style(modifiers: [:bold])) }
+  TITLE = "Star Wars Character Datapad"
+
+  Title = -> (tui) { tui.paragraph(text: TITLE, style: tui.style(modifiers: [:bold])) }
 
   # A status word takes no width when absent. Blue is for ephemeral status.
   StatusWord = -> (tui, word, color) {
@@ -102,6 +104,9 @@ module Sw
     )
   }
 
+  # Search is as wide as the list.
+  ListWidth = 27
+
   View = -> (model, tui) {
     return FailureView.call(model, tui) if model.failure
     return LoadingView.call(tui) unless model.characters
@@ -110,14 +115,21 @@ module Sw
 
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(1), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2), tui.constraint_length(1)],
+      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2), tui.constraint_length(1)],
       children: [
-        Title.call(tui),
         tui.layout(
           direction: :horizontal,
-          constraints: [tui.constraint_length(27), tui.constraint_fill(1)],
+          constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)],
           children: [
-            Characters::View.call(model.characters, tui, focused: model.focus == :characters),
+            Title.call(tui),
+            Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1),
+          ]
+        ),
+        tui.layout(
+          direction: :horizontal,
+          constraints: [tui.constraint_length(ListWidth), tui.constraint_fill(1)],
+          children: [
+            Characters::View.call(model.characters, tui, number: FocusOrder.index(:characters) + 1, focused: model.focus == :characters),
             SelectedCharacter::View.call(selected, tui),
           ]
         ),

@@ -1,9 +1,10 @@
-[0m[0m[1mStar Wars Character Datapad                                                                                             [0m
-[0m┌Characters───────────────┐┌[0m[1mAnakin Skywalker[0m───────────────────────────────────────────────────────────────────────────┐[0m
+[0m[0m[1mStar Wars Character Datapad                                                                  [0m[32m┌[1] Search───────────────┐[0m
+[0m[0m[1m                                                                                             [0m[32m│sky                      [32m│[0m
+[0m[0m[1m                                                                                             [0m[32m└─────────────────────────┘[0m
+[0m┌[2] Characters───────────┐┌[0m[1mAnakin Skywalker[0m───────────────────────────────────────────────────────────────────────────┐[0m
 [0m│[0m[7m> Anakin Skywalker       [0m││                                                                                           │[0m
 [0m│  Luke Skywalker         ││                                                                                           │[0m
 [0m│  Shmi Skywalker         ││                                                                                           │[0m
-[0m│                         ││                                                                                           │[0m
 [0m│                         ││                                                                                           │[0m
 [0m│                         ││                                                                                           │[0m
 [0m│                         ││                                                                                           │[0m
@@ -32,7 +33,6 @@
 [0m│                                                          ││[0m[1mXJ-6 airspeeder[0m        airspeeder                         │[0m
 [0m│                                                          ││Crew / Passengers:     1 / 1                              │[0m
 [0m│                                                          ││Model / Manufacturer:  XJ-6 airspeeder / Narglatch AirTech│[0m
-[0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m
 [0m│                                                          ││                                                          │[0m

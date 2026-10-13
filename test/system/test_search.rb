@@ -18,4 +18,16 @@ class TestSearch < Minitest::Test
       assert_snapshots("a_search_for_sky")
     end
   end
+
+  def test_a_search_for_grogu_shows_grogu_in_search_and_in_the_list
+    with_test_terminal(120, 40) do
+      inject_sync
+      inject_keys("/", "G", "r", "o", "g", "u")
+      inject_key(:ctrl_c)
+      Rooibos.run(Sw)
+
+      assert_equal 2, buffer_content.join("\n").scan("Grogu").size
+      assert_snapshots("a_search_for_grogu")
+    end
+  end
 end

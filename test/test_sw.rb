@@ -22,9 +22,9 @@ class TestSw < Minitest::Test
     assert_equal Sw::Load.new(url: "https://swapi.info/api"), command
   end
 
-  def test_the_top_line_is_a_bold_title
+  def test_the_title_is_bold
     with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
-      assert_bold(0, 0)
+      assert_text_style Sw::TITLE, modifiers: [:bold]
     end
   end
 
@@ -50,7 +50,8 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model.with(characters: three_characters), tui)) do
-      assert_fg_color(:green, 0, 1)
+      x, y = text_position("[2]")
+      assert_fg_color(:green, x - 1, y)
     end
   end
 
@@ -74,6 +75,14 @@ class TestSw < Minitest::Test
 
     with_rendered(Sw::View.call(Sw::Model.new(characters: no_one, focus: :search), tui)) do
       refute_nil text_position("Characters")
+    end
+  end
+
+  def test_the_screen_shows_grogu_typed_into_search
+    typing_grogu = Sw::Model.new(characters: three_characters, focus: :search, search: Sw::Search::Init.call.with(query: "Grogu"))
+
+    with_rendered(Sw::View.call(typing_grogu, tui)) do
+      refute_nil text_position("Grogu")
     end
   end
 

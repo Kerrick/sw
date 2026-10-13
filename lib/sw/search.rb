@@ -37,5 +37,9 @@ module Sw
     receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
 
     Update = from_router
+
+    View = -> (model, tui, focused:, number:) {
+      tui.paragraph(text: model.query, block: tui.block(title: "[#{number}] Search", borders: [:all], border_style: tui.style(fg: (:green if focused))))
+    }
   end
 end
