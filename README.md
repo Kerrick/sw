@@ -310,6 +310,19 @@ source code.
 coding agents, along with the facts about the data and the libraries that
 they are likely to get wrong.
 
+All of this took time. The brief asked for a few hours. The twelve issues
+took me about ten hours, after two hours of planning. I could probably have
+written the app faster by hand. The first six issues ran two to four times
+over their estimates because I was tuning the skill and `AGENTS.md`, while the
+last six had accurate estimates. That was worth it to me for two reasons. The
+skill will serve every Rooibos app I build from now on. And work like this,
+early in a new repo, moves what one developer knows out of their head and into
+files a team can read and an agent will follow. I also want the Datapad to
+become one of Rooibos's example applications, so I built more than the brief
+asked for, like CI on three platforms and offline caching. I could have stopped
+at the timebox with less to show, but I kept going because the work was going
+well, and because I enjoyed it.
+
 ## Maintaining it
 
 Start with `AGENTS.md`. (The fact that `AGENTS.md` motivated so many teams to
