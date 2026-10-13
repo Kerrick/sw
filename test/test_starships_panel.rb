@@ -14,4 +14,13 @@ class TestStarshipsPanel < Minitest::Test
       refute_nil text_position("T-65 X-wing / Incom Corporation")
     end
   end
+
+  def test_the_aa9_coruscant_freighter_crew_is_dimmed_as_unknown_beside_its_30_000_passengers
+    aa9_coruscant_freighter = EntireGalaxy::RECORDS.fetch(:starships).find { |starship| starship.name.to_s == "AA-9 Coruscant freighter" }
+
+    with_rendered(Sw::Starships::View.call(Sw::Collection.new([aa9_coruscant_freighter]), tui)) do
+      assert_text_style "unknown", on_line_with: "30,000", modifiers: [:dim]
+      assert_text_style "30,000", modifiers: []
+    end
+  end
 end
