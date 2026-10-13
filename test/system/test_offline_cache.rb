@@ -31,6 +31,24 @@ class TestOfflineCache < Minitest::Test
     never_answers&.close
   end
 
+  def test_a_week_old_cache_without_a_network_keeps_its_characters_on_screen
+    launch
+    eight_days_ago = Time.now - (8 * 24 * 60 * 60)
+    age_cache(eight_days_ago)
+    ENV["SW_API_URL"] = unreachable_url
+
+    with_test_terminal(120, 40) do
+      inject_sync # the cache
+      inject_sync # the background reload
+      inject_key(:ctrl_c)
+      Rooibos.run(Sw)
+
+      assert_includes buffer_content.join("\n"), "Ackbar"
+      assert_text_style "Reload failed", fg: :red
+      assert_snapshots("a_week_old_cache_without_a_network")
+    end
+  end
+
   def test_a_reload_without_a_network_keeps_the_characters_on_screen
     launch
     ENV["SW_API_URL"] = unreachable_url

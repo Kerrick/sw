@@ -75,6 +75,15 @@ class TestLoad < Minitest::Test
     assert_equal "Sw::Load::Failed", reloaded.class.name
   end
 
+  def test_a_reload_that_brings_back_html_leaves_the_cache_as_it_was
+    finished
+    cached = cache_files
+
+    FIXTURE_SERVER.answering("/api/vehicles", "<html>Bad Gateway</html>") { delivered(FIXTURE_SERVER.url, reload: true) }
+
+    assert_equal cached, cache_files
+  end
+
   def test_a_refused_connection_fails_naming_the_address
     url = unreachable_url
     failed = delivered(url)
@@ -129,6 +138,8 @@ class TestLoad < Minitest::Test
   end
 
   private def finished = delivered(FIXTURE_SERVER.url)
+
+  private def cache_files = Dir.glob("**/*.json", base: @cache_home).sort.to_h { |name| [name, File.binread(File.join(@cache_home, name))] }
 
   private def delivered(url, **options)
     with_test_terminal do
