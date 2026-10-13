@@ -63,7 +63,12 @@ reason when it's the one the test is about. A typo, a wrong path, a missing
 production code before the gate, not even an empty class. A test that passes
 on arrival, because earlier code already does the job, is not a red run. Prove
 it isn't vacuous by temporarily breaking the code and watching it fail, then
-restore the code. Say so at the gate.
+restore the code. Break it as mutation testing would: one small, plausible
+fault (a changed operator, an off-by-one, a dropped statement) that the test's
+own assertion catches, not a crash on the way to it. A test that pins the data
+rather than the code needs no mutant: give it an input from the other
+equivalence class, outside the repository, and watch it fail. Say so at the
+gate.
 
 ### 4. Gate one: TEST REVIEW
 

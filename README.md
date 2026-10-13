@@ -115,8 +115,8 @@ What counts as missing data? I let the API's own values decide. It uses
 droid's hair color. It uses "none" as a real answer, like a bald character's
 hair. The app shows the first two for what they are and treats "none" as
 data. It also copes with numbers written with commas (Jabba weighs "1,358"),
-with ranges (a starship's crew of "30-165"), and with a planet literally
-named "unknown," which it treats as an unknown homeworld rather than a place.
+ranges (a starship's crew of "30-165"), and a planet named "unknown," which
+it treats as an unknown homeworld rather than a place.
 
 Can a planet measure zero? No. Six planets have a diameter of "0," and the
 planet named "unknown" also takes zero hours to turn and zero days to orbit.

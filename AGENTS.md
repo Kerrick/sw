@@ -98,8 +98,10 @@ Facts that are easy to get wrong:
 Vocabulary: a Rooibos unit is a **fragment**, never a "component" (reserved
 for the Kit library). "Widget" means a RatatuiRuby render primitive. Write
 "message" and "command", not "msg"/"cmd". The people are characters
-(`Character`, `characters`) everywhere but the loader, which maps the API's
-`people`. The domain model has domain objects with attributes and
+(`Character`, `characters`), except where an API field names their role,
+which the domain keeps: a vehicle's `pilots`, a planet's `residents`, a
+species' `people`. Every member reads the API field of its own name, with no
+renaming. The domain model has domain objects with attributes and
 associations, never "records"; "record" belongs to the loader and the data.
 
 ## The data source
@@ -116,6 +118,10 @@ never happened, and Solo and non-Skywalker Saga films aren't Star Wars.
 - Other mirrors (swapi.dev, swapi.tech) are shaped differently: paginated
   wrappers, trailing `/`, fields nested under `properties`. Supporting one is
   a documented maybe, not something to build for.
+
+The root URL is configurable (`SW_API_URL`). Only `Sw::API_URL`, its default,
+and the fixture server name swapi.info. Never write a URL into other code,
+not even in a throwaway edit; take links from the data.
 
 Build for a frozen dataset, not for *this* dataset. Never assume six films
 or episodes I–VI; more Skywalker Saga films should mean new data, not new
@@ -195,7 +201,9 @@ are `View`-only modules. A fragment's View takes that fragment's own
 `View`-only module takes whatever it needs, like props: a domain object, a
 `Collection`, or nothing. Parts inside a panel are `View`-only too, as
 lambdas in the panel's module or as modules of their own; file length
-decides. Key bindings, focus order, and on-screen wording belong in the
+decides. A part drawn as its own bordered box inside a panel is named for
+its role with a `Box` suffix (`HomeworldBox`, `SpeciesBox`), apart from the
+domain object it draws. Key bindings, focus order, and on-screen wording belong in the
 issues, not here. The brief is `tmp/brief.pdf`, uncommitted; its wireframe,
 on page 3, settles a panel's labels, order, and units unless an issue says
 otherwise.

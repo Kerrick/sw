@@ -3,7 +3,8 @@
 Estimate: 25 minutes
 
 The attributes table in Selected Character, where most of the data's quirks
-live. It is a View-only part of that panel.
+live. It is a View-only part of that panel, named `AttributesBox` like the
+other boxes in it.
 
 Attributes takes the left column, beside Species and Homeworld, with the
 wireframe's units: "172 cm" and "77 kg". Every panel already dims `"n/a"`,
