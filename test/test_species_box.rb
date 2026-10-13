@@ -17,6 +17,15 @@ class TestSpeciesBox < Minitest::Test
     end
   end
 
+  def test_droids_live_indefinitely_with_no_years_to_count
+    droid = EntireGalaxy::RECORDS.fetch(:species).find { |species| species.name.to_s == "Droid" }
+
+    with_rendered(Sw::SpeciesBox::View.call(droid, tui)) do
+      refute_nil text_position("indefinite")
+      assert_nil text_position("indefinite yr")
+    end
+  end
+
   def test_lukes_species_reads_dimmed_as_unknown
     lukes_species = luke.species.first
 
