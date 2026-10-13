@@ -126,7 +126,6 @@ class Collection[T] < Data
   class Load < Data
     include Rooibos::Command::Custom
     Command: singleton(Rooibos::Command)
-    CACHE: Etcetera::AppStrategy::AppStrategyArgs
     attr_reader url: String
     def initialize: (url: String) -> void
     def call: (Rooibos::Command::Outlet out, Concurrent::Cancellation token) -> void
@@ -156,6 +155,21 @@ class Collection[T] < Data
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
       def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Starship | Film | Planet | Species]]
+    end
+
+    class Cache < Data
+      APP: Etcetera::AppStrategy::AppStrategyArgs
+      attr_reader directory: Pathname
+      def initialize: (?directory: Pathname) -> void
+      def complete?: (*Symbol names) -> bool
+      def read: (*Symbol names) -> Hash[Symbol, String]
+      def write: (Hash[Symbol, String] bodies) -> void
+    end
+
+    class Run
+      BODIES: Array[Symbol]
+      def initialize: (String url, Rooibos::Command::Outlet out, Concurrent::Cancellation token) -> void
+      def call: () -> Finished
     end
   end
 
