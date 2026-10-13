@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 require "json"
+require "roman"
 
 module Sw
   class Load
     # Maps the API's records to domain objects, by Metadata Mapping: COLLECTIONS names each collection's record
     # class, and each class's Data members name the API fields it reads. Every array is a list of links and becomes
-    # a Collection of records; every other field becomes a Value.
+    # a Collection of records; every other field becomes a Value, or a RomanNumeral where NUMERALS says so.
     class Mapper
       # Each API collection, with the name the app uses for it and the class of its records. A new collection needs
       # only an entry here and a Data class.
-      COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle] }.freeze
+      COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle], films: [:films, Film] }.freeze
+
+      # Which members the API sends as numbers but that represent Roman numerals.
+      NUMERALS = %i[episode_id].freeze
 
       def links(root)
         JSON.parse(root, freeze: true).transform_keys(&:to_sym)
@@ -43,13 +47,15 @@ module Sw
 
         # A record takes the API's field of the same name for each of its members.
         private def record(type, json)
-          record = type.new(**type.members.to_h { |member| [member, field(json.fetch(member.to_s))] })
+          record = type.new(**type.members.to_h { |member| [member, field(member, json.fetch(member.to_s))] })
           @by_url[json.fetch("url")] = record
         end
 
-        # Every array in the API is a list of links. Every other field is a Value, which may be unknown.
-        private def field(value)
+        # Every array in the API is a list of links, and a NUMERALS field is a RomanNumeral. Every other field is a
+        # Value, which may be unknown.
+        private def field(member, value)
           return links_to(value) if value.is_a?(Array)
+          return RomanNumeral.new(value) if NUMERALS.include?(member)
 
           Value.new(value)
         end

@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestSw < Minitest::Test
   include ViewTestHelper
-  include ThreeCharacters
+  include SmallGalaxy
 
   def test_init_loads_from_the_root_in_sw_api_url
     ENV["SW_API_URL"] = "http://localhost:3000/api"
@@ -23,13 +23,13 @@ class TestSw < Minitest::Test
   end
 
   def test_the_title_is_bold
-    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters), tui)) do
       assert_text_style Sw::TITLE, modifiers: [:bold]
     end
   end
 
   def test_the_selected_character_is_named_in_bold
-    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters(selected: luke)), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters(selected: luke)), tui)) do
       assert_text_style "Luke Skywalker", modifiers: [:bold]
     end
   end
@@ -38,6 +38,12 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     assert_nil model.characters
+  end
+
+  def test_the_app_starts_with_no_films_until_the_download_finishes
+    model, = Sw::Init.call
+
+    assert_nil model.films
   end
 
   def test_the_app_opens_with_the_characters_panel_focused
@@ -49,20 +55,20 @@ class TestSw < Minitest::Test
   def test_the_characters_border_is_green_when_the_app_opens
     model, = Sw::Init.call
 
-    with_rendered(Sw::View.call(model.with(characters: three_characters), tui)) do
+    with_rendered(Sw::View.call(model.with(characters: three_characters, films:), tui)) do
       x, y = text_position("[2]")
       assert_fg_color(:green, x - 1, y)
     end
   end
 
   def test_the_status_line_shows_the_list_keys_as_hotkeys_while_the_list_has_focus
-    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters), tui)) do
       %w[k/j g/G].each { |keys| assert_text_style keys, modifiers: [:bold, :dim, :underlined] }
     end
   end
 
   def test_the_status_line_hides_the_list_keys_while_search_has_focus
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     with_rendered(Sw::View.call(searching, tui)) do
       %w[k/j g/G].each { |keys| assert_nil text_position(keys), "Expected #{keys} hidden" }
@@ -73,13 +79,13 @@ class TestSw < Minitest::Test
     grogu = Sw::Search::QueryChanged.new(query: "Grogu")
     no_one, = Sw::Characters::Update.call(Rooibos::Message::Routed.new(envelope: :filter, event: grogu), three_characters)
 
-    with_rendered(Sw::View.call(Sw::Model.new(characters: no_one, focus: :search), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: no_one, focus: :search), tui)) do
       refute_nil text_position("Characters")
     end
   end
 
   def test_the_status_line_dims_k_j_and_what_it_does
-    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters), tui)) do
       x, y = text_position("k/j: ")
       assert_includes get_cell(x, y).modifiers, :dim
       assert_cell_style(x + "k/j".length, y, modifiers: [:dim])
@@ -87,7 +93,7 @@ class TestSw < Minitest::Test
   end
 
   def test_the_list_shows_esc_as_a_hotkey_while_a_search_for_sky_is_active
-    browsing_skywalkers = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+    browsing_skywalkers = Sw::Model.new(films:, characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
 
     with_rendered(Sw::View.call(browsing_skywalkers, tui)) do
       assert_text_style "esc:", modifiers: [:bold, :dim, :underlined]
@@ -95,13 +101,13 @@ class TestSw < Minitest::Test
   end
 
   def test_the_list_shows_no_esc_hotkey_without_a_search
-    with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
+    with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters), tui)) do
       assert_nil text_position("esc:")
     end
   end
 
   def test_the_status_line_hides_r_and_q_while_search_has_focus
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     with_rendered(Sw::View.call(searching, tui)) do
       %w[r q].each { |key| refute_match(/\b#{key}:/, buffer_content.join("\n")) }
@@ -109,7 +115,7 @@ class TestSw < Minitest::Test
   end
 
   def test_the_status_line_shows_enter_and_esc_as_hotkeys_while_search_has_focus
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     with_rendered(Sw::View.call(searching, tui)) do
       %w[enter esc].each { |key| assert_text_style "#{key}:", modifiers: [:bold, :dim, :underlined] }
@@ -117,7 +123,7 @@ class TestSw < Minitest::Test
   end
 
   def test_the_screen_shows_grogu_typed_into_search
-    typing_grogu = Sw::Model.new(characters: three_characters, focus: :search, search: Sw::Search::Init.call.with(query: "Grogu"))
+    typing_grogu = Sw::Model.new(films:, characters: three_characters, focus: :search, search: Sw::Search::Init.call.with(query: "Grogu"))
 
     with_rendered(Sw::View.call(typing_grogu, tui)) do
       refute_nil text_position("Grogu")
@@ -162,7 +168,7 @@ class TestSw < Minitest::Test
   def test_r_is_shown_as_a_hotkey_whether_loading_failed_or_loaded
     loading, = Sw::Init.call
     failed = loading.with(failure: "Connection refused")
-    loaded = loading.with(characters: three_characters)
+    loaded = loading.with(characters: three_characters, films:)
 
     [loading, failed, loaded].each do |model|
       with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", modifiers: [:bold, :dim, :underlined] }
@@ -192,7 +198,7 @@ class TestSw < Minitest::Test
 
   def test_reloading_with_characters_on_screen_shows_the_blue_loading_status_word
     loading, = Sw::Init.call
-    loaded = loading.with(characters: three_characters)
+    loaded = loading.with(characters: three_characters, films:)
     reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     with_rendered(Sw::View.call(reloading, tui)) do
@@ -228,7 +234,7 @@ class TestSw < Minitest::Test
 
   def test_the_down_arrow_and_j_move_the_highlight_to_the_next_character
     %w[down j].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(films:, characters: three_characters))
 
       assert_equal han, model.characters.selected, "Expected #{key} to select Han"
     end
@@ -236,7 +242,7 @@ class TestSw < Minitest::Test
 
   def test_the_up_arrow_and_k_move_the_highlight_to_the_previous_character
     %w[up k].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters(selected: luke)))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(films:, characters: three_characters(selected: luke)))
 
       assert_equal han, model.characters.selected, "Expected #{key} to select Han"
     end
@@ -244,7 +250,7 @@ class TestSw < Minitest::Test
 
   def test_home_and_g_jump_the_highlight_to_the_first_character
     %w[home g].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters(selected: luke)))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(films:, characters: three_characters(selected: luke)))
 
       assert_equal ackbar, model.characters.selected, "Expected #{key} to select Ackbar"
     end
@@ -252,7 +258,7 @@ class TestSw < Minitest::Test
 
   def test_end_and_capital_g_jump_the_highlight_to_the_last_character
     [{ code: "end" }, { code: "G", modifiers: ["shift"] }].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(characters: three_characters))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(films:, characters: three_characters))
 
       assert_equal luke, model.characters.selected, "Expected #{key} to select Luke"
     end
@@ -260,7 +266,7 @@ class TestSw < Minitest::Test
 
   def test_slash_and_1_focus_search
     ["/", "1"].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(characters: three_characters))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), Sw::Model.new(films:, characters: three_characters))
 
       assert_equal :search, model.focus, "Expected #{key} to focus Search"
     end
@@ -276,7 +282,7 @@ class TestSw < Minitest::Test
   end
 
   def test_the_down_arrow_leaves_the_highlight_on_ackbar_while_search_has_focus
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "down"), searching)
 
@@ -285,7 +291,7 @@ class TestSw < Minitest::Test
 
   def test_enter_after_searching_for_sky_returns_to_the_list_still_showing_the_skywalkers
     skywalkers = three_characters(selected: luke).with(query: "sky")
-    searching = Sw::Model.new(characters: skywalkers, focus: :search)
+    searching = Sw::Model.new(films:, characters: skywalkers, focus: :search)
 
     model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "enter"), searching)
 
@@ -295,7 +301,7 @@ class TestSw < Minitest::Test
 
   def test_tab_from_a_search_for_sky_moves_on_to_the_list_still_showing_the_skywalkers
     skywalkers = three_characters(selected: luke).with(query: "sky")
-    searching = Sw::Model.new(characters: skywalkers, focus: :search)
+    searching = Sw::Model.new(films:, characters: skywalkers, focus: :search)
 
     model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "tab"), searching)
 
@@ -304,21 +310,21 @@ class TestSw < Minitest::Test
   end
 
   def test_tab_from_the_list_wraps_around_to_search
-    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "tab"), Sw::Model.new(characters: three_characters))
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "tab"), Sw::Model.new(films:, characters: three_characters))
 
     assert_equal :search, model.focus
   end
 
   def test_shift_tab_from_the_list_moves_back_to_search
     [{ code: "back_tab" }, { code: "back_tab", modifiers: ["shift"] }].each do |key|
-      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(characters: three_characters))
+      model, = Sw::Update.call(RatatuiRuby::Event::Key.new(**key), Sw::Model.new(films:, characters: three_characters))
 
       assert_equal :search, model.focus, "Expected #{key} to focus Search"
     end
   end
 
   def test_q_r_digits_slash_and_space_type_into_search_instead_of_acting
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     ["q", "r", "1", "2", "/", " "].each do |key|
       model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: key), searching)
@@ -328,7 +334,7 @@ class TestSw < Minitest::Test
   end
 
   def test_ctrl_c_quits_and_f5_reloads_from_search
-    searching = Sw::Model.new(characters: three_characters, focus: :search)
+    searching = Sw::Model.new(films:, characters: three_characters, focus: :search)
 
     _, quit = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "c", modifiers: ["ctrl"]), searching)
     _, reload = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "f5"), searching)
@@ -339,7 +345,7 @@ class TestSw < Minitest::Test
 
   def test_esc_from_a_search_for_sky_lands_on_the_list_with_every_character_back
     skywalkers = three_characters(selected: luke).with(query: "sky")
-    searching = Sw::Model.new(characters: skywalkers, focus: :search, search: Sw::Search::Init.call.with(query: "sky"))
+    searching = Sw::Model.new(films:, characters: skywalkers, focus: :search, search: Sw::Search::Init.call.with(query: "sky"))
 
     model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "esc"), searching)
 
@@ -350,7 +356,7 @@ class TestSw < Minitest::Test
 
   def test_esc_in_the_list_after_searching_for_sky_brings_every_character_back
     skywalkers = three_characters(selected: luke).with(query: "sky")
-    browsing = Sw::Model.new(characters: skywalkers, focus: :characters, search: Sw::Search::Init.call.with(query: "sky"))
+    browsing = Sw::Model.new(films:, characters: skywalkers, focus: :characters, search: Sw::Search::Init.call.with(query: "sky"))
 
     model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "esc"), browsing)
 
@@ -359,8 +365,8 @@ class TestSw < Minitest::Test
   end
 
   def test_a_reload_after_searching_for_sky_still_shows_only_luke
-    searched_for_sky = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
-    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]))
+    searched_for_sky = Sw::Model.new(films:, characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), films: Sw::Collection.new([]))
 
     model, = Sw::Update.call(reloaded, searched_for_sky)
 
@@ -368,12 +374,24 @@ class TestSw < Minitest::Test
   end
 
   def test_a_reload_after_searching_for_sky_highlights_luke_not_the_hidden_ackbar
-    searched_for_sky = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
-    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]))
+    searched_for_sky = Sw::Model.new(films:, characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), films: Sw::Collection.new([]))
 
     model, = Sw::Update.call(reloaded, searched_for_sky)
 
     assert_equal luke, model.characters.selected
+  end
+
+  def test_the_app_keeps_the_films_the_download_delivered
+    downloaded = Sw::Load::Finished.new(
+      characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]),
+      films: Sw::Collection.new([a_new_hope, revenge_of_the_sith])
+    )
+    loading, = Sw::Init.call
+
+    model, = Sw::Update.call(downloaded, loading)
+
+    assert_equal [a_new_hope, revenge_of_the_sith], model.films.to_a
   end
 
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way

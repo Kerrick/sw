@@ -6,8 +6,8 @@ module ViewTestHelper
 
   private def tui = RatatuiRuby::TUI.new
 
-  private def with_rendered(widget)
-    with_test_terminal do
+  private def with_rendered(widget, width: 80, height: 24)
+    with_test_terminal(width, height) do
       RatatuiRuby.draw { |frame| frame.render_widget(widget, frame.area) }
       yield
     end

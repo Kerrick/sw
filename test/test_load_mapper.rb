@@ -5,6 +5,7 @@ require "test_helper"
 class TestLoadMapper < Minitest::Test
   PEOPLE = File.read(File.join(FixtureServer::FIXTURES, "api/people.json")).freeze
   VEHICLES = File.read(File.join(FixtureServer::FIXTURES, "api/vehicles.json")).freeze
+  FILMS = File.read(File.join(FixtureServer::FIXTURES, "api/films.json")).freeze
 
   def test_the_first_person_is_luke_skywalker
     assert_equal "Luke Skywalker", records.fetch(:characters).first.name.to_s
@@ -42,6 +43,18 @@ class TestLoadMapper < Minitest::Test
     assert_empty unlisted_vehicles + unlisted_pilots
   end
 
+  def test_every_film_and_every_character_in_it_list_each_other
+    characters, films = records.values_at(:characters, :films)
+    unlisted_films = characters.flat_map do |character|
+      character.films.reject { |film| film.characters.include?(character) }.map { |film| "#{film.title} omits #{character.name}" }
+    end
+    unlisted_characters = films.flat_map do |film|
+      film.characters.reject { |character| character.films.include?(film) }.map { |character| "#{character.name} omits #{film.title}" }
+    end
+
+    assert_empty unlisted_films + unlisted_characters
+  end
+
   def test_the_snowspeeder_is_an_incom_t47_airspeeder_for_a_crew_of_two_and_no_passengers
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
@@ -67,12 +80,31 @@ class TestLoadMapper < Minitest::Test
     assert Ractor.shareable?(records)
   end
 
+  def test_luke_appears_in_a_new_hope_the_empire_strikes_back_return_of_the_jedi_and_revenge_of_the_sith
+    luke = records.fetch(:characters).first
+
+    assert_equal ["A New Hope", "The Empire Strikes Back", "Return of the Jedi", "Revenge of the Sith"], luke.films.map { |film| film.title.to_s }
+  end
+
+  def test_a_new_hope_features_luke_threepio_artoo_vader_and_leia_among_its_18_characters
+    a_new_hope = records.fetch(:films).find { |film| film.title.to_s == "A New Hope" }
+
+    assert_equal ["Luke Skywalker", "C-3PO", "R2-D2", "Darth Vader", "Leia Organa"], a_new_hope.characters.first(5).map { |character| character.name.to_s }
+    assert_equal 18, a_new_hope.characters.count
+  end
+
+  def test_a_new_hope_is_episode_iv
+    a_new_hope = records.fetch(:films).find { |film| film.title.to_s == "A New Hope" }
+
+    assert_equal "IV", a_new_hope.episode_id.to_s
+  end
+
   def test_the_first_vehicle_is_the_sand_crawler
     assert_equal "Sand Crawler", records.fetch(:vehicles).first.name.to_s
   end
 
   private def records
     mapper = Sw::Load::Mapper.new
-    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES))
+    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS))
   end
 end

@@ -8,7 +8,7 @@ module Sw
     Command = Rooibos::Command
 
     # The message Load sends when the whole dataset has arrived.
-    class Finished < Data.define(:characters, :vehicles)
+    class Finished < Data.define(:characters, :vehicles, :films)
       include Rooibos::Message::Predicates
     end
 

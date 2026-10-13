@@ -40,4 +40,7 @@ Gem::Specification.new do |spec|
 
   # https://www.rooibos.run
   spec.add_runtime_dependency "rooibos", "~> 0.8"
+
+  # Roman numerals for episode numbers
+  spec.add_runtime_dependency "roman", "~> 0.3"
 end

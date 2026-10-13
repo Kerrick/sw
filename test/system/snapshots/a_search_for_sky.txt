@@ -21,7 +21,7 @@ enter: Finish search  esc: Clear search                                         
 │                         ││                                                                                           │
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                                                      │
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
 │                                                                                                                      │
 │                                                                                                                      │
 │                                                                                                                      │

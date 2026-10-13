@@ -5,12 +5,13 @@ module Sw
 
   class Model < Data
     attr_reader characters: Characters::Model?
+    attr_reader films: Collection[Film]?
     attr_reader failure: String?
     attr_reader loading: bool
     attr_reader focus: Symbol
     attr_reader search: Search::Model
-    def initialize: (characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> void
-    def with: (?characters: Characters::Model?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> Model
+    def initialize: (characters: Characters::Model?, films: Collection[Film]?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> void
+    def with: (?characters: Characters::Model?, ?films: Collection[Film]?, ?failure: String?, ?loading: bool, ?focus: Symbol, ?search: Search::Model) -> Model
     def loading?: () -> bool
   end
 
@@ -28,7 +29,15 @@ module Sw
   class Character < Data
     attr_reader name: Value
     attr_reader vehicles: Collection[Vehicle]
-    def initialize: (name: Value, ?vehicles: Collection[Vehicle]) -> void
+    attr_reader films: Collection[Film]
+    def initialize: (name: Value, ?vehicles: Collection[Vehicle], ?films: Collection[Film]) -> void
+  end
+
+  class Film < Data
+    attr_reader title: Value
+    attr_reader episode_id: RomanNumeral
+    attr_reader characters: Collection[Character]
+    def initialize: (title: Value, episode_id: RomanNumeral, ?characters: Collection[Character]) -> void
   end
 
   class Value < Data
@@ -74,7 +83,8 @@ module Sw
       include Rooibos::Message::Predicates
       attr_reader characters: Collection[Character]
       attr_reader vehicles: Collection[Vehicle]
-      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle]) -> void
+      attr_reader films: Collection[Film]
+      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], films: Collection[Film]) -> void
     end
 
     class Failed < Data
@@ -84,10 +94,11 @@ module Sw
     end
 
     class Mapper
-      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle)]]
+      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Film)]]
+      NUMERALS: Array[Symbol]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
-      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle]]
+      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Film]]
     end
   end
 
@@ -135,7 +146,8 @@ module Sw
   end
 
   module Films
-    View: ^(RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
+    Column: ^(Film, bool, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Paragraph
+    View: ^(Collection[Film], Collection[Film]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 
   module Starships
@@ -151,4 +163,12 @@ module Sw
     Empty: ^(RatatuiRuby::TUI) -> RatatuiRuby::Layout::Layout
     View: ^(Collection[Sw::Vehicle]?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
+end
+
+# From the roman gem, which ships no signatures. Only what the app uses.
+class RomanNumeral < Numeric
+  include Comparable
+  def initialize: (Integer | String value) -> void
+  def to_s: () -> String
+  def to_i: () -> Integer
 end

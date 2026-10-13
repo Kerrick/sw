@@ -4,6 +4,7 @@ require "rooibos"
 require_relative "sw/character"
 require_relative "sw/value"
 require_relative "sw/vehicle"
+require_relative "sw/film"
 require_relative "sw/collection"
 require_relative "sw/load"
 require_relative "sw/load/mapper"
@@ -20,8 +21,8 @@ module Sw
 
   API_URL = "https://swapi.info/api"
 
-  Model = Data.define(:characters, :failure, :loading, :focus, :search) do
-    def initialize(characters:, failure: nil, loading: false, focus: :characters, search: Search::Init.call) = super
+  Model = Data.define(:characters, :films, :failure, :loading, :focus, :search) do
+    def initialize(characters:, films:, failure: nil, loading: false, focus: :characters, search: Search::Init.call) = super
 
     alias_method :loading?, :loading
   end
@@ -33,7 +34,7 @@ module Sw
 
   Download = -> { Load.new(url: ENV.fetch("SW_API_URL", API_URL)) }
 
-  Init = -> { [Model.new(characters: nil, loading: true), Download.call] }
+  Init = -> { [Model.new(characters: nil, films: nil, loading: true), Download.call] }
 
   TITLE = "Star Wars Character Datapad"
 
@@ -142,7 +143,7 @@ module Sw
             SelectedCharacter::View.call(selected, tui),
           ]
         ),
-        Films::View.call(tui),
+        Films::View.call(model.films, selected&.films, tui),
         tui.layout(
           direction: :horizontal,
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
@@ -201,7 +202,7 @@ module Sw
   end
 
   receive_instances_of Load::Finished, -> (message, model) {
-    model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), loading: false)
+    model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), films: message.films, loading: false)
   }
 
   receive_instances_of Load::Failed, -> (message, model) {

@@ -21,7 +21,7 @@ k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                             
 │> Luke Skywalker         ││                                                                                           │
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                                                                                                      │
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
 │                                                                                                                      │
 │                                                                                                                      │
 │                                                                                                                      │

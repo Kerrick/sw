@@ -4,7 +4,7 @@ require "test_helper"
 
 class TestCharacters < Minitest::Test
   include ViewTestHelper
-  include ThreeCharacters
+  include SmallGalaxy
 
   def test_init_selects_ackbar_the_first_alphabetically
     assert_equal ackbar, three_characters.selected
