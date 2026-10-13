@@ -70,5 +70,13 @@ class TestAttributesBox < Minitest::Test
     end
   end
 
+  def test_tarkins_hair_is_both_auburn_and_grey
+    tarkin = character("Wilhuff Tarkin")
+
+    with_rendered(Sw::AttributesBox::View.call(tarkin, tui)) do
+      refute_nil text_position("auburn, grey")
+    end
+  end
+
   private def character(name) = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == name }
 end
