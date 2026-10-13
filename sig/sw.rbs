@@ -65,6 +65,7 @@ module Sw
                   | (text: String) -> void
     def to_s: () -> String
     def unknown?: () -> bool
+    def not_applicable?: () -> bool
     def <=>: (untyped other) -> Integer?
   end
 

@@ -24,6 +24,14 @@ class TestHomeworldPanel < Minitest::Test
     end
   end
 
+  def test_dagobahs_gravity_of_n_a_reads_dimmed
+    dagobah = EntireGalaxy::RECORDS.fetch(:planets).find { |planet| planet.name.to_s == "Dagobah" }
+
+    with_rendered(Sw::Homeworld::View.call(dagobah, tui)) do
+      assert_text_style "N/A", modifiers: [:dim]
+    end
+  end
+
   def test_yodas_homeworld_reads_dimmed_as_unknown_rather_than_as_a_planet_named_unknown
     yoda = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == "Yoda" }
 

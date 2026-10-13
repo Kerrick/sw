@@ -15,5 +15,8 @@ module Sw
     def to_s = text.gsub(/\d(?=(\d{3})+\z)/, '\0,')
 
     def unknown? = text == "unknown"
+
+    # Dagobah's gravity says it in capitals.
+    def not_applicable? = text.casecmp?("n/a")
   end
 end

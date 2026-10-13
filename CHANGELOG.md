@@ -21,6 +21,7 @@
 - Show a homeworld the data calls "unknown", such as Yoda's, dimmed as unknown rather than as a planet of that name.
 - Show a planet's diameter of 0, such as Polis Massa's, as unknown.
 - Show a planet's rotation or orbital period of 0 as unknown.
+- Dim any value the data says doesn't apply, such as Dagobah's gravity of N/A, as unknown values are.
 - Search the characters by name: press / or 1, then type or paste to narrow the list as you go. Say so when nothing matches.
 - Keep the search and return to the list with Enter, or clear it with Esc from either place. Backspace deletes a character, and Ctrl-U clears the query.
 - Move between Search and the list with Tab and Shift-Tab, keeping the search.
