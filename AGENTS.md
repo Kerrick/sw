@@ -5,7 +5,8 @@ Wars API (SWAPI). Gem `sw`, module `Sw`, executable `exe/sw`. Built on
 Rooibos (TEA/MVU framework) and RatatuiRuby (Rust-backed TUI engine).
 
 This file records only what you would not do by default. It is not a style
-guide for Ruby. Implementation work follows the
+guide for Ruby. A fact about one place in the code goes in a comment there,
+not here. Implementation work follows the
 `.agents/skills/human-in-the-ralph-loop` skill.
 
 ## Commands
@@ -55,7 +56,18 @@ Facts that are easy to get wrong:
 
 - The router matches `Key#to_sym`. A capital letter arrives as `g` with Shift
   held, so bind `:shift_G`, never `:G`. (The `Key#G?` predicate is a
-  different path.)
+  different path.) Shift-Tab arrives as `back_tab`, sometimes with Shift
+  held too, so bind both `:back_tab` and `:shift_back_tab`.
+- Ctrl and Alt chords report `text?`, so a text field must skip them. Cmd
+  and Super never arrive: nothing turns on the Kitty keyboard protocol.
+- A Router runs every observer before the first matching receive, forward,
+  or `otherwise`, and guards see the model the observers left.
+- A nested fragment's `Command.bubble` passes through the outer fragment's
+  forwards, so `forward_instances_of`, with `to:` and `as:`, hands it to a
+  sibling.
+- `skip when:` wraps its guard in a closure that debug mode must make
+  Ractor-shareable, so a plain `->` guard fails there. Use
+  `Ractor.shareable_lambda`. (`only when:` has no such trouble.)
 - `out.source` runs one child command, waits, and returns its message, or
   `nil` on timeout or cancellation (handle that apart from HTTP errors).
   `out.standing` runs children in parallel, but their messages go to Update,
@@ -244,13 +256,17 @@ The approach comes from five books. Apply them; don't cite them in code.
   assertions), as RatatuiRuby's application testing guide recommends.
   Don't inspect the widget tree a View returns. Unit tests assert
   behavior and style, never positions or box-drawing characters; layout
-  belongs to snapshots. Assert style or data, never copy, which product
-  decisions change. `ViewTestHelper#with_rendered` renders a View for
+  belongs to snapshots. An offset from text you found is fine: the cell
+  after a key, or the corner beside a title. Assert style or data, never
+  copy, which product decisions change. `ViewTestHelper#with_rendered` renders a View for
   these assertions. Find text with `#text_position` and check its style
   with `#assert_text_style`, named as they would be in RatatuiRuby, rather
   than indexing `buffer_content` by hand. Refer to on-screen wording through
   the View's own constant, like `Sw::Vehicles::EMPTY`.
 - Don't test non-behavior.
+- Don't repeat the app's logic in a test, as by looping over the constant
+  under test. Name what you expect. Keys are behavior, not copy, so name
+  them.
 - Don't unit-test framework wiring: Router dispatch, `Data#with`, or
   generated placeholders. The end-to-end test covers it.
 - Test custom commands through the real runtime with `inject_sync`, against
@@ -279,7 +295,8 @@ back. Read it whole and revise it whole, never in patches, and never get
 ahead of a decision an issue hasn't made. Read any `.md` file in full before
 you edit it.
 
-Code comments describe the code. They never mention the wireframe or a
+Code comments say what the code can't: why, a rule, or a library's limit.
+Don't narrate what the code shows. They never mention the wireframe or a
 mockup.
 
 ## Changes, commits, changelog
@@ -294,9 +311,12 @@ mockup.
   a Conventional Commits message covering the whole `git diff` and
   `git diff --cached`: plain text, no markdown, body only when it explains
   *why*. End with your own harness's attribution lines (naming your model,
-  not one copied from history), in the format earlier commits use.
+  not one copied from history), in the format earlier commits use. A commit
+  that repairs behavior is a `fix:`, even when an unpushed commit in the
+  same issue added that behavior.
 - User-visible changes go under `## [Unreleased]` in `CHANGELOG.md`
-  (Keep a Changelog). Tests, refactors, and tooling do not.
+  (Keep a Changelog). Tests, refactors, and tooling do not. Each entry is one
+  capability; add an entry rather than growing an old one.
 - Keep `sig/` RBS current for public constants and classes; no `untyped`
   where a real type is known.
 - Done means `bundle exec rake` passes with no failures or offenses.

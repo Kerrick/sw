@@ -89,14 +89,19 @@ make them and post a new TEST REVIEW.
 
 Write the least code that makes the test pass: fake it when unsure,
 triangulate with another test when the fake would survive, and write the
-obvious implementation only when it is obvious (Beck). A triangulating test
-is a new test, so it starts a new cycle and goes to its own TEST REVIEW.
+obvious implementation only when it is obvious (Beck). Code no test asks
+for waits for the test that will, however obvious it looks; a snapshot can
+ask for layout and wording. A triangulating test is a new test, so it starts
+a new cycle and goes to its own TEST REVIEW.
 Implement only the test the reviewer approved. Run the full check. Only the
 end-to-end test may be red at a gate. If the code would break any other test,
 fold the change into the cycle that fixes that test, or split the work so
 every other test stays green. If a change breaks more than you expected,
 revert to the last green state first. Then make the change easy, and make
-the easy change (Beck): a few small steps, each green on its own.
+the easy change (Beck): a few small steps, each green on its own. When you
+expect a change to alter snapshots or other recorded output, regenerate it
+yourself and read the diff before the gate. Report anything you didn't
+expect.
 Fix lint offenses rather than disabling rules. Refactor only while green, and
 only within what this cycle touched. Meet the rest of the project's
 definition of done.
@@ -114,9 +119,9 @@ Post a message that begins with **IMPLEMENTATION REVIEW** and contains:
 - why you made any decision the diff can't explain, if it matters;
 - any pattern that changed since the TEST REVIEW, by its book name;
 - anything in `README.md` or `AGENTS.md` now out of date;
-- if the full check passed, a suggested commit message in the project's
-  format, ending with `Refs #<issue>`, or `Closes #<issue>` on the
-  issue's last item;
+- whether you recommend committing now and, only if you do, a suggested
+  commit message in the project's format, ending with `Refs #<issue>`, or
+  `Closes #<issue>` on the issue's last item;
 - the next cycle, in one sentence.
 
 End your turn and wait.
@@ -129,6 +134,13 @@ approved message. A refactor gets its own commit, apart from the behavior
 around it. The working tree may hold more than the commit will, so run the
 full check on exactly what is staged, for example in a copy made with
 `git checkout-index -a --prefix=<dir>/`.
+
+A correction that belongs in an earlier unpushed commit goes there as a
+`fixup!` commit, folded in with an autosquash rebase. When later commits
+touched the same lines, back up the finished work first, stop the rebase at
+that commit, make the change as it would have been made then, and resolve
+each later conflict as its commit intended. Afterward, run the full check
+on every rewritten commit, and confirm the final tree matches the backup.
 
 A commit needs the full check to pass. While an end-to-end test is still
 red, a cycle ends at its approved IMPLEMENTATION REVIEW, and the next cycle
