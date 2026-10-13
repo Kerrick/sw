@@ -56,7 +56,6 @@ Facts that are easy to get wrong:
 - The router matches `Key#to_sym`. A capital letter arrives as `g` with Shift
   held, so bind `:shift_G`, never `:G`. (The `Key#G?` predicate is a
   different path.)
-- `Collection#records` is private. Use `Enumerable` methods.
 - `out.source` runs one child command, waits, and returns its message, or
   `nil` on timeout or cancellation (handle that apart from HTTP errors).
   `out.standing` runs children in parallel, but their messages go to Update,
@@ -198,16 +197,12 @@ issues, not here.
   `forward_events %i[down j], to: :characters, as: :move_down`.
   Characters' Update handles `:move_down`, never raw keys. Support both
   CUA and vim/lazygit-style keys.
-- A text field captures typing: global first (Ctrl+C), then intent
-  management, then keystrokes (`otherwise route_to: :search`). Handle Paste
-  events. Draw the cursor with `tui.cursor`.
-- Search bubbles a message upward; the root forwards it to Characters.
 - Each Fragment stores its own state, like selection. A list leaves scrolling to
   the List widget (`offset: nil` keeps the selection in view).
 - Keys reach a panel only while it has something to receive them: guard the
   root's forwards with `only when:` to prevent exceptions.
-- Loading, empty ("No characters match …"), and error-with-retry states
-  are all required. Good UX (tailored for a TUI user) is a must.
+- Loading, empty, and error-with-retry states are all required. Good UX
+  (tailored for a TUI user) is a must.
 
 ## Testing
 
@@ -240,9 +235,6 @@ The approach comes from five books. Apply them; don't cite them in code.
   the only time to touch the live API, and only after asking. Never edit
   them, and keep bulk edits out of `test/fixtures/`: renaming `Count` once
   turned "Count Dooku" into "Value Dooku".
-- `test_helper.rb` starts one `FIXTURE_SERVER` for the whole suite and
-  resets `SW_API_URL`, which overrides the API root, to it before every
-  test. No test reaches swapi.info.
 - Test parsing and the domain model as plain Ruby against fixtures.
 - Test Update functions without a terminal: assert on the returned model and
   command *values*. Child fragments receive routed intents, not keys; the
@@ -264,8 +256,7 @@ The approach comes from five books. Apply them; don't cite them in code.
 - Test custom commands through the real runtime with `inject_sync`, against
   a local `TCPServer` serving fixtures, as Rooibos's own tests do. Don't add
   WebMock, mock `Net::HTTP`, or fake the `Outlet`. Inject faults with
-  `FixtureServer#refusing` (404), `#dropping` (no answer), and `#answering`
-  (any body), each for the length of a block.
+  `FixtureServer`'s helpers.
 - System tests run the app against the fixture server, reach their example
   with keys, and check the screen with `assert_snapshots`. Name snapshots
   after the example they show, and mask machine-specific output with
