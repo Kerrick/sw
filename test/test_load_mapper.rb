@@ -125,6 +125,26 @@ class TestLoadMapper < Minitest::Test
     assert_empty unlisted_residents + misplaced_residents
   end
 
+  def test_the_human_species_doesnt_list_luke_either
+    luke = records.fetch(:characters).first
+    human = records.fetch(:species).find { |species| species.name.to_s == "Human" }
+
+    assert_empty luke.species.map { |species| species.name.to_s }
+    refute_includes human.people.map { |character| character.name.to_s }, "Luke Skywalker"
+  end
+
+  def test_every_character_and_their_species_list_each_other
+    characters, species = records.values_at(:characters, :species)
+    unlisted_members = characters.flat_map do |character|
+      character.species.reject { |kind| kind.people.include?(character) }.map { |kind| "#{kind.name} omits #{character.name}" }
+    end
+    unlisted_species = species.flat_map do |kind|
+      kind.people.reject { |character| character.species.include?(kind) }.map { |character| "#{character.name} omits #{kind.name}" }
+    end
+
+    assert_empty unlisted_members + unlisted_species
+  end
+
   def test_the_snowspeeder_is_an_incom_t47_airspeeder_for_a_crew_of_two_and_no_passengers
     snowspeeder = records.fetch(:characters).first.vehicles.first
 
