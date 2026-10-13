@@ -13,4 +13,22 @@ class TestAttributesBox < Minitest::Test
       end
     end
   end
+
+  def test_anakin_was_born_41_9bby_to_the_tenth_of_a_year
+    anakin = character("Anakin Skywalker")
+
+    with_rendered(Sw::AttributesBox::View.call(anakin, tui)) do
+      refute_nil text_position("41.9BBY")
+    end
+  end
+
+  def test_jek_tono_porkins_birth_year_reads_dimmed_as_unknown
+    jek_tono_porkins = character("Jek Tono Porkins")
+
+    with_rendered(Sw::AttributesBox::View.call(jek_tono_porkins, tui)) do
+      assert_text_style "unknown", modifiers: [:dim]
+    end
+  end
+
+  private def character(name) = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == name }
 end
