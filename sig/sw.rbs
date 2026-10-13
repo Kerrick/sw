@@ -82,6 +82,7 @@ module Sw
     def initialize: (String text) -> void
                   | (text: String) -> void
     def to_s: () -> String
+    def numeric?: () -> bool
     def unknown?: () -> bool
     def not_applicable?: () -> bool
     def <=>: (untyped other) -> Integer?

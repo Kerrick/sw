@@ -7,7 +7,7 @@ module Sw
     # lifespan counts no years.
     Span = -> (value, tui, unit: "") {
       return tui.text_span(content: value.to_s, style: tui.style(modifiers: [:dim])) if value.unknown? || value.not_applicable?
-      return tui.text_span(content: value.to_s) unless value.text.match?(/\A[\d.,]+\z/)
+      return tui.text_span(content: value.to_s) unless value.numeric?
 
       tui.text_span(content: "#{value}#{unit}")
     }

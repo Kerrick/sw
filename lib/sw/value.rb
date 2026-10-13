@@ -14,6 +14,9 @@ module Sw
     # Puts a comma before every three digits that run to the end.
     def to_s = text.gsub(/\d(?=(\d{3})+\z)/, '\0,')
 
+    # A range like "30-165" isn't one number.
+    def numeric? = text.match?(/\A[\d.,]+\z/)
+
     def unknown? = text == "unknown"
 
     # Dagobah's gravity says it in capitals.
