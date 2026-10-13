@@ -165,6 +165,18 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_a_failed_reload_says_so_in_red_beside_the_characters
+    loading, = Sw::Init.call
+    loaded = loading.with(characters: three_characters, films:)
+    reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
+
+    failed, = Sw::Update.call(Sw::Load::Failed.new(reason: "Connection refused"), reloading)
+
+    with_rendered(Sw::View.call(failed, tui)) do
+      assert_text_style "Reload failed", fg: :red
+    end
+  end
+
   def test_r_is_shown_as_a_hotkey_whether_loading_failed_or_loaded
     loading, = Sw::Init.call
     failed = loading.with(failure: "Connection refused")

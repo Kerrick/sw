@@ -1,0 +1,40 @@
+[0m[0m[1mStar Wars Character Datapad                                                                  [0m┌[1] Search───────────────┐[0m
+[0m                                                                                             │                         │[0m
+[0m[31mReload failed [0m[1;2;4mk/j[0m[2m: Prev/Next[0m  [0m[1;2;4mg/G[0m[2m: First/Last[0m  [0m[1;2;4mr[0m[2m: Reload[0m  [0m[1;2;4mq[0m[2m: Quit[0m                            └─────────────────────────┘[0m
+[0m[32m┌[2] Characters───────────┐┌[0m[1mAckbar[0m─────────────────────────────────────────────────────────────────────────────────────┐[0m
+[0m[32m│[0m[7m> Ackbar                 [0m[32m││┌Attributes──────────────────┐┌Species: [0m[1mMon Calamari[0m────────┐┌Homeworld: [0m[1mMon Cala[0m─────────┐│[0m
+[0m[32m│  Adi Gallia             [32m│││Birth year: 41BBY           ││Classification:   amphibian  ││Population:      27,000,000,││[0m
+[0m[32m│  Anakin Skywalker       [32m│││Gender:     male            ││Designation:      sentient   ││Terrain:         oceans, ree││[0m
+[0m[32m│  Arvel Crynyd           [32m│││Height:     180 cm          ││Average height:   160 cm     ││Climate:         temperate  ││[0m
+[0m[32m│  Ayla Secura            [32m│││Mass:       83 kg           ││Average lifespan: [0m[2munknown[0m    ││Surface water:   100%       ││[0m
+[0m[32m│  Bail Prestor Organa    [32m│││Eye color:  orange          ││Language:         Mon Calamar││Diameter:        11,030 km  ││[0m
+[0m[32m│  Barriss Offee          [32m│││Hair color: none            ││                             ││Rotation period: 21 hr      ││[0m
+[0m[32m│  Ben Quadinaros         [32m│││Skin color: brown mottle    ││                             ││Orbital period:  398 d      ││[0m
+[0m[32m│  Beru Whitesun lars     [32m│││                            ││                             ││Gravity:         1          ││[0m
+[0m[32m│  Bib Fortuna            [32m││└────────────────────────────┘└─────────────────────────────┘└────────────────────────────┘│[0m
+[0m[32m└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘[0m
+[0m┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
+[0m│ [0m[1;2mThe Phantom Menace[0m [0m[1;2mAttack of the Clone[0m [0m[1;2mRevenge of the Sith[0m     [0m[1;2mA New Hope[0m     [0m[1;2mThe Empire Strikes [0m [0m[1mReturn of the Jedi[0m │[0m
+[0m│      [0m[2mEpisode I[0m         [0m[2mEpisode II[0m          [0m[2mEpisode III[0m         [0m[2mEpisode IV[0m          [0m[2mEpisode V[0m          Episode VI     │[0m
+[0m└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m
+[0m┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│[0m[2m                       No starships                       [0m││[0m[2m                        No vehicles                       [0m│[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m│                                                          ││                                                          │[0m
+[0m└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘[0m

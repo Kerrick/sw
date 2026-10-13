@@ -137,10 +137,18 @@ module Sw
   }
 
   View = -> (model, tui) {
-    return FailureView.call(model, tui) if model.failure
+    # The error screen is only for having no data. A failed reload leaves the old data on screen.
+    return FailureView.call(model, tui) if model.failure && !model.characters
     return LoadingView.call(tui) unless model.characters
 
     selected = model.characters.selected
+    status = if model.loading?
+      StatusWord.call(tui, "Loading", :blue)
+    elsif model.failure
+      StatusWord.call(tui, "Reload failed", :red)
+    else
+      []
+    end
 
     tui.layout(
       direction: :vertical,
@@ -148,7 +156,7 @@ module Sw
       children: [
         Header.call(
           tui,
-          StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *GlobalKeys] : Search::Keys),
+          StatusLine.call(tui, status:, keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *GlobalKeys] : Search::Keys),
           Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1)
         ),
         tui.layout(

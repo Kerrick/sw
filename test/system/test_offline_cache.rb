@@ -14,9 +14,24 @@ class TestOfflineCache < Minitest::Test
     end
   end
 
-  private def launch
+  def test_a_reload_without_a_network_keeps_the_characters_on_screen
+    launch
+    ENV["SW_API_URL"] = unreachable_url
+
+    launch(:r) do
+      assert_includes buffer_content.join("\n"), "Ackbar"
+      assert_snapshots("a_reload_without_a_network")
+    end
+  end
+
+  # Presses each key once the data before it has arrived.
+  private def launch(*keys)
     with_test_terminal(120, 40) do
       inject_sync
+      keys.each do |key|
+        inject_key(key)
+        inject_sync
+      end
       inject_key(:ctrl_c)
       Rooibos.run(Sw)
       yield if block_given?
