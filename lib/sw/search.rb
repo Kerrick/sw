@@ -24,6 +24,8 @@ module Sw
     # Ctrl-U clears the line, as in a shell. Super-Backspace (Cmd or Win) arrives only from a terminal that reports Super.
     receive_events %i[ctrl_u super_backspace], -> (_, model) { Change.(model, "") }
 
+    receive_routed :clear, -> (_, model) { Change.(model, "") }
+
     # A key that types one character. Ctrl and Alt chords are commands, not text, though Shift types capitals.
     Typed = -> (message, _) {
       message.respond_to?(:text?) && message.text? && message.code.length == 1 && !message.ctrl? && !message.alt?

@@ -245,6 +245,27 @@ class TestSw < Minitest::Test
     assert_equal skywalkers, model.characters
   end
 
+  def test_esc_from_a_search_for_sky_lands_on_the_list_with_every_character_back
+    skywalkers = three_characters(selected: luke).with(query: "sky")
+    searching = Sw::Model.new(characters: skywalkers, focus: :search, search: Sw::Search::Init.call.with(query: "sky"))
+
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "esc"), searching)
+
+    assert_equal :characters, model.focus
+    assert_equal "", model.search.query
+    assert_equal [ackbar, han, luke], model.characters.matches.to_a
+  end
+
+  def test_esc_in_the_list_after_searching_for_sky_brings_every_character_back
+    skywalkers = three_characters(selected: luke).with(query: "sky")
+    browsing = Sw::Model.new(characters: skywalkers, focus: :characters, search: Sw::Search::Init.call.with(query: "sky"))
+
+    model, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "esc"), browsing)
+
+    assert_equal "", model.search.query
+    assert_equal [ackbar, han, luke], model.characters.matches.to_a
+  end
+
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way
     loading, = Sw::Init.call
 

@@ -145,6 +145,10 @@ module Sw
     receive_events %i[1 /], -> (_, model) { model.with(focus: :search) }
     receive_events :"2", -> (_, model) { model.with(focus: :characters) }
 
+    # Esc clears the search from either panel and lands on the list.
+    observe_events :esc, -> (_, model) { model.with(focus: :characters) }
+    forward_events :esc, to: :search, as: :clear
+
     only when: -> (_, model) { model.focus == :characters } do
       forward_events %i[down j], to: :characters, as: :move_down
       forward_events %i[up k], to: :characters, as: :move_up

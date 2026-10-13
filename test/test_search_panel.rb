@@ -39,6 +39,15 @@ class TestSearchPanel < Minitest::Test
     assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "")), command
   end
 
+  def test_clearing_sky_empties_the_query_and_tells_the_screen
+    after_sky = Sw::Search::Init.call.with(query: "sky")
+
+    model, command = Sw::Search::Update.call(Rooibos::Message::Routed.new(envelope: :clear, event: nil), after_sky)
+
+    assert_equal "", model.query
+    assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "")), command
+  end
+
   def test_ctrl_a_and_alt_b_leave_sky_as_it_was
     after_sky = Sw::Search::Init.call.with(query: "sky")
 
