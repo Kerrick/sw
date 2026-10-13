@@ -10,6 +10,9 @@ module Sw
 
     def empty? = items.empty?
 
+    # Every cycle in the domain model runs through a Collection, so printing its items would walk the whole graph.
+    def inspect = "#<#{self.class} #{[items.size, items.first&.class].compact.join(" ")}>"
+
     private :items
   end
 end

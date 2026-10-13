@@ -109,6 +109,7 @@ class Collection[T] < Data
     def each: () { (T) -> void } -> Array[T]
             | () -> Enumerator[T, Array[T]]
     def empty?: () -> bool
+    def inspect: () -> String
 
     private
 

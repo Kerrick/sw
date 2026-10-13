@@ -15,4 +15,10 @@ class TestCollection < Minitest::Test
 
     assert_empty lukes_species
   end
+
+  def test_a_failure_message_can_show_tatooine
+    tatooine = EntireGalaxy::RECORDS.fetch(:characters).first.homeworld
+
+    assert_includes Timeout.timeout(1) { tatooine.inspect }, "Tatooine"
+  end
 end
