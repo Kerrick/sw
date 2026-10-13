@@ -30,5 +30,13 @@ class TestAttributesBox < Minitest::Test
     end
   end
 
+  def test_jabba_weighs_1_358_kg
+    jabba = character("Jabba Desilijic Tiure")
+
+    with_rendered(Sw::AttributesBox::View.call(jabba, tui)) do
+      refute_nil text_position("1,358 kg")
+    end
+  end
+
   private def character(name) = EntireGalaxy::RECORDS.fetch(:characters).find { |character| character.name.to_s == name }
 end
