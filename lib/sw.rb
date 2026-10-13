@@ -201,7 +201,7 @@ module Sw
   end
 
   receive_instances_of Load::Finished, -> (message, model) {
-    model.with(characters: Characters::Init.(characters: message.characters), loading: false)
+    model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), loading: false)
   }
 
   receive_instances_of Load::Failed, -> (message, model) {

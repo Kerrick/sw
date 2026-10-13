@@ -25,7 +25,7 @@ unbound until then.
 - [x] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
 - [x] When the highlighted character stops matching, the highlight moves to the first match
 - [x] The list's keys move through the matches only
-- [ ] A reload keeps the search
+- [x] A reload keeps the search
 - [x] Backspace deletes the query's last character, and does nothing to an empty query
 - [x] Cmd-Backspace, or Ctrl-U, clears the query
 - [x] Ctrl and Alt chords don't type into the query

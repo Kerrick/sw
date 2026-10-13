@@ -358,6 +358,24 @@ class TestSw < Minitest::Test
     assert_equal [ackbar, han, luke], model.characters.matches.to_a
   end
 
+  def test_a_reload_after_searching_for_sky_still_shows_only_luke
+    searched_for_sky = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]))
+
+    model, = Sw::Update.call(reloaded, searched_for_sky)
+
+    assert_equal [luke], model.characters.matches.to_a
+  end
+
+  def test_a_reload_after_searching_for_sky_highlights_luke_not_the_hidden_ackbar
+    searched_for_sky = Sw::Model.new(characters: three_characters(selected: luke).with(query: "sky"), search: Sw::Search::Init.call.with(query: "sky"))
+    reloaded = Sw::Load::Finished.new(characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]))
+
+    model, = Sw::Update.call(reloaded, searched_for_sky)
+
+    assert_equal luke, model.characters.selected
+  end
+
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way
     loading, = Sw::Init.call
 

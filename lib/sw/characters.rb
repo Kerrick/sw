@@ -13,9 +13,10 @@ module Sw
       end
     end
 
-    Init = -> (characters:) {
+    Init = -> (characters:, query: "") {
       sorted = Collection.new(characters.sort_by(&:name))
-      Ractor.make_shareable(Model.new(collection: sorted, selected: sorted.first))
+      model = Model.new(collection: sorted, selected: nil, query:)
+      Ractor.make_shareable(model.with(selected: model.matches.first))
     }
 
     # Moves the selection one step by an operator (:+ or :-) and stops at either end.

@@ -101,7 +101,7 @@ module Sw
       def matches: () -> Collection[Character]
     end
 
-    Init: ^(characters: Collection[Character]) -> Model
+    Init: ^(characters: Collection[Character], ?query: String) -> Model
     Select: ^(Symbol, Model) -> Model
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
     EMPTY: String
