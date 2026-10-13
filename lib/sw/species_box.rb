@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sw
-  # Draws a character's species, a View-only part of Selected Character. Named apart from Species, the domain object.
+  # Draws a character's species, a View-only part of Selected Character.
   module SpeciesBox
     LABEL = "Species"
 

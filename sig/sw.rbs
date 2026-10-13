@@ -192,7 +192,7 @@ class Collection[T] < Data
     View: ^(Character?, RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Block
   end
 
-  module Homeworld
+  module HomeworldBox
     LABEL: String
     UNKNOWN: String
     Title: ^(Planet, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line

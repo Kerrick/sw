@@ -2,7 +2,7 @@
 
 module Sw
   # Draws a character's homeworld, a View-only part of Selected Character.
-  module Homeworld
+  module HomeworldBox
     LABEL = "Homeworld"
 
     # Selected Character has no row to spare, so the planet's name shares the border with the label.
