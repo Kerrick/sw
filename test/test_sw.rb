@@ -413,6 +413,17 @@ class TestSw < Minitest::Test
     assert_same reloaded_han, model.characters.selected
   end
 
+  def test_ackbar_takes_the_highlight_when_a_reload_no_longer_has_han_solo
+    browsing_han = Sw::Model.new(films:, characters: three_characters(selected: han), loading: true)
+    reload = reloaded
+    reload_without_han = reload.with(characters: Sw::Collection.new(reload.characters.reject { |character| character.name.to_s == "Han Solo" }))
+    reloaded_ackbar = reload.characters.find { |character| character.name.to_s == "Ackbar" }
+
+    model, = Sw::Update.call(reload_without_han, browsing_han)
+
+    assert_same reloaded_ackbar, model.characters.selected
+  end
+
   def test_the_app_keeps_the_films_the_download_delivered
     downloaded = Sw::Load::Finished.new(
       characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]),

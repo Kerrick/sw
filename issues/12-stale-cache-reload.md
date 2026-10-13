@@ -14,4 +14,4 @@ cache exists.
 - [x] A reload (`r` or F5) that fails while characters are on screen keeps them, the same as a failed background reload. This closes a gap issue 11 accepted: since its reload skips the cache, a reload without a network shows the error screen.
 - [x] A reload keeps the highlighted character, as the new data has it, so the list doesn't jump back to the top while it's under way
 - [x] Every kind of domain object knows itself in the new data, not only characters, so a future screen's selection survives a reload too
-- [ ] A highlighted character missing from the new data gives way to the first match
+- [x] A highlighted character missing from the new data gives way to the first match
