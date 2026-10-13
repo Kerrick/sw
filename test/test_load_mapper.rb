@@ -129,7 +129,7 @@ class TestLoadMapper < Minitest::Test
     luke = records.fetch(:characters).first
     human = records.fetch(:species).find { |species| species.name.to_s == "Human" }
 
-    assert_empty luke.species.map { |species| species.name.to_s }
+    assert_empty luke.species
     refute_includes human.people.map { |character| character.name.to_s }, "Luke Skywalker"
   end
 

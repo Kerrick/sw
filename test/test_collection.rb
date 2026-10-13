@@ -9,4 +9,10 @@ class TestCollection < Minitest::Test
 
     assert_equal ["Luke Skywalker", "Leia Organa"], Sw::Collection.new([luke, leia]).map { |character| character.name.to_s }
   end
+
+  def test_luke_belongs_to_no_species
+    lukes_species = EntireGalaxy::RECORDS.fetch(:characters).first.species
+
+    assert_empty lukes_species
+  end
 end

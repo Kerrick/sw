@@ -8,6 +8,8 @@ module Sw
 
     def each(&) = items.each(&)
 
+    def empty? = items.empty?
+
     private :items
   end
 end
