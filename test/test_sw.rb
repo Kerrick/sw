@@ -176,24 +176,32 @@ class TestSw < Minitest::Test
   end
 
   def test_r_reloads_the_download_after_a_failure
-    model, download = Sw::Init.call
+    model, = Sw::Init.call
     failed = model.with(failure: "Connection refused")
 
     retried, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), failed)
 
     assert_nil retried.failure
-    assert_equal download, command
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
   end
 
   def test_r_reloads_the_download_and_keeps_the_characters_on_screen
-    loading, download = Sw::Init.call
+    loading, = Sw::Init.call
     characters = three_characters
     loaded = loading.with(characters:)
 
     reloading, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     assert_equal characters, reloading.characters
-    assert_equal download, command
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
+  end
+
+  def test_r_reloads_from_the_api_rather_than_the_cache
+    loaded = Sw::Model.new(films:, characters: three_characters)
+
+    _, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
+
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
   end
 
   def test_reloading_with_characters_on_screen_shows_the_blue_loading_status_word
@@ -207,13 +215,13 @@ class TestSw < Minitest::Test
   end
 
   def test_f5_reloads_the_download_like_r
-    model, download = Sw::Init.call
+    model, = Sw::Init.call
     failed = model.with(failure: "Connection refused")
 
     reloading, command = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "f5"), failed)
 
     assert_nil reloading.failure
-    assert_equal download, command
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
   end
 
   def test_q_quits
@@ -340,7 +348,7 @@ class TestSw < Minitest::Test
     _, reload = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "f5"), searching)
 
     assert_equal Rooibos::Command.exit, quit
-    assert_equal Sw::Download.call, reload
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), reload
   end
 
   def test_esc_from_a_search_for_sky_lands_on_the_list_with_every_character_back

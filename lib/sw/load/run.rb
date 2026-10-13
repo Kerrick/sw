@@ -9,14 +9,15 @@ module Sw
       # The root and every collection, which together make a complete cache.
       BODIES = [:root, *Mapper::COLLECTIONS.keys].freeze
 
-      def initialize(url, out, token)
+      def initialize(url, out, token, reload:)
         @url = url
+        @reload = reload
         @out = out
         @token = token
       end
 
       def call
-        reload unless cache.complete?(*BODIES)
+        reload if @reload || !cache.complete?(*BODIES)
         finished
       end
 

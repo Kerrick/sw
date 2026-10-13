@@ -31,6 +31,13 @@ class TestLoad < Minitest::Test
     assert_equal 82, cached.characters.count
   end
 
+  def test_a_reload_goes_to_the_network_even_when_the_cache_is_fresh
+    finished
+    reloaded = delivered(unreachable_url, reload: true)
+
+    assert_equal "Sw::Load::Failed", reloaded.class.name
+  end
+
   def test_a_refused_connection_fails_naming_the_address
     url = unreachable_url
     failed = delivered(url)
@@ -86,11 +93,11 @@ class TestLoad < Minitest::Test
 
   private def finished = delivered(FIXTURE_SERVER.url)
 
-  private def delivered(url)
+  private def delivered(url, **options)
     with_test_terminal do
       inject_sync
       inject_key(:ctrl_c)
-      Rooibos::Runtime.run(model: :loading, view: ClearView, update: KeepLastMessage, command: Sw::Load.new(url:))
+      Rooibos::Runtime.run(model: :loading, view: ClearView, update: KeepLastMessage, command: Sw::Load.new(url:, **options))
     end
   end
 end

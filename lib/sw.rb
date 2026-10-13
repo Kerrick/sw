@@ -43,9 +43,7 @@ module Sw
 
   FocusStep = -> (model, step) { model.with(focus: FocusOrder[(FocusOrder.index(model.focus) + step) % FocusOrder.size]) }
 
-  Download = -> { Load.new(url: ENV.fetch("SW_API_URL", API_URL)) }
-
-  Init = -> { [Model.new(characters: nil, films: nil, loading: true), Download.call] }
+  Init = -> { [Model.new(characters: nil, films: nil, loading: true), Load.new] }
 
   TITLE = "Star Wars Character Datapad"
 
@@ -176,7 +174,7 @@ module Sw
 
   action :quit, -> { Rooibos::Command.exit }
 
-  action :reload, -> (_, model) { [model.with(failure: nil, loading: true), Download.call] }
+  action :reload, -> (_, model) { [model.with(failure: nil, loading: true), Load.new(reload: true)] }
 
   receive_events :ctrl_c, :quit
   receive_events :f5, :reload
