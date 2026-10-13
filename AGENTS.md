@@ -275,7 +275,8 @@ The approach comes from five books. Apply them; don't cite them in code.
   these assertions. Find text with `#text_position` and check its style
   with `#assert_text_style`, named as they would be in RatatuiRuby, rather
   than indexing `buffer_content` by hand. Refer to on-screen wording through
-  the View's own constant, like `Sw::Vehicles::EMPTY`.
+  the View's own constant, like `Sw::Vehicles::EMPTY`. When two rows show
+  the same value, find the one you mean by its label with `on_line_with:`.
 - Don't test non-behavior.
 - Don't repeat the app's logic in a test, as by looping over the constant
   under test. Name what you expect. Keys are behavior, not copy, so name
