@@ -91,7 +91,8 @@ the arrow keys or `j` and `k` move the highlight, and the panels beside it
 follow. Home and End, or `g` and `G`, jump to either end. Search filters the
 list as you type. Enter keeps the filter and returns to the list. Esc clears
 it. Ctrl-C quits from anywhere, and `q` quits from anywhere but Search. F5
-and `r` reload the data from the API.
+reloads the data from the API from anywhere, and `r` from anywhere but
+Search.
 
 ## Assumptions
 
