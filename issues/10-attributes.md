@@ -15,5 +15,5 @@ as it does `"unknown"`, so R2-D2's items are about telling `"n/a"` from
 - [x] Birth years `"19BBY"`, `"41.9BBY"`, and `"unknown"`
 - [x] Jabba's mass of `"1,358"`
 - [x] R2-D2's hair color `"n/a"` (doesn't apply) versus Mace Windu's `"none"` (a real answer)
-- [ ] R2-D2's gender `"n/a"` versus IG-88's `"none"`
+- [x] R2-D2's gender `"n/a"` versus IG-88's `"none"`
 - [ ] Multi-valued colors like `"auburn, grey"`
