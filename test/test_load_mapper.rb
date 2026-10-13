@@ -45,6 +45,12 @@ class TestLoadMapper < Minitest::Test
     assert_predicate polis_massa.diameter, :unknown?
   end
 
+  def test_tund_is_known_to_have_no_population
+    tund = records.fetch(:planets).find { |planet| planet.name.to_s == "Tund" }
+
+    assert_equal Sw::Value.new("0"), tund.population
+  end
+
   def test_yodas_unknown_homeworld_turns_and_orbits_in_an_unknown_time_rather_than_none
     yodas_homeworld = records.fetch(:characters).find { |character| character.name.to_s == "Yoda" }.homeworld
 

@@ -15,4 +15,4 @@ and Attributes share those rows.
 - [x] A diameter, rotation period, or orbital period of `"0"` shows as unknown (Polis Massa's diameter; planets/28's periods)
 - [x] A planet's residents link back, and both directions agree
 - [x] Dagobah's gravity `"N/A"` reads dimmed, like unknown
-- [ ] Tund's population of `"0"` shows as 0, since the Sorcerers of Tund's last member killed everyone on it
+- [x] Tund's population of `"0"` shows as 0, since the Sorcerers of Tund's last member killed everyone on it
