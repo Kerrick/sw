@@ -219,6 +219,9 @@ Enter to choose a character would double the keystrokes for browsing.
 Only panels that take focus keep state. The other panels, and the pieces
 inside every panel, are View-only modules.
 
+The Starships and Vehicles panel heights are the maximum the current dataset
+needs, rather than adding focus and scrolling to those panels right now.
+
 The layout is meant for a reasonably large terminal, and a small window will be
 cramped. Responsive design is possible with RatatuiRuby, but was deemed
 out-of-scope for a few hours.

@@ -119,6 +119,8 @@ Post a message that begins with **IMPLEMENTATION REVIEW** and contains:
 - why you made any decision the diff can't explain, if it matters;
 - any pattern that changed since the TEST REVIEW, by its book name;
 - anything in `README.md` or `AGENTS.md` now out of date;
+- any earlier recommendation whose reason no longer holds, and what you'd
+  do instead;
 - whether you recommend committing now and, only if you do, a suggested
   commit message in the project's format, ending with `Refs #<issue>`, or
   `Closes #<issue>` on the issue's last item;
@@ -141,6 +143,9 @@ touched the same lines, back up the finished work first, stop the rebase at
 that commit, make the change as it would have been made then, and resolve
 each later conflict as its commit intended. Afterward, run the full check
 on every rewritten commit, and confirm the final tree matches the backup.
+A decision the reviewer reverses is such a correction. Rewrite the commit
+that made it as though the first choice was never made: its code, tests,
+recorded output, message, and every note that mentions it.
 
 A commit needs the full check to pass. While an end-to-end test is still
 red, a cycle ends at its approved IMPLEMENTATION REVIEW, and the next cycle

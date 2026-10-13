@@ -84,8 +84,13 @@ Facts that are easy to get wrong:
   titles, Table cells, and Spans' `content:` take anything with `to_s`. In the running app, a widget that raises while
   drawing leaves its panel blank and reports nothing.
 - Table cells don't wrap, not even a Paragraph with `wrap: true` in a taller
-  row. Long values are cut off, and the project accepts that. Tables have no
-  row separators; `Vehicles::Vehicle` shows the way around it.
+  row. Long values are cut off, and the project accepts that, so a test
+  asserts only the part of a value that fits its column. Tables have no row
+  separators; `Craft::Entry` shows the way around it.
+- A View can't measure the space it gets (a custom widget only returns Draw
+  commands). In a layout, Fill sections take all spare space before a Min
+  grows, so a Min beside Fills stays at its floor, and among Mins alone the
+  last takes everything. A proportional share with a floor can't be said.
 - A Paragraph's `style:` covers its blank cells too, which changes the
   `.ansi` snapshots. Be sure whether you intend to style the text or the area
   around it.
@@ -205,6 +210,13 @@ issues, not here.
   root's forwards with `only when:` to prevent exceptions.
 - Loading, empty, and error-with-retry states are all required. Good UX
   (tailored for a TUI user) is a must.
+- Never show less of the data to make it fit. A panel that takes no focus
+  can't scroll, so its height comes from the largest case in the whole
+  dataset (`CraftHeight`), never from the selected object, and the layout
+  holds still while browsing. Snapshots run at 120×40; say how a layout
+  change behaves in a taller terminal too.
+- When a panel draws what another already draws, share all of it, as
+  `Craft` does for Vehicles and Starships, not only the piece an issue names.
 
 ## Testing
 
@@ -306,7 +318,8 @@ mockup.
   *why*. End with your own harness's attribution lines (naming your model,
   not one copied from history), in the format earlier commits use. A commit
   that repairs behavior is a `fix:`, even when an unpushed commit in the
-  same issue added that behavior.
+  same issue added that behavior. A decision the reviewer reverses is not a
+  repair; the skill's rule for corrections applies.
 - User-visible changes go under `## [Unreleased]` in `CHANGELOG.md`
   (Keep a Changelog). Tests, refactors, and tooling do not. Each entry is one
   capability; add an entry rather than growing an old one.
