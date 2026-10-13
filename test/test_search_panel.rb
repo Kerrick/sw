@@ -31,6 +31,14 @@ class TestSearchPanel < Minitest::Test
     assert_equal "", model.query
   end
 
+  def test_ctrl_u_after_sky_tells_the_screen_the_query_is_empty
+    after_sky = Sw::Search::Init.call.with(query: "sky")
+
+    _, command = Sw::Search::Update.call(RatatuiRuby::Event::Key.new(code: "u", modifiers: ["ctrl"]), after_sky)
+
+    assert_equal Rooibos::Command.bubble(Sw::Search::QueryChanged.new(query: "")), command
+  end
+
   def test_ctrl_a_and_alt_b_leave_sky_as_it_was
     after_sky = Sw::Search::Init.call.with(query: "sky")
 

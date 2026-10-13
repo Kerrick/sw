@@ -22,7 +22,7 @@ unbound until then.
 - [x] `2` focuses Characters (no test drives it until a third panel takes focus)
 - [x] The list's keys work only while Characters has focus
 - [ ] The status line lists the focused panel's keys, with the global ones after them
-- [ ] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
+- [x] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
 - [x] When the highlighted character stops matching, the highlight moves to the first match
 - [ ] The list's keys move through the matches only
 - [ ] A reload keeps the search

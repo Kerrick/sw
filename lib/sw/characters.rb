@@ -23,7 +23,7 @@ module Sw
     Select = -> (operator, model) {
       return model unless model.selected
 
-      records = model.collection.to_a
+      records = model.matches.to_a
       new_index = records.index(model.selected).public_send(operator, 1)
       model.with(selected: records[new_index.clamp(0, records.length - 1)])
     }
