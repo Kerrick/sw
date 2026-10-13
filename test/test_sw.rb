@@ -24,7 +24,7 @@ class TestSw < Minitest::Test
 
   def test_the_title_is_bold
     with_rendered(Sw::View.call(Sw::Model.new(films:, characters: three_characters), tui)) do
-      assert_text_style Sw::TITLE, modifiers: [:bold]
+      assert_text_style Sw::Header::TITLE, modifiers: [:bold]
     end
   end
 

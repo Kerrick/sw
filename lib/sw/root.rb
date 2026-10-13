@@ -17,49 +17,15 @@ module Sw
 
   Init = -> { [Model.new(characters: nil, films: nil, loading: true), Load.new] }
 
-  TITLE = "Star Wars Character Datapad"
-
-  Title = -> (tui) { tui.paragraph(text: TITLE, style: tui.style(modifiers: [:bold])) }
-
-  # A status word takes no width when absent. Blue is for ephemeral status.
-  StatusWord = -> (tui, word, color) {
-    [tui.text_span(content: word, style: tui.style(fg: color)), tui.text_span(content: " ")]
-  }
-
-  Hotkey = -> (tui, key, label) {
-    [tui.text_span(content: key, style: tui.style(modifiers: [:bold, :underlined, :dim])), tui.text_span(content: ": #{label}", style: tui.style(modifiers: [:dim]))]
-  }
-
-  GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
-
-  StatusLine = -> (tui, status: [], keys: []) {
-    hotkeys = keys.map { |key, label| Hotkey.call(tui, key, label) }
-    tui.paragraph(text: [
-      tui.text_line(spans: [*status, *hotkeys.flat_map { |spans| [*spans, tui.text_span(content: "  ")] }.slice(0...-1)]),
-    ])
-  }
-
   # Search is as wide as the list.
   ListWidth = 27
-
-  # The title over the status line, with Search beside them once there is data to search.
-  Header = -> (tui, status_line, search = nil) {
-    title_and_status = tui.layout(
-      direction: :vertical,
-      constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-      children: [Title.call(tui), tui.paragraph(text: ""), status_line]
-    )
-    return title_and_status unless search
-
-    tui.layout(direction: :horizontal, constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)], children: [title_and_status, search])
-  }
 
   # The header around one body, for screens without panels.
   Wrapper = -> (tui, body, status: []) {
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(3), tui.constraint_fill(1)],
-      children: [Header.call(tui, StatusLine.call(tui, status:, keys: GlobalKeys)), body]
+      children: [Header::View.call(tui, StatusLine::View.call(tui, status:, keys: StatusLine::GlobalKeys)), body]
     )
   }
 
@@ -81,7 +47,7 @@ module Sw
           spacer,
         ]
       ),
-      status: StatusWord.call(tui, "Loading", :blue)
+      status: StatusLine::Word.call(tui, "Loading", :blue)
     )
   }
 
@@ -97,7 +63,7 @@ module Sw
         width_percent: 60,
         height_percent: 40
       ),
-      status: StatusWord.call(tui, "Error", :red)
+      status: StatusLine::Word.call(tui, "Error", :red)
     )
   }
 
@@ -115,9 +81,9 @@ module Sw
 
     selected = model.characters.selected
     status = if model.loading?
-      StatusWord.call(tui, "Reloading", :blue)
+      StatusLine::Word.call(tui, "Reloading", :blue)
     elsif model.failure
-      StatusWord.call(tui, "Reload failed", :red)
+      StatusLine::Word.call(tui, "Reload failed", :red)
     else
       []
     end
@@ -126,9 +92,9 @@ module Sw
       direction: :vertical,
       constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_length(CraftHeight.(model.characters.collection))],
       children: [
-        Header.call(
+        Header::View.call(
           tui,
-          StatusLine.call(tui, status:, keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *GlobalKeys] : Search::Keys),
+          StatusLine::View.call(tui, status:, keys: (model.focus == :characters) ? [*Characters::Keys, *([Search::ClearKey] unless model.search.query.empty?), *StatusLine::GlobalKeys] : Search::Keys),
           Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1)
         ),
         tui.layout(

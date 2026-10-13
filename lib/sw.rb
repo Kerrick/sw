@@ -25,6 +25,8 @@ require_relative "sw/species_box"
 require_relative "sw/films"
 require_relative "sw/starships"
 require_relative "sw/vehicles"
+require_relative "sw/status_line"
+require_relative "sw/header"
 require_relative "sw/root"
 
 # The Star Wars Character Datapad.
