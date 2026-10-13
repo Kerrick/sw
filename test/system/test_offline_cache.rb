@@ -37,7 +37,7 @@ class TestOfflineCache < Minitest::Test
     age_cache(eight_days_ago)
     ENV["SW_API_URL"] = unreachable_url
 
-    with_test_terminal(120, 40) do
+    with_test_terminal(120, 40, timeout: REFUSAL_TIMEOUT) do
       inject_sync # the cache
       inject_sync # the background reload
       inject_key(:ctrl_c)
@@ -53,15 +53,15 @@ class TestOfflineCache < Minitest::Test
     launch
     ENV["SW_API_URL"] = unreachable_url
 
-    launch(:r) do
+    launch(:r, timeout: REFUSAL_TIMEOUT) do
       assert_includes buffer_content.join("\n"), "Ackbar"
       assert_snapshots("a_reload_without_a_network")
     end
   end
 
   # Presses each key once the data before it has arrived.
-  private def launch(*keys)
-    with_test_terminal(120, 40) do
+  private def launch(*keys, timeout: 2)
+    with_test_terminal(120, 40, timeout:) do
       inject_sync
       keys.each do |key|
         inject_key(key)

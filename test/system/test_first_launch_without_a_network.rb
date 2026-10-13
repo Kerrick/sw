@@ -9,7 +9,7 @@ class TestFirstLaunchWithoutANetwork < Minitest::Test
     url = unreachable_url
     ENV["SW_API_URL"] = url
 
-    with_test_terminal(120, 40) do
+    with_test_terminal(120, 40, timeout: REFUSAL_TIMEOUT) do
       inject_sync
       inject_key(:ctrl_c)
       Rooibos.run(Sw)

@@ -52,6 +52,10 @@ Minitest::Test.include(EmptyCache)
 
 # Tests that need a network failure ask for an address nothing listens on.
 module UnreachableUrl
+  # Windows retries a refused connection for about two seconds, the test terminal's whole default timeout, so a test
+  # that waits for the refusal gives it longer.
+  REFUSAL_TIMEOUT = 5
+
   # A port that was open a moment ago and now refuses connections.
   private def unreachable_url
     server = TCPServer.new("127.0.0.1", 0)

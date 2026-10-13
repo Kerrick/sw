@@ -70,7 +70,7 @@ class TestLoad < Minitest::Test
 
   def test_a_reload_goes_to_the_network_even_when_the_cache_is_fresh
     finished
-    reloaded = delivered(unreachable_url, reload: true)
+    reloaded = delivered(unreachable_url, reload: true, timeout: REFUSAL_TIMEOUT)
 
     assert_equal "Sw::Load::Failed", reloaded.class.name
   end
@@ -86,7 +86,7 @@ class TestLoad < Minitest::Test
 
   def test_a_refused_connection_fails_naming_the_address
     url = unreachable_url
-    failed = delivered(url)
+    failed = delivered(url, timeout: REFUSAL_TIMEOUT)
 
     assert_equal "Sw::Load::Failed", failed.class.name
     assert_includes failed.reason, URI(url).authority
@@ -141,8 +141,8 @@ class TestLoad < Minitest::Test
 
   private def cache_files = Dir.glob("**/*.json", base: @cache_home).sort.to_h { |name| [name, File.binread(File.join(@cache_home, name))] }
 
-  private def delivered(url, **options)
-    with_test_terminal do
+  private def delivered(url, timeout: 2, **options)
+    with_test_terminal(timeout:) do
       inject_sync
       inject_key(:ctrl_c)
       Rooibos::Runtime.run(model: :loading, view: ClearView, update: KeepLastMessage, command: Sw::Load.new(url:, **options))
