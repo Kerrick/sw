@@ -7,7 +7,7 @@ reloads it in the background and never shows the error screen while any
 cache exists.
 
 - [x] A cache older than 7 days shows immediately, with "Reloading" as the status word, in blue like Loading
-- [ ] A load from the cache never rewrites it, so the files' modification time says when the data arrived
+- [x] A load from the cache never rewrites it, so the files' modification time says when the data arrived
 - [ ] The new data swaps in with one message
 - [ ] A failed or malformed background reload leaves the cache files as they were
 - [ ] A failed background reload keeps the old data and shows a brief error as the status word, in red like Error

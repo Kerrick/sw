@@ -31,6 +31,16 @@ class TestLoad < Minitest::Test
     assert_equal 82, cached.characters.count
   end
 
+  def test_a_cache_downloaded_yesterday_still_says_yesterday_after_loading
+    finished
+    yesterday = Time.now - (24 * 60 * 60)
+    age_cache(yesterday)
+
+    delivered(unreachable_url)
+
+    assert_equal [yesterday.to_i], Dir.glob("**/*.json", base: @cache_home).map { |name| File.mtime(File.join(@cache_home, name)).to_i }.uniq
+  end
+
   def test_a_cache_downloaded_just_now_is_not_stale
     finished
     cached = delivered(unreachable_url)
