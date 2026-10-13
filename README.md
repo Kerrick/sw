@@ -5,6 +5,14 @@ for exploring Star Wars characters, using data from the
 [Star Wars API](https://swapi.info/). It runs in a terminal. It works offline
 after the first launch. You drive it entirely from the keyboard.
 
+It does everything the brief asked. All 82 characters appear in a scrolling
+list, and typing in Search narrows it. Beside the list are the highlighted
+character's attributes, species, and homeworld. Below them is every film,
+with the ones the character isn't in dimmed, and then the starships and
+vehicles they pilot. The first launch shows a loading screen, a search with no
+matches says so, and a failed download says what went wrong and offers to try
+again.
+
 I built it on two open-source Ruby gems I created and maintain:
 [RatatuiRuby](https://www.ratatui-ruby.dev), a library that draws terminal user
 interfaces (TUIs), and [Rooibos](https://www.rooibos.run), a framework for
@@ -15,23 +23,6 @@ You can see the app without running it. The tests record every screen they
 check under `test/**/snapshots/`. The `.txt` files read well in GitHub's web
 view. The `.ansi` files show the same screens in color if you `cat` them in a
 terminal.
-
-## What the brief asked for
-
-The brief asked for an app that lets someone view a list of characters,
-search for one, and select one to see their attributes, species, and
-homeworld. It also asked for the films they appear in and the starships and
-vehicles they pilot, and for clear loading, empty, and error states. A
-wireframe showed all of it on one web-style page. Only that page was
-required, and images could be placeholders.
-
-The Datapad does each of those things. All 82 characters appear in a
-scrolling list, and typing in the search field narrows it. Choosing a
-character fills the panels beside the list with their attributes, species, and
-homeworld. Below them is every film, with the ones the character isn't in
-dimmed, as the wireframe showed. The starships and vehicles they pilot come
-last. The first launch shows a loading screen. A search with no matches says
-so. A failed download says what went wrong and offers to try again.
 
 ## Why a terminal
 
@@ -51,19 +42,9 @@ terminal, where web browsers handle sites like Wookieepedia poorly. And it
 can work offline. The whole dataset is under 200 KB, so the app downloads it
 once and works offline from then on.
 
-There is a plainer reason too. I maintain RatatuiRuby and Rooibos, and I'd
-welcome the chance to talk about them in the follow-up interview. That I
-[wrought](#how-i-used-ai) them makes them the tools I know best. It also makes them a risk, which I take up below.
-
-Those conclusions informed the rest. The app is a Rooibos application. On its
-first launch it starts at the API's root URL, downloads the entire small dataset,
-and caches it on disk. Each panel on screen is its own module. Like
-[lazygit](https://github.com/jesseduffield/lazygit), the app tracks which
-panel has focus, and that panel decides what each key means. When the search
-field has focus, keystrokes type into it. When the character list has focus,
-keystrokes move through it. Both the classic arrow and Home keys
-(from IBM's CUA guidelines) and the `j`, `k`, `g`, and `G` keys of vim and newer
-terminal apps work.
+There is a plainer reason too. I [wrought](#how-i-used-ai) RatatuiRuby and
+Rooibos, which makes them the tools I know best, and I'd welcome the chance to
+talk about them in the follow-up interview.
 
 ## Running it
 
@@ -83,14 +64,12 @@ mise x -- bundle exec exe/sw
 ```
 
 The app opens with the character list focused, and a green border marks
-whichever panel has focus. Tab and Shift-Tab move focus between the list and
-Search. So do the number keys, and a slash also jumps to Search. In the list,
-the arrow keys or `j` and `k` move the highlight, and the panels beside it
-follow. Home and End, or `g` and `G`, jump to either end. Search filters the
-list as you type. Enter keeps the filter and returns to the list. Esc clears
-it. Ctrl-C quits from anywhere, and `q` quits from anywhere but Search. F5
-reloads the data from the API from anywhere, and `r` from anywhere but
-Search.
+whichever panel has focus. As in [lazygit](https://github.com/jesseduffield/lazygit),
+the focused panel decides what each key means, and the line under the title
+lists them. A few keys work without being listed: the
+[CUA](https://en.wikipedia.org/wiki/IBM_Common_User_Access) arrow keys, Home,
+and End; Tab and Shift-Tab, and `/` for Search; and Ctrl-C and F5, which quit
+and reload even from Search, where `q` and `r` type.
 
 ## Assumptions
 
@@ -139,57 +118,47 @@ important, I look forward to adding
 
 ## How it's built
 
-Rooibos follows The Elm Architecture, also called Model-View-Update. One
-immutable model holds the app's state. A view function turns that model into
-what's on screen. An update function takes each message, such as a key press or
-a finished download, and returns a new model, sometimes with a command for the
-runtime to carry out. The runtime draws the screen and runs commands in the
-background.
+Rooibos follows [The Elm Architecture](https://guide.elm-lang.org/architecture/)
+(MVU): one immutable model, a view of it, and an update function that turns each
+message into a new model (and, optionally, a command for the runtime to run).
 
-The model starts with the API's JSON. The app parses it into immutable
-classes (`Character`, `Planet` and the rest) and cleans up the data's quirks
-on the way in. A small Domain Model, in Martin Fowler's sense from *Patterns of Enterprise
-Application Architecture*, holds those domain objects and answers questions about
-them, like which films a character appears in. Every object keeps its
-associations in both directions, so a character lists its films and a film lists its
-characters, and they point straight at each other. No type of object is a
-"center": asking who pilots a vehicle is as easy as asking what a character
-pilots, which eases the addition of future screens. The objects refer to each
-other in circles, which is safe because they never change and the cache
-stores raw JSON rather than objects. Each screen hands the object it centers
-on to its panels.
+The app parses the API's JSON into immutable classes (`Character`, `Planet`
+and the rest) and cleans up the data's quirks on the way in. They form a small
+[Domain Model](https://martinfowler.com/eaaCatalog/domainModel.html) that
+answers questions like which films a character appears in. Every object keeps
+its associations in both directions, so no kind of object is the center: asking
+who pilots a vehicle is as easy as asking what a character pilots.
 
-Loading happens in custom Rooibos commands. They fetch the API's root, then
-all the collections at once. They cache the raw responses in the platform's
-standard cache directory, found with the
-[`etcetera`](https://rubygems.org/gems/etcetera) gem, and build the
-domain model away from the interface. The interface hears about it once: the
-data loaded, or it failed for a reason it can show. When the cache is more
+Loading happens in [custom Rooibos commands](https://www.rooibos.run/docs/v0.8/Rooibos/Command/Custom.html).
+They fetch the API's root, then all the collections at once, and cache the raw
+responses in the platform's standard cache directory, found with the
+[`etcetera`](https://rubygems.org/gems/etcetera) gem. When the cache is more
 than a week old, the app shows it anyway and reloads in the background,
 swapping in the new data in one step. If that reload fails, it keeps the old
 data. Only a first launch without a network shows an error.
 
-The screen is made of one module per panel. The list and Search take focus,
-and each keeps its own state in its model. The other panels, and the pieces
-inside every panel, like the attributes table, are only views. The root
-fragment's model records which panel has focus. Its router turns keys into
-intents, so the down arrow and `j` both mean "move down," and hands each
-intent to the focused panel.
+The screen is one [module](https://www.rooibos.run/docs/v0.8/doc/scaling_up/fractal_architecture_md.html)
+per panel. Only the list and Search take focus, and only they keep state. The
+other panels, and the pieces inside every panel, like the attributes table, are
+only views. The root's model records which panel has focus, and its
+[router](https://www.rooibos.run/docs/v0.8/doc/scaling_up/message_routing_md.html)
+turns keys into intents (so the down arrow and `j` both mean "move down") and
+routes each intent to the focused panel. The list keeps its selection in its
+model rather than in a stateful widget, as
+[Rooibos recommends](https://www.rooibos.run/docs/v0.8/doc/best_practices/no_stateful_widgets_md.html).
 
-The brief needed one screen, centered on a character. Because panels are
-small modules over a shared domain model, a screen centered on a vehicle, a
-planet, or a film would be a new arrangement of panels, most of them reused,
-and a choice at the top of which screen to show. Existing panels would need
-navigation added, like the Characters list has now.
+The brief needed one screen, centered on a character. A screen centered on a
+vehicle, a planet, or a film would be a new arrangement of the same panels
+over the same domain model, and a choice at the top of which screen to show.
 
 ## Choices and tradeoffs
 
 A web app would have been easier for most reviewers to run and for most
-teams to inherit. It would also have competed with Wookieepedia and lost. I
-chose the option with a reason to exist, and I accepted that fewer people can
-run it. A niche audience with no competition beats losing on the open web.
+teams to inherit. I chose the option with a reason to exist alongside
+Wookieepedia, and I accepted that fewer people can run it. A niche audience
+with no competition beats losing on the open web.
 
-Building on my own libraries cuts both ways. I know them deeply, they fit
+Building upon my own libraries cuts both ways. I know them deeply, they fit
 the problem, and the app uses them the way their guides recommend. But a team
 inheriting this app would inherit an app using a young framework, still before
 its 1.0 release, which is built on a library with a small community and one
@@ -215,9 +184,6 @@ the fix works with existing caches without a new download.
 The panels beside the list follow its highlight, as lazygit's do. Requiring
 Enter to choose a character would double the keystrokes for browsing.
 
-Only panels that take focus keep state. The other panels, and the pieces
-inside every panel, are View-only modules.
-
 The Starships and Vehicles panel heights are the maximum the current dataset
 needs, rather than adding focus and scrolling to those panels right now.
 
@@ -225,20 +191,16 @@ The layout is meant for a reasonably large terminal, and a small window will be
 cramped. Responsive design is possible with RatatuiRuby, but was deemed
 out-of-scope for a few hours.
 
-Rooibos recommends against stateful RatatuiRuby widgets, so the app keeps
-selection in the model and uses the widget's default scrolling behavior.
-
-There is no Domain-Driven Design here, and no hexagonal architecture. In my
-Skills Assessment I recommended both for a legacy enterprise CMS.
-They pay for themselves in large systems with many teams and shifting
-requirements. This is a read-only viewer for a few hundred records that
-rarely, if ever, change.
+There is no [Domain-Driven Design](https://www.domainlanguage.com/ddd/) here,
+and no [hexagonal architecture](https://alistair.cockburn.us/hexagonal-architecture/).
+In my Skills Assessment I recommended both for a legacy enterprise CMS. They
+pay for themselves in large systems with many teams and shifting requirements.
+This is a read-only viewer for a few hundred records that rarely, if ever,
+change.
 
 ## Tests & Testing
 
-I wrought tests before the code they cover.
-
-The tests run with the linter, or alone:
+I wrought tests before the code they cover. They run with the linter, or alone:
 
 ```sh
 mise x -- bundle exec rake
@@ -249,17 +211,13 @@ When a change to the screen is intended, regenerate the snapshots with
 `UPDATE_SNAPSHOTS=1 mise x -- bundle exec rake test` and read the diff before
 committing.
 
-Integration tests talk to a real local HTTP server as a mock, instead of
-mock objects, as Rooibos's own HTTP tests do. The suite never touches the
-network. Tests that need HTTP talk to a local server that replays recorded
-responses from the real API.
-
-Update functions are pure, so unit tests call them directly and check the
-model and command they return, with no terminal involved. Snapshot tests run
-the real app in a headless terminal for the screens worth seeing. Each
-snapshot is named for the example it shows: Luke selected, a search for
-"sky," a search with no matches, a first launch without a network. Read
-together, they describe the app.
+The suite never touches the network. Tests that need HTTP talk to a real local
+server that replays recorded responses from the API, instead of mock objects.
+Update functions are pure, so unit tests call them directly and check the model
+and command they return, with no terminal involved. Snapshot tests run the real
+app in a headless terminal for the screens worth seeing. Each snapshot is named
+for the example it shows: Luke selected, a search for "sky," a search with no
+matches, a first launch without a network. Read together, they describe the app.
 
 ## With more time
 
@@ -283,7 +241,9 @@ me, the way a dark factory runs without lights.
 
 I wrought this repository. I could have written it. But my Skills Assessment
 was light on AI, and I wrote it rather than wrought it, so this exercise was my
-chance to show the other half of how I work.
+chance to show the other half of how I work. I wrought RatatuiRuby and Rooibos
+too. The `etcetera` gem was requested, so I treat it like any other
+third-party gem whose source I haven't read.
 
 The workflow is committed as an agent skill, in the open
 [Agent Skills](https://agentskills.io) format, at
@@ -293,22 +253,15 @@ lets an agent run until the work is done. Mine keeps a human in it. The agent
 builds one small behavior at a time, test first, and stops twice in every
 cycle: once for me to review the failing test, and once for me to review the
 implementation before it commits. When something important is unclear, it
-asks instead of assuming. So the agent's work had to meet behavior I had already
-specified, and nothing was committed until I had read it. Nothing in the skill
-is specific to this app, so a team could adopt it as it stands.
+asks instead of assuming. So the agent's work had to meet behavior I had
+already specified, and nothing was committed until I had read it. Nothing in
+the skill is specific to this app, so a team could adopt it as it stands.
+[`AGENTS.md`](https://agents.md) holds what the skill leaves out: this
+project's conventions, and the facts about the data and the libraries that an
+agent is likely to get wrong.
 
-I planned with the agent too, which required plenty of iteration of its own.
-This README.md file, for example, was generated based upon a conversation, then
-re-generated based on feedback, then extensively hand-edited, then agent-edited,
-with manual review between each step.
-
-RatatuiRuby and Rooibos were both wrought, while `etcetera` was requested.
-I treat the latter like any other third-party gem for which I haven't read the
-source code.
-
-`AGENTS.md` holds what the skill leaves out: this project's conventions for
-coding agents, along with the facts about the data and the libraries that
-they are likely to get wrong.
+I planned with the agent too, and this README went through several rounds of
+generating and extensive hand-editing, with my review between each.
 
 All of this took time. The brief asked for a few hours. The twelve issues
 took me about ten hours, after two hours of planning. I could probably have
@@ -325,10 +278,9 @@ well, and because I enjoyed it.
 
 ## Maintaining it
 
-Start with `AGENTS.md`. (The fact that `AGENTS.md` motivated so many teams to
-write their first onboarding documentation that a new human team member also
-benefits from is a subject for a blog post.) `AGENTS.md` is short, and it covers
-the vocabulary, the data's quirks, and how the tests are written.
+Start with `AGENTS.md`. (That it took coding agents to get so many teams
+to write onboarding docs is a subject for a blog post.) `AGENTS.md` is short,
+and it covers the vocabulary, the data's quirks, and how the tests are written.
 
 To handle a new quirk in the data, add the raw value to a recorded response,
 write a failing test for the class that parses it, then fix the parser.
