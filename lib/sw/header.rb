@@ -7,7 +7,7 @@ module Sw
 
     Title = -> (tui) { tui.paragraph(text: TITLE, style: tui.style(modifiers: [:bold])) }
 
-    View = -> (tui, status_line, search = nil) {
+    View = -> (status_line, tui, search: nil) {
       title_and_status = tui.layout(
         direction: :vertical,
         constraints: [

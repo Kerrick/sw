@@ -6,7 +6,7 @@ module Sw
     GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
 
     # A status word takes no width when absent. Blue is for ephemeral status.
-    Word = -> (tui, word, color) {
+    Word = -> (word, color, tui) {
       [
         tui.text_span(
           content: word,
@@ -16,7 +16,7 @@ module Sw
       ]
     }
 
-    Hotkey = -> (tui, key, label) {
+    Hotkey = -> (key, label, tui) {
       [
         tui.text_span(
           content: key,
@@ -30,7 +30,7 @@ module Sw
     }
 
     View = -> (tui, status: [], keys: []) {
-      hotkeys = keys.map { |key, label| Hotkey.call(tui, key, label) }
+      hotkeys = keys.map { |key, label| Hotkey.call(key, label, tui) }
       tui.paragraph(
         text: [
           tui.text_line(

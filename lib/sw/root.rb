@@ -21,14 +21,14 @@ module Sw
   ListWidth = 27
 
   # The header around one body, for screens without panels.
-  Wrapper = -> (tui, body, status: []) {
+  Wrapper = -> (body, tui, status: []) {
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(3), tui.constraint_fill(1)],
       children: [
         Header::View.call(
-          tui,
-          StatusLine::View.call(tui, status:, keys: StatusLine::GlobalKeys)
+          StatusLine::View.call(tui, status:, keys: StatusLine::GlobalKeys),
+          tui
         ),
         body,
       ]
@@ -38,7 +38,6 @@ module Sw
   LoadingView = -> (tui) {
     spacer = tui.paragraph(text: "")
     Wrapper.call(
-      tui,
       tui.layout(
         direction: :vertical,
         constraints: [
@@ -68,13 +67,13 @@ module Sw
           spacer,
         ]
       ),
-      status: StatusLine::Word.call(tui, "Loading", :blue)
+      tui,
+      status: StatusLine::Word.call("Loading", :blue, tui)
     )
   }
 
   FailureView = -> (model, tui) {
     Wrapper.call(
-      tui,
       tui.center(
         child: tui.paragraph(
           text: model.failure,
@@ -88,7 +87,8 @@ module Sw
         width_percent: 60,
         height_percent: 40
       ),
-      status: StatusLine::Word.call(tui, "Error", :red)
+      tui,
+      status: StatusLine::Word.call("Error", :red, tui)
     )
   }
 
@@ -99,9 +99,9 @@ module Sw
 
     selected = model.characters.selected
     status = if model.loading?
-      StatusLine::Word.call(tui, "Reloading", :blue)
+      StatusLine::Word.call("Reloading", :blue, tui)
     elsif model.failure
-      StatusLine::Word.call(tui, "Reload failed", :red)
+      StatusLine::Word.call("Reload failed", :red, tui)
     else
       []
     end
@@ -121,9 +121,9 @@ module Sw
       ],
       children: [
         Header::View.call(
-          tui,
           StatusLine::View.call(tui, status:, keys:),
-          Search::View.call(
+          tui,
+          search: Search::View.call(
             model.search,
             tui,
             focused: model.focus == :search,

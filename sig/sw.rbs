@@ -234,15 +234,15 @@ class Collection[T] < Data
 
   module StatusLine
     GlobalKeys: Array[[String, String]]
-    Word: ^(RatatuiRuby::TUI, String, Symbol) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
-    Hotkey: ^(RatatuiRuby::TUI, String, String) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
+    Word: ^(String, Symbol, RatatuiRuby::TUI) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
+    Hotkey: ^(String, String, RatatuiRuby::TUI) -> [RatatuiRuby::Text::Span, RatatuiRuby::Text::Span]
     View: ^(RatatuiRuby::TUI, ?status: Array[RatatuiRuby::Text::Span], ?keys: Array[[String, String]]) -> RatatuiRuby::Widgets::Paragraph
   end
 
   module Header
     TITLE: String
     Title: ^(RatatuiRuby::TUI) -> RatatuiRuby::Widgets::Paragraph
-    View: ^(RatatuiRuby::TUI, RatatuiRuby::Widgets::Paragraph, ?RatatuiRuby::Widgets::Paragraph?) -> RatatuiRuby::Layout::Layout
+    View: ^(RatatuiRuby::Widgets::Paragraph, RatatuiRuby::TUI, ?search: RatatuiRuby::Widgets::Paragraph?) -> RatatuiRuby::Layout::Layout
   end
 
   module SelectedCharacter
