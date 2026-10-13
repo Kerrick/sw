@@ -1,5 +1,7 @@
 Star Wars Character Datapad                                                                                             
                                                                                                                         
+Error r: Reload  q: Quit                                                                                                
+                                                                                                                        
                                                                                                                         
                                                                                                                         
                                                                                                                         
@@ -24,7 +26,6 @@ Star Wars Character Datapad
                         │                                                                      │                        
                         │                                                                      │                        
                         │                                                                      │                        
-                        │                                                                      │                        
                         └──────────────────────────────────────────────────────────────────────┘                        
                                                                                                                         
                                                                                                                         
@@ -37,4 +38,3 @@ Star Wars Character Datapad
                                                                                                                         
                                                                                                                         
                                                                                                                         
-Error r: Reload  q: Quit                                                                                                

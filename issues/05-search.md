@@ -18,7 +18,7 @@ unbound until then.
 
 - [x] `1` or `/` focuses Search
 - [x] `/` does nothing while the download is under way
-- [ ] Search is a bordered box in a three-row title area, numbered `[1]`, and Characters is numbered `[2]`; the status line moves to the title area's third row on every screen, with its labels dimmed and its keys not
+- [x] Search is a bordered box in a three-row title area, numbered `[1]`, and Characters is numbered `[2]`; the status line moves to the title area's third row on every screen, with its labels dimmed and its keys not
 - [x] `2` focuses Characters (no test drives it until a third panel takes focus)
 - [x] The list's keys work only while Characters has focus
 - [x] The status line lists the focused panel's keys, with the global ones after them

@@ -1,7 +1,8 @@
 Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
                                                                                              │                         │
-                                                                                             └─────────────────────────┘
+k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
 ┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
+│  Greedo                 ││                                                                                           │
 │  Gregar Typho           ││                                                                                           │
 │  Grievous               ││                                                                                           │
 │  Han Solo               ││                                                                                           │
@@ -37,4 +38,3 @@ Star Wars Character Datapad                                                     
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘
-k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                                                     

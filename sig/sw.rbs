@@ -17,6 +17,7 @@ module Sw
   FocusOrder: Array[Symbol]
   ListWidth: Integer
   TITLE: String
+  Header: ^(RatatuiRuby::TUI, RatatuiRuby::Widgets::Paragraph, ?RatatuiRuby::Widgets::Paragraph?) -> RatatuiRuby::Layout::Layout
   FocusStep: ^(Model, Integer) -> Model
   Searching: ^(Rooibos::message, Model) -> bool
   Download: ^() -> Load

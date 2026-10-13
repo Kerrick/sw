@@ -57,12 +57,27 @@ module Sw
     ])
   }
 
-  # The title and key help around one body, for screens without panels.
+  # Search is as wide as the list.
+  ListWidth = 27
+
+  # The title over the status line, with Search beside them once there is data to search.
+  Header = -> (tui, status_line, search = nil) {
+    title_and_status = tui.layout(
+      direction: :vertical,
+      constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
+      children: [Title.call(tui), tui.paragraph(text: ""), status_line]
+    )
+    return title_and_status unless search
+
+    tui.layout(direction: :horizontal, constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)], children: [title_and_status, search])
+  }
+
+  # The header around one body, for screens without panels.
   Wrapper = -> (tui, body, status: []) {
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-      children: [Title.call(tui), body, StatusLine.call(tui, status:, keys: GlobalKeys)]
+      constraints: [tui.constraint_length(3), tui.constraint_fill(1)],
+      children: [Header.call(tui, StatusLine.call(tui, status:, keys: GlobalKeys)), body]
     )
   }
 
@@ -104,9 +119,6 @@ module Sw
     )
   }
 
-  # Search is as wide as the list.
-  ListWidth = 27
-
   View = -> (model, tui) {
     return FailureView.call(model, tui) if model.failure
     return LoadingView.call(tui) unless model.characters
@@ -115,15 +127,12 @@ module Sw
 
     tui.layout(
       direction: :vertical,
-      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2), tui.constraint_length(1)],
+      constraints: [tui.constraint_length(3), tui.constraint_fill(3), tui.constraint_fill(1), tui.constraint_fill(2)],
       children: [
-        tui.layout(
-          direction: :horizontal,
-          constraints: [tui.constraint_fill(1), tui.constraint_length(ListWidth)],
-          children: [
-            Title.call(tui),
-            Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1),
-          ]
+        Header.call(
+          tui,
+          StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *GlobalKeys] : Search::Keys),
+          Search::View.call(model.search, tui, focused: model.focus == :search, number: FocusOrder.index(:search) + 1)
         ),
         tui.layout(
           direction: :horizontal,
@@ -139,7 +148,6 @@ module Sw
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
           children: [Starships::View.call(tui), Vehicles::View.call(selected&.vehicles, tui)]
         ),
-        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *GlobalKeys] : Search::Keys),
       ]
     )
   }

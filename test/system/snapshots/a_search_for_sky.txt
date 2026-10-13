@@ -1,10 +1,11 @@
 Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
                                                                                              │sky                      │
-                                                                                             └─────────────────────────┘
+enter: Finish search  esc: Clear search                                                      └─────────────────────────┘
 ┌[2] Characters───────────┐┌Anakin Skywalker───────────────────────────────────────────────────────────────────────────┐
 │> Anakin Skywalker       ││                                                                                           │
 │  Luke Skywalker         ││                                                                                           │
 │  Shmi Skywalker         ││                                                                                           │
+│                         ││                                                                                           │
 │                         ││                                                                                           │
 │                         ││                                                                                           │
 │                         ││                                                                                           │
@@ -37,4 +38,3 @@ Star Wars Character Datapad                                                     
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘
-enter: Finish search  esc: Clear search                                                                                 

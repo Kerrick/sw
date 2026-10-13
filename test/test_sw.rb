@@ -57,7 +57,7 @@ class TestSw < Minitest::Test
 
   def test_the_status_line_shows_the_list_keys_as_hotkeys_while_the_list_has_focus
     with_rendered(Sw::View.call(Sw::Model.new(characters: three_characters), tui)) do
-      %w[k/j g/G].each { |keys| assert_text_style keys, line: -1, modifiers: [:bold, :dim, :underlined] }
+      %w[k/j g/G].each { |keys| assert_text_style keys, modifiers: [:bold, :dim, :underlined] }
     end
   end
 
@@ -116,7 +116,7 @@ class TestSw < Minitest::Test
     with_rendered(Sw::View.call(model, tui)) do
       between_title_and_key_help = buffer_content[1...-1]
       assert between_title_and_key_help.any? { |line| line.strip != "" }, "Expected a loading box"
-      assert_text_style "Loading", line: -1, fg: :blue
+      assert_text_style "Loading", fg: :blue
     end
   end
 
@@ -140,8 +140,8 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model.with(failure: "Connection refused"), tui)) do
-      assert_text_style "Error", line: -1, fg: :red
-      refute_includes get_cell(*text_position("Error", line: -1)).modifiers, :dim
+      assert_text_style "Error", fg: :red
+      refute_includes get_cell(*text_position("Error")).modifiers, :dim
     end
   end
 
@@ -151,7 +151,7 @@ class TestSw < Minitest::Test
     loaded = loading.with(characters: three_characters)
 
     [loading, failed, loaded].each do |model|
-      with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", line: -1, modifiers: [:bold, :dim, :underlined] }
+      with_rendered(Sw::View.call(model, tui)) { assert_text_style "r: ", modifiers: [:bold, :dim, :underlined] }
     end
   end
 
@@ -182,7 +182,7 @@ class TestSw < Minitest::Test
     reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     with_rendered(Sw::View.call(reloading, tui)) do
-      assert_text_style "Loading", line: -1, fg: :blue
+      assert_text_style "Loading", fg: :blue
     end
   end
 
@@ -208,7 +208,7 @@ class TestSw < Minitest::Test
     model, = Sw::Init.call
 
     with_rendered(Sw::View.call(model, tui)) do
-      assert_text_style "q: ", line: -1, modifiers: [:bold, :dim, :underlined]
+      assert_text_style "q: ", modifiers: [:bold, :dim, :underlined]
     end
   end
 
