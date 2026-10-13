@@ -24,7 +24,7 @@ unbound until then.
 - [ ] The status line lists the focused panel's keys, with the global ones after them
 - [x] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
 - [x] When the highlighted character stops matching, the highlight moves to the first match
-- [ ] The list's keys move through the matches only
+- [x] The list's keys move through the matches only
 - [ ] A reload keeps the search
 - [x] Backspace deletes the query's last character, and does nothing to an empty query
 - [x] Cmd-Backspace, or Ctrl-U, clears the query

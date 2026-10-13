@@ -36,9 +36,9 @@ module Sw
       model.with(query: message.event.query, selected: matches.include?(model.selected) ? model.selected : matches.first)
     }
 
-    receive_routed :move_first, -> (_, model) { model.with(selected: model.collection.first) }
+    receive_routed :move_first, -> (_, model) { model.with(selected: model.matches.first) }
 
-    receive_routed :move_last, -> (_, model) { model.with(selected: model.collection.to_a.last) }
+    receive_routed :move_last, -> (_, model) { model.with(selected: model.matches.to_a.last) }
 
     # What the status line shows for this panel. The arrow and Home/End keys work too, but aren't listed.
     Keys = [["k/j", "Prev/Next"], ["g/G", "First/Last"]].freeze
