@@ -2,16 +2,16 @@
 [0m                                                                                                                                     │                         │[0m
 [0m[0m[1;2;4mk/j[0m[2m: Prev/Next[0m  [0m[1;2;4mg/G[0m[2m: First/Last[0m  [0m[1;2;4mr[0m[2m: Reload[0m  [0m[1;2;4mq[0m[2m: Quit[0m                                                                                  └─────────────────────────┘[0m
 [0m[32m┌[2] Characters───────────┐┌[0m[1mLuke Skywalker[0m─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
-[0m[32m│  Jar Jar Binks          [32m││                                                                                                                                   │[0m
-[0m[32m│  Jek Tono Porkins       [32m││                                                                                                                                   │[0m
-[0m[32m│  Jocasta Nu             [32m││                                                                                                                                   │[0m
-[0m[32m│  Ki-Adi-Mundi           [32m││                                                                                                                                   │[0m
-[0m[32m│  Kit Fisto              [32m││                                                                                                                                   │[0m
-[0m[32m│  Lama Su                [32m││                                                                                                                                   │[0m
-[0m[32m│  Lando Calrissian       [32m││                                                                                                                                   │[0m
-[0m[32m│  Leia Organa            [32m││                                                                                                                                   │[0m
-[0m[32m│  Lobot                  [32m││                                                                                                                                   │[0m
-[0m[32m│[0m[7m> Luke Skywalker         [0m[32m││                                                                                                                                   │[0m
+[0m[32m│  Jar Jar Binks          [32m││                                                                                       ┌Homeworld: [0m[1mTatooine[0m───────────────────────┐│[0m
+[0m[32m│  Jek Tono Porkins       [32m││                                                                                       │Population:      200,000                  ││[0m
+[0m[32m│  Jocasta Nu             [32m││                                                                                       │Terrain:         desert                   ││[0m
+[0m[32m│  Ki-Adi-Mundi           [32m││                                                                                       │Climate:         arid                     ││[0m
+[0m[32m│  Kit Fisto              [32m││                                                                                       │Surface water:   1%                       ││[0m
+[0m[32m│  Lama Su                [32m││                                                                                       │Diameter:        10,465 km                ││[0m
+[0m[32m│  Lando Calrissian       [32m││                                                                                       │Rotation period: 23 hr                    ││[0m
+[0m[32m│  Leia Organa            [32m││                                                                                       │Orbital period:  304 d                    ││[0m
+[0m[32m│  Lobot                  [32m││                                                                                       │Gravity:         1 standard               ││[0m
+[0m[32m│[0m[7m> Luke Skywalker         [0m[32m││                                                                                       └──────────────────────────────────────────┘│[0m
 [0m[32m└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘[0m
 [0m┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
 [0m│    [0m[1;2mThe Phantom Menace[0m       [0m[1;2mAttack of the Clones[0m        [0m[1mRevenge of the Sith[0m           [0m[1mA New Hope[0m          [0m[1mThe Empire Strikes Back[0m      [0m[1mReturn of the Jedi[0m    │[0m

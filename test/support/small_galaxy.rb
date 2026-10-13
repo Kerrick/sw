@@ -2,10 +2,10 @@
 
 require "json"
 
-# Ackbar, Han, and Luke, the first, middle, and last of the list, and every film one of them is in, linked as the API
-# links them. For tests that need a panel to move through or films to light and dim: Luke is in all four films, Han
-# misses one, and Ackbar is in only one. It slices the recorded responses in memory and drops the links to records
-# left out, so the real Mapper builds it.
+# Ackbar, Han, and Luke, the first, middle, and last of the list, with their homeworlds and every film one of them is
+# in, linked as the API links them. For tests that need a panel to move through or films to light and dim: Luke is
+# in all four films, Han misses one, and Ackbar is in only one. It slices the recorded responses in memory and drops
+# the links to records left out, so the real Mapper builds it.
 module SmallGalaxy
   CHARACTERS = ["Ackbar", "Han Solo", "Luke Skywalker"].freeze
 
@@ -14,9 +14,10 @@ module SmallGalaxy
     people = fixture_for.("people").select { |person| CHARACTERS.include?(person["name"]) }
     people_urls = people.map { |person| person["url"] }
     films = fixture_for.("films").select { |film| film["characters"].intersect?(people_urls) }
+    planets = fixture_for.("planets").select { |planet| people.any? { |person| person["homeworld"] == planet["url"] } }
     urls = people_urls + films.map { |film| film["url"] }
     kept = -> (records) { records.map { |record| record.transform_values { |value| value.is_a?(Array) ? value & urls : value } } }
-    Sw::Load::Mapper.new.records(people: kept.(people), vehicles: [], films: kept.(films))
+    Sw::Load::Mapper.new.records(people: kept.(people), vehicles: [], films: kept.(films), planets: kept.(planets))
   end
 
   private def ackbar = character("Ackbar")

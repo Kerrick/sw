@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                              │                         │
 k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
 ┌[2] Characters───────────┐┌Luke Skywalker─────────────────────────────────────────────────────────────────────────────┐
-│  Jar Jar Binks          ││                                                                                           │
-│  Jek Tono Porkins       ││                                                                                           │
-│  Jocasta Nu             ││                                                                                           │
-│  Ki-Adi-Mundi           ││                                                                                           │
-│  Kit Fisto              ││                                                                                           │
-│  Lama Su                ││                                                                                           │
-│  Lando Calrissian       ││                                                                                           │
-│  Leia Organa            ││                                                                                           │
-│  Lobot                  ││                                                                                           │
-│> Luke Skywalker         ││                                                                                           │
+│  Jar Jar Binks          ││                                                             ┌Homeworld: Tatooine─────────┐│
+│  Jek Tono Porkins       ││                                                             │Population:      200,000    ││
+│  Jocasta Nu             ││                                                             │Terrain:         desert     ││
+│  Ki-Adi-Mundi           ││                                                             │Climate:         arid       ││
+│  Kit Fisto              ││                                                             │Surface water:   1%         ││
+│  Lama Su                ││                                                             │Diameter:        10,465 km  ││
+│  Lando Calrissian       ││                                                             │Rotation period: 23 hr      ││
+│  Leia Organa            ││                                                             │Orbital period:  304 d      ││
+│  Lobot                  ││                                                             │Gravity:         1 standard ││
+│> Luke Skywalker         ││                                                             └────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │

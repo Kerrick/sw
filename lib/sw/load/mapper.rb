@@ -7,11 +7,22 @@ module Sw
   class Load
     # Maps the API's records to domain objects, by Metadata Mapping: COLLECTIONS names each collection's record
     # class, and each class's Data members name the API fields it reads. Every array is a list of links and becomes
-    # a Collection of records; every other field becomes a Value, or a RomanNumeral where NUMERALS says so.
+    # a Collection of records; a LINKS field is one link and becomes the record itself; every other field becomes a
+    # Value, or a RomanNumeral where NUMERALS says so.
     class Mapper
       # Each API collection, with the name the app uses for it and the class of its records. A new collection needs
-      # only an entry here and a Data class.
-      COLLECTIONS = { people: [:characters, Character], vehicles: [:vehicles, Vehicle], starships: [:starships, Starship], films: [:films, Film] }.freeze
+      # only an entry here and a Data class. A record must exist before another can link to it by a LINKS field, so
+      # collections map in this order: planets before people.
+      COLLECTIONS = {
+        planets: [:planets, Planet],
+        people: [:characters, Character],
+        vehicles: [:vehicles, Vehicle],
+        starships: [:starships, Starship],
+        films: [:films, Film],
+      }.freeze
+
+      # Which members the API sends as one link rather than a list of them.
+      LINKS = %i[homeworld].freeze
 
       # Which members the API sends as numbers but that represent Roman numerals.
       NUMERALS = %i[episode_id].freeze
@@ -35,7 +46,8 @@ module Sw
         end
 
         def call(collections)
-          mapped = collections.to_h { |api_name, json_records| collection(api_name, json_records) }
+          ordered = collections.sort_by { |api_name, _| COLLECTIONS.keys.index(api_name) }
+          mapped = ordered.to_h { |api_name, json_records| collection(api_name, json_records) }
           link
           Ractor.make_shareable(mapped)
         end
@@ -51,10 +63,11 @@ module Sw
           @by_url[json.fetch("url")] = record
         end
 
-        # Every array in the API is a list of links, and a NUMERALS field is a RomanNumeral. Every other field is a
-        # Value, which may be unknown.
+        # Every array in the API is a list of links, a LINKS field is one link, and a NUMERALS field is a RomanNumeral.
+        # Every other field is a Value, which may be unknown.
         private def field(member, value)
           return links_to(value) if value.is_a?(Array)
+          return @by_url.fetch(value) if LINKS.include?(member)
           return RomanNumeral.new(value) if NUMERALS.include?(member)
 
           Value.new(value)

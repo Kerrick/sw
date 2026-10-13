@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                              │sky_                     │
 enter: Finish search  esc: Clear search                                                      └─────────────────────────┘
 ┌[2] Characters───────────┐┌Anakin Skywalker───────────────────────────────────────────────────────────────────────────┐
-│> Anakin Skywalker       ││                                                                                           │
-│  Luke Skywalker         ││                                                                                           │
-│  Shmi Skywalker         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
-│                         ││                                                                                           │
+│> Anakin Skywalker       ││                                                             ┌Homeworld: Tatooine─────────┐│
+│  Luke Skywalker         ││                                                             │Population:      200,000    ││
+│  Shmi Skywalker         ││                                                             │Terrain:         desert     ││
+│                         ││                                                             │Climate:         arid       ││
+│                         ││                                                             │Surface water:   1%         ││
+│                         ││                                                             │Diameter:        10,465 km  ││
+│                         ││                                                             │Rotation period: 23 hr      ││
+│                         ││                                                             │Orbital period:  304 d      ││
+│                         ││                                                             │Gravity:         1 standard ││
+│                         ││                                                             └────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │

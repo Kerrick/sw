@@ -6,7 +6,19 @@ module Sw
     View = -> (character, tui) {
       return tui.block(borders: [:all]) unless character
 
-      tui.block(title: character.name, title_style: tui.style(modifiers: [:bold]), borders: [:all])
+      spacer = tui.paragraph(text: "")
+      tui.block(
+        title: character.name,
+        title_style: tui.style(modifiers: [:bold]),
+        borders: [:all],
+        children: [
+          tui.layout(
+            direction: :horizontal,
+            constraints: [tui.constraint_fill(1), tui.constraint_fill(1), tui.constraint_fill(1)],
+            children: [spacer, spacer, Homeworld::View.(character.homeworld, tui)]
+          ),
+        ]
+      )
     }
   end
 end

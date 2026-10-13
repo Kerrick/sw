@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                              │                         │
 k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
 ┌[2] Characters───────────┐┌Ackbar─────────────────────────────────────────────────────────────────────────────────────┐
-│> Ackbar                 ││                                                                                           │
-│  Adi Gallia             ││                                                                                           │
-│  Anakin Skywalker       ││                                                                                           │
-│  Arvel Crynyd           ││                                                                                           │
-│  Ayla Secura            ││                                                                                           │
-│  Bail Prestor Organa    ││                                                                                           │
-│  Barriss Offee          ││                                                                                           │
-│  Ben Quadinaros         ││                                                                                           │
-│  Beru Whitesun lars     ││                                                                                           │
-│  Bib Fortuna            ││                                                                                           │
+│> Ackbar                 ││                                                             ┌Homeworld: Mon Cala─────────┐│
+│  Adi Gallia             ││                                                             │Population:      27,000,000,││
+│  Anakin Skywalker       ││                                                             │Terrain:         oceans, ree││
+│  Arvel Crynyd           ││                                                             │Climate:         temperate  ││
+│  Ayla Secura            ││                                                             │Surface water:   100%       ││
+│  Bail Prestor Organa    ││                                                             │Diameter:        11,030 km  ││
+│  Barriss Offee          ││                                                             │Rotation period: 21 hr      ││
+│  Ben Quadinaros         ││                                                             │Orbital period:  398 d      ││
+│  Beru Whitesun lars     ││                                                             │Gravity:         1          ││
+│  Bib Fortuna            ││                                                             └────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │

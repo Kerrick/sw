@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rooibos"
+require_relative "sw/planet"
 require_relative "sw/character"
 require_relative "sw/value"
 require_relative "sw/vehicle"
@@ -14,6 +15,7 @@ require_relative "sw/search"
 require_relative "sw/selected_character"
 require_relative "sw/values"
 require_relative "sw/craft"
+require_relative "sw/homeworld"
 require_relative "sw/films"
 require_relative "sw/starships"
 require_relative "sw/vehicles"
