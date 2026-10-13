@@ -27,22 +27,22 @@ module Sw
           title: LABEL,
           borders: [:all],
           children: [
-            Empty::View.(UNKNOWN, tui),
+            Empty::View.call(UNKNOWN, tui),
           ]
         )
       end
 
       tui.table(
         rows: [
-          ["Classification:", Values::Span.(species.classification, tui)],
-          ["Designation:", Values::Span.(species.designation, tui)],
-          ["Average height:", Values::Span.(species.average_height, tui, unit: " cm")],
-          ["Average lifespan:", Values::Span.(species.average_lifespan, tui, unit: " yr")],
-          ["Language:", Values::Span.(species.language, tui)],
+          ["Classification:", Values::Span.call(species.classification, tui)],
+          ["Designation:", Values::Span.call(species.designation, tui)],
+          ["Average height:", Values::Span.call(species.average_height, tui, unit: " cm")],
+          ["Average lifespan:", Values::Span.call(species.average_lifespan, tui, unit: " yr")],
+          ["Language:", Values::Span.call(species.language, tui)],
         ],
         widths: [tui.constraint_length(17), tui.constraint_fill(1)],
         block: tui.block(
-          titles: [{ content: Title.(species, tui) }],
+          titles: [{ content: Title.call(species, tui) }],
           borders: [:all]
         )
       )

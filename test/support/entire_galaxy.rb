@@ -6,7 +6,7 @@
 module EntireGalaxy
   RECORDS = begin
     fixture_for = -> (name) { JSON.parse(File.read(File.join(FixtureServer::FIXTURES, "api/#{name}.json"))) }
-    Sw::Load::Mapper.new.records(people: fixture_for.("people"), vehicles: fixture_for.("vehicles"), starships: fixture_for.("starships"), films: fixture_for.("films"), planets: fixture_for.("planets"), species: fixture_for.("species"))
+    Sw::Load::Mapper.new.records(people: fixture_for.call("people"), vehicles: fixture_for.call("vehicles"), starships: fixture_for.call("starships"), films: fixture_for.call("films"), planets: fixture_for.call("planets"), species: fixture_for.call("species"))
   end
 
   private def luke = RECORDS.fetch(:characters).find { |character| character.name.to_s == "Luke Skywalker" }

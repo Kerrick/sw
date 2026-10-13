@@ -12,7 +12,7 @@ module Sw
           content: craft.name.to_s,
           style: tui.style(modifiers: [:bold])
         ),
-        Values::Span.(craft.public_send(class_member), tui),
+        Values::Span.call(craft.public_send(class_member), tui),
       ]
     }
 
@@ -21,11 +21,11 @@ module Sw
     Entry = -> (craft, class_member, tui, first:) {
       tui.table(
         rows: [
-          Heading.(craft, class_member, tui),
-          ["Crew / Passengers:", Values::Pair.(craft.crew, craft.passengers, tui)],
-          ["Model / Manufacturer:", Values::Pair.(craft.model, craft.manufacturer, tui)],
+          Heading.call(craft, class_member, tui),
+          ["Crew / Passengers:", Values::Pair.call(craft.crew, craft.passengers, tui)],
+          ["Model / Manufacturer:", Values::Pair.call(craft.model, craft.manufacturer, tui)],
         ],
-        widths: Widths.(tui),
+        widths: Widths.call(tui),
         block: (tui.block(borders: [:top]) unless first)
       )
     }
@@ -41,7 +41,7 @@ module Sw
         ],
         children: [
           *crafts.each_with_index.map do |craft, index|
-            Entry.(craft, class_member, tui, first: index.zero?)
+            Entry.call(craft, class_member, tui, first: index.zero?)
           end,
           tui.paragraph(text: ""),
         ]

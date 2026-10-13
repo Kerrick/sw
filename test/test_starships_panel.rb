@@ -21,7 +21,7 @@ class TestStarshipsPanel < Minitest::Test
     obi_wan = characters.find { |character| character.name.to_s == "Obi-Wan Kenobi" }
     belbullab_22_model = "Belbullab-22 starfighter"
 
-    with_rendered(Sw::Starships::View.call(obi_wan.starships, tui), width: 60, height: Sw::Craft::Height.(characters)) do
+    with_rendered(Sw::Starships::View.call(obi_wan.starships, tui), width: 60, height: Sw::Craft::Height.call(characters)) do
       refute_nil text_position(belbullab_22_model, on_line_with: "Model / Manufacturer:")
     end
   end

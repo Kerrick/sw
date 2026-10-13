@@ -20,9 +20,9 @@ module Sw
     Pair = -> (first, second, tui) {
       tui.text_line(
         spans: [
-          Span.(first, tui),
+          Span.call(first, tui),
           tui.text_span(content: " / "),
-          Span.(second, tui),
+          Span.call(second, tui),
         ]
       )
     }

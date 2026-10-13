@@ -117,7 +117,7 @@ module Sw
         tui.constraint_length(3),
         tui.constraint_fill(3),
         tui.constraint_fill(1),
-        tui.constraint_length(Craft::Height.(model.characters.collection)),
+        tui.constraint_length(Craft::Height.call(model.characters.collection)),
       ],
       children: [
         Header::View.call(
@@ -184,8 +184,8 @@ module Sw
       end
     end
 
-    receive_events :tab, -> (_, model) { FocusStep.(model, 1) }
-    receive_events %i[back_tab shift_back_tab], -> (_, model) { FocusStep.(model, -1) }
+    receive_events :tab, -> (_, model) { FocusStep.call(model, 1) }
+    receive_events %i[back_tab shift_back_tab], -> (_, model) { FocusStep.call(model, -1) }
 
     # Esc clears the search from either panel and lands on the list.
     observe_events :esc, -> (_, model) { model.with(focus: :characters) }
@@ -205,7 +205,7 @@ module Sw
   end
 
   receive_instances_of Load::Finished, -> (message, model) {
-    loaded = model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), films: message.films, loading: message.stale)
+    loaded = model.with(characters: Characters::Init.call(characters: message.characters, query: model.search.query), films: message.films, loading: message.stale)
     message.stale ? [loaded, Load.new(reload: true)] : loaded
   }
 

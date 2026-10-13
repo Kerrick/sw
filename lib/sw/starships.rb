@@ -14,7 +14,7 @@ module Sw
         title: "Starships",
         borders: [:all],
         children: [
-          starships.any? ? Craft::Stack.(starships, :starship_class, tui) : Empty::View.(EMPTY, tui),
+          starships.any? ? Craft::Stack.call(starships, :starship_class, tui) : Empty::View.call(EMPTY, tui),
         ]
       )
     }

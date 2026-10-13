@@ -11,13 +11,13 @@ module SmallGalaxy
 
   RECORDS = begin
     fixture_for = -> (name) { JSON.parse(File.read(File.join(FixtureServer::FIXTURES, "api/#{name}.json"))) }
-    people = fixture_for.("people").select { |person| CHARACTERS.include?(person["name"]) }
+    people = fixture_for.call("people").select { |person| CHARACTERS.include?(person["name"]) }
     people_urls = people.map { |person| person["url"] }
-    films = fixture_for.("films").select { |film| film["characters"].intersect?(people_urls) }
-    planets = fixture_for.("planets").select { |planet| people.any? { |person| person["homeworld"] == planet["url"] } }
+    films = fixture_for.call("films").select { |film| film["characters"].intersect?(people_urls) }
+    planets = fixture_for.call("planets").select { |planet| people.any? { |person| person["homeworld"] == planet["url"] } }
     urls = people_urls + films.map { |film| film["url"] }
     kept = -> (records) { records.map { |record| record.transform_values { |value| value.is_a?(Array) ? value & urls : value } } }
-    Sw::Load::Mapper.new.records(people: kept.(people), vehicles: [], films: kept.(films), planets: kept.(planets))
+    Sw::Load::Mapper.new.records(people: kept.call(people), vehicles: [], films: kept.call(films), planets: kept.call(planets))
   end
 
   private def ackbar = character("Ackbar")
@@ -35,7 +35,7 @@ module SmallGalaxy
 
   # The Characters panel as it opens, with Ackbar selected, or with another character selected.
   private def three_characters(selected: nil)
-    panel = Sw::Characters::Init.(characters: Sw::Collection.new([luke, ackbar, han]))
+    panel = Sw::Characters::Init.call(characters: Sw::Collection.new([luke, ackbar, han]))
     selected ? panel.with(selected:) : panel
   end
 

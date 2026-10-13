@@ -21,20 +21,20 @@ module Sw
     private_constant :Change
 
     # Ctrl-U clears the line, as in a shell. Super-Backspace (Cmd or Win) arrives only from a terminal that reports Super.
-    receive_events %i[ctrl_u super_backspace], -> (_, model) { Change.(model, "") }
+    receive_events %i[ctrl_u super_backspace], -> (_, model) { Change.call(model, "") }
 
-    receive_routed :clear, -> (_, model) { Change.(model, "") }
+    receive_routed :clear, -> (_, model) { Change.call(model, "") }
 
     # Ctrl and Alt chords are commands, not text, though Shift types capitals.
     Typed = -> (message, _) {
       message.respond_to?(:text?) && message.text? && message.code.length == 1 && !message.ctrl? && !message.alt?
     }
 
-    receive Typed, -> (message, model) { Change.(model, "#{model.query}#{message.code}") }
+    receive Typed, -> (message, model) { Change.call(model, "#{model.query}#{message.code}") }
 
-    receive_instances_of RatatuiRuby::Event::Paste, -> (message, model) { Change.(model, message.content.chomp) }
+    receive_instances_of RatatuiRuby::Event::Paste, -> (message, model) { Change.call(model, message.content.chomp) }
 
-    receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
+    receive_events :backspace, -> (_, model) { Change.call(model, model.query.chop) }
 
     ClearKey = ["esc", "Clear search"].freeze
 
@@ -55,7 +55,7 @@ module Sw
         text: tui.text_line(
           spans: [
             tui.text_span(content: model.query),
-            *(Cursor.(tui) if focused),
+            *(Cursor.call(tui) if focused),
           ]
         ),
         block: tui.block(

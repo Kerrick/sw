@@ -19,9 +19,9 @@ module Sw
               tui.constraint_fill(1),
             ],
             children: [
-              AttributesBox::View.(character, tui),
-              SpeciesBox::View.(character.species.first, tui),
-              HomeworldBox::View.(character.homeworld, tui),
+              AttributesBox::View.call(character, tui),
+              SpeciesBox::View.call(character.species.first, tui),
+              HomeworldBox::View.call(character.homeworld, tui),
             ]
           ),
         ]

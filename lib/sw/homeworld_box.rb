@@ -27,25 +27,25 @@ module Sw
           title: LABEL,
           borders: [:all],
           children: [
-            Empty::View.(UNKNOWN, tui),
+            Empty::View.call(UNKNOWN, tui),
           ]
         )
       end
 
       tui.table(
         rows: [
-          ["Population:", Values::Span.(planet.population, tui)],
-          ["Terrain:", Values::Span.(planet.terrain, tui)],
-          ["Climate:", Values::Span.(planet.climate, tui)],
-          ["Surface water:", Values::Span.(planet.surface_water, tui, unit: "%")],
-          ["Diameter:", Values::Span.(planet.diameter, tui, unit: " km")],
-          ["Rotation period:", Values::Span.(planet.rotation_period, tui, unit: " hr")],
-          ["Orbital period:", Values::Span.(planet.orbital_period, tui, unit: " d")],
-          ["Gravity:", Values::Span.(planet.gravity, tui)],
+          ["Population:", Values::Span.call(planet.population, tui)],
+          ["Terrain:", Values::Span.call(planet.terrain, tui)],
+          ["Climate:", Values::Span.call(planet.climate, tui)],
+          ["Surface water:", Values::Span.call(planet.surface_water, tui, unit: "%")],
+          ["Diameter:", Values::Span.call(planet.diameter, tui, unit: " km")],
+          ["Rotation period:", Values::Span.call(planet.rotation_period, tui, unit: " hr")],
+          ["Orbital period:", Values::Span.call(planet.orbital_period, tui, unit: " d")],
+          ["Gravity:", Values::Span.call(planet.gravity, tui)],
         ],
         widths: [tui.constraint_length(16), tui.constraint_fill(1)],
         block: tui.block(
-          titles: [{ content: Title.(planet, tui) }],
+          titles: [{ content: Title.call(planet, tui) }],
           borders: [:all]
         )
       )

@@ -14,7 +14,7 @@ module Sw
         title: "Vehicles",
         borders: [:all],
         children: [
-          vehicles.any? ? Craft::Stack.(vehicles, :vehicle_class, tui) : Empty::View.(EMPTY, tui),
+          vehicles.any? ? Craft::Stack.call(vehicles, :vehicle_class, tui) : Empty::View.call(EMPTY, tui),
         ]
       )
     }

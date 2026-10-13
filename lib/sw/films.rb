@@ -39,7 +39,7 @@ module Sw
           tui.layout(
             direction: :horizontal,
             constraints: films.map { tui.constraint_fill(1) },
-            children: films.map { |film| Column.(film, appearing_in.include?(film), tui) }
+            children: films.map { |film| Column.call(film, appearing_in.include?(film), tui) }
           ),
         ]
       )

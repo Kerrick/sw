@@ -80,7 +80,7 @@ module Sw
         borders: [:all],
         border_style: tui.style(fg: (:green if focused))
       )
-      return block.with(children: [Empty.(model.query, tui)]) if matches.none?
+      return block.with(children: [Empty.call(model.query, tui)]) if matches.none?
 
       tui.list(
         items: matches.map { |character| character.name.to_s },
