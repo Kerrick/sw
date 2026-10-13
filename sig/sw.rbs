@@ -30,10 +30,11 @@ module Sw
   class Character < Data
     attr_reader name: Value
     attr_reader homeworld: Planet?
+    attr_reader species: Collection[Species]
     attr_reader vehicles: Collection[Vehicle]
     attr_reader starships: Collection[Starship]
     attr_reader films: Collection[Film]
-    def initialize: (name: Value, ?homeworld: Planet?, ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
+    def initialize: (name: Value, ?homeworld: Planet?, ?species: Collection[Species], ?vehicles: Collection[Vehicle], ?starships: Collection[Starship], ?films: Collection[Film]) -> void
   end
 
   class Planet < Data
@@ -48,6 +49,17 @@ module Sw
     attr_reader gravity: Value
     attr_reader residents: Collection[Character]
     def initialize: (name: Value, population: Value, terrain: Value, climate: Value, surface_water: Value, diameter: Value, rotation_period: Value, orbital_period: Value, gravity: Value, ?residents: Collection[Character]) -> void
+  end
+
+  class Species < Data
+    attr_reader name: Value
+    attr_reader classification: Value
+    attr_reader designation: Value
+    attr_reader average_height: Value
+    attr_reader average_lifespan: Value
+    attr_reader language: Value
+    attr_reader people: Collection[Character]
+    def initialize: (name: Value, classification: Value, designation: Value, average_height: Value, average_lifespan: Value, language: Value, ?people: Collection[Character]) -> void
   end
 
   class Film < Data
@@ -116,7 +128,8 @@ class Collection[T] < Data
       attr_reader starships: Collection[Starship]
       attr_reader films: Collection[Film]
       attr_reader planets: Collection[Planet]
-      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], starships: Collection[Starship], films: Collection[Film], planets: Collection[Planet]) -> void
+      attr_reader species: Collection[Species]
+      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], starships: Collection[Starship], films: Collection[Film], planets: Collection[Planet], species: Collection[Species]) -> void
     end
 
     class Failed < Data
@@ -126,13 +139,13 @@ class Collection[T] < Data
     end
 
     class Mapper
-      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Starship) | singleton(Film) | singleton(Planet)]]
+      COLLECTIONS: Hash[Symbol, [Symbol, singleton(Character) | singleton(Vehicle) | singleton(Starship) | singleton(Film) | singleton(Planet) | singleton(Species)]]
       LINKS: Array[Symbol]
       NUMERALS: Array[Symbol]
       NEVER_ZERO: Array[Symbol]
       def links: (String root) -> Hash[Symbol, String]
       def parse: (String body) -> Array[Hash[String, untyped]]
-      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Starship | Film | Planet]]
+      def records: (**Array[Hash[String, untyped]]) -> Hash[Symbol, Collection[Character | Vehicle | Starship | Film | Planet | Species]]
     end
   end
 
@@ -184,6 +197,13 @@ class Collection[T] < Data
     UNKNOWN: String
     Title: ^(Planet, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
     View: ^(Planet, RatatuiRuby::TUI) -> (RatatuiRuby::Widgets::Table | RatatuiRuby::Widgets::Block)
+  end
+
+  module SpeciesBox
+    LABEL: String
+    UNKNOWN: String
+    Title: ^(Species, RatatuiRuby::TUI) -> RatatuiRuby::Text::Line
+    View: ^(Species?, RatatuiRuby::TUI) -> (RatatuiRuby::Widgets::Table | RatatuiRuby::Widgets::Block)
   end
 
   module Films

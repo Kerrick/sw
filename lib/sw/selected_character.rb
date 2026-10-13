@@ -15,7 +15,7 @@ module Sw
           tui.layout(
             direction: :horizontal,
             constraints: [tui.constraint_fill(1), tui.constraint_fill(1), tui.constraint_fill(1)],
-            children: [spacer, spacer, Homeworld::View.(character.homeworld, tui)]
+            children: [spacer, SpeciesBox::View.(character.species.first, tui), Homeworld::View.(character.homeworld, tui)]
           ),
         ]
       )

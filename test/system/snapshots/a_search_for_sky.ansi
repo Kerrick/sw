@@ -2,16 +2,16 @@
 [0m                                                                                             [32m│sky[0m[5m_[0m                     [32m│[0m
 [0m[0m[1;2;4menter[0m[2m: Finish search[0m  [0m[1;2;4mesc[0m[2m: Clear search[0m                                                      [32m└─────────────────────────┘[0m
 [0m┌[2] Characters───────────┐┌[0m[1mAnakin Skywalker[0m───────────────────────────────────────────────────────────────────────────┐[0m
-[0m│[0m[7m> Anakin Skywalker       [0m││                                                             ┌Homeworld: [0m[1mTatooine[0m─────────┐│[0m
-[0m│  Luke Skywalker         ││                                                             │Population:      200,000    ││[0m
-[0m│  Shmi Skywalker         ││                                                             │Terrain:         desert     ││[0m
-[0m│                         ││                                                             │Climate:         arid       ││[0m
-[0m│                         ││                                                             │Surface water:   1%         ││[0m
-[0m│                         ││                                                             │Diameter:        10,465 km  ││[0m
-[0m│                         ││                                                             │Rotation period: 23 hr      ││[0m
-[0m│                         ││                                                             │Orbital period:  304 d      ││[0m
-[0m│                         ││                                                             │Gravity:         1 standard ││[0m
-[0m│                         ││                                                             └────────────────────────────┘│[0m
+[0m│[0m[7m> Anakin Skywalker       [0m││                              ┌Species──────────────────────┐┌Homeworld: [0m[1mTatooine[0m─────────┐│[0m
+[0m│  Luke Skywalker         ││                              │                             ││Population:      200,000    ││[0m
+[0m│  Shmi Skywalker         ││                              │                             ││Terrain:         desert     ││[0m
+[0m│                         ││                              │                             ││Climate:         arid       ││[0m
+[0m│                         ││                              │                             ││Surface water:   1%         ││[0m
+[0m│                         ││                              │[0m[2m           unknown           [0m││Diameter:        10,465 km  ││[0m
+[0m│                         ││                              │                             ││Rotation period: 23 hr      ││[0m
+[0m│                         ││                              │                             ││Orbital period:  304 d      ││[0m
+[0m│                         ││                              │                             ││Gravity:         1 standard ││[0m
+[0m│                         ││                              └─────────────────────────────┘└────────────────────────────┘│[0m
 [0m└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘[0m
 [0m┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐[0m
 [0m│ [0m[1mThe Phantom Menace[0m [0m[1mAttack of the Clone[0m [0m[1mRevenge of the Sith[0m     [0m[1;2mA New Hope[0m     [0m[1;2mThe Empire Strikes [0m [0m[1;2mReturn of the Jedi[0m │[0m

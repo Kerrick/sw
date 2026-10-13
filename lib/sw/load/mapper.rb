@@ -19,6 +19,7 @@ module Sw
         vehicles: [:vehicles, Vehicle],
         starships: [:starships, Starship],
         films: [:films, Film],
+        species: [:species, Species],
       }.freeze
 
       # Which members the API sends as one link rather than a list of them.

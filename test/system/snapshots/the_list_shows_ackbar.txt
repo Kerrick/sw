@@ -2,16 +2,16 @@ Star Wars Character Datapad                                                     
                                                                                              │                         │
 k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                          └─────────────────────────┘
 ┌[2] Characters───────────┐┌Ackbar─────────────────────────────────────────────────────────────────────────────────────┐
-│> Ackbar                 ││                                                             ┌Homeworld: Mon Cala─────────┐│
-│  Adi Gallia             ││                                                             │Population:      27,000,000,││
-│  Anakin Skywalker       ││                                                             │Terrain:         oceans, ree││
-│  Arvel Crynyd           ││                                                             │Climate:         temperate  ││
-│  Ayla Secura            ││                                                             │Surface water:   100%       ││
-│  Bail Prestor Organa    ││                                                             │Diameter:        11,030 km  ││
-│  Barriss Offee          ││                                                             │Rotation period: 21 hr      ││
-│  Ben Quadinaros         ││                                                             │Orbital period:  398 d      ││
-│  Beru Whitesun lars     ││                                                             │Gravity:         1          ││
-│  Bib Fortuna            ││                                                             └────────────────────────────┘│
+│> Ackbar                 ││                              ┌Species: Mon Calamari────────┐┌Homeworld: Mon Cala─────────┐│
+│  Adi Gallia             ││                              │Classification:   amphibian  ││Population:      27,000,000,││
+│  Anakin Skywalker       ││                              │Designation:      sentient   ││Terrain:         oceans, ree││
+│  Arvel Crynyd           ││                              │Average height:   160 cm     ││Climate:         temperate  ││
+│  Ayla Secura            ││                              │Average lifespan: unknown    ││Surface water:   100%       ││
+│  Bail Prestor Organa    ││                              │Language:         Mon Calamar││Diameter:        11,030 km  ││
+│  Barriss Offee          ││                              │                             ││Rotation period: 21 hr      ││
+│  Ben Quadinaros         ││                              │                             ││Orbital period:  398 d      ││
+│  Beru Whitesun lars     ││                              │                             ││Gravity:         1          ││
+│  Bib Fortuna            ││                              └─────────────────────────────┘└────────────────────────────┘│
 └─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
 ┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │

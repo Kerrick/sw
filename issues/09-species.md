@@ -11,6 +11,7 @@ row to spare, so the label and the name share the border title, "Species:
 **Human**". Units follow the wireframe: "180 cm" and "120 yr". An unknown
 species shows dimmed through `Sw::Empty`, as Yoda's unknown planet does.
 
-- [ ] A character with a species shows its classification, designation, average height, average lifespan, and language
-- [ ] Luke's empty species shows as unknown
+- [x] A character with a species shows its classification, designation, average height, average lifespan, and language
+- [x] Luke's empty species shows as unknown
 - [ ] Species/1 (Human) doesn't list Luke either, so the two directions agree on his missing species, pinned by a test
+- [ ] A droid's average lifespan of "indefinite" reads with no "yr"

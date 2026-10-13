@@ -8,6 +8,7 @@ class TestLoadMapper < Minitest::Test
   FILMS = File.read(File.join(FixtureServer::FIXTURES, "api/films.json")).freeze
   STARSHIPS = File.read(File.join(FixtureServer::FIXTURES, "api/starships.json")).freeze
   PLANETS = File.read(File.join(FixtureServer::FIXTURES, "api/planets.json")).freeze
+  SPECIES = File.read(File.join(FixtureServer::FIXTURES, "api/species.json")).freeze
 
   def test_the_first_person_is_luke_skywalker
     assert_equal "Luke Skywalker", records.fetch(:characters).first.name.to_s
@@ -37,6 +38,12 @@ class TestLoadMapper < Minitest::Test
     luke = records.fetch(:characters).first
 
     assert_equal "Tatooine", luke.homeworld.name.to_s
+  end
+
+  def test_ackbar_is_a_mon_calamari
+    ackbar = records.fetch(:characters).find { |character| character.name.to_s == "Ackbar" }
+
+    assert_equal ["Mon Calamari"], ackbar.species.map { |species| species.name.to_s }
   end
 
   def test_polis_massa_has_an_unknown_diameter_rather_than_none
@@ -168,6 +175,6 @@ class TestLoadMapper < Minitest::Test
 
   private def records
     mapper = Sw::Load::Mapper.new
-    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS), starships: mapper.parse(STARSHIPS), planets: mapper.parse(PLANETS))
+    mapper.records(people: mapper.parse(PEOPLE), vehicles: mapper.parse(VEHICLES), films: mapper.parse(FILMS), starships: mapper.parse(STARSHIPS), planets: mapper.parse(PLANETS), species: mapper.parse(SPECIES))
   end
 end
