@@ -37,4 +37,4 @@ Star Wars Character Datapad                                                     
 │                                                          ││                                                          │
 │                                                          ││                                                          │
 └──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘
-r: Reload  q: Quit                                                                                                      
+enter: Finish search  esc: Clear search                                                                                 

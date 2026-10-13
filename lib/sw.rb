@@ -51,7 +51,7 @@ module Sw
   GlobalKeys = [["r", "Reload"], ["q", "Quit"]].freeze
 
   StatusLine = -> (tui, status: [], keys: []) {
-    hotkeys = [*keys, *GlobalKeys].map { |key, label| Hotkey.call(tui, key, label) }
+    hotkeys = keys.map { |key, label| Hotkey.call(tui, key, label) }
     tui.paragraph(text: [
       tui.text_line(spans: [*status, *hotkeys.flat_map { |spans| [*spans, tui.text_span(content: "  ")] }.slice(0...-1)]),
     ])
@@ -62,7 +62,7 @@ module Sw
     tui.layout(
       direction: :vertical,
       constraints: [tui.constraint_length(1), tui.constraint_fill(1), tui.constraint_length(1)],
-      children: [Title.call(tui), body, StatusLine.call(tui, status:)]
+      children: [Title.call(tui), body, StatusLine.call(tui, status:, keys: GlobalKeys)]
     )
   }
 
@@ -139,7 +139,7 @@ module Sw
           constraints: [tui.constraint_fill(1), tui.constraint_fill(1)],
           children: [Starships::View.call(tui), Vehicles::View.call(selected&.vehicles, tui)]
         ),
-        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? Characters::Keys : []),
+        StatusLine.call(tui, status: model.loading? ? StatusWord.call(tui, "Loading", :blue) : [], keys: (model.focus == :characters) ? [*Characters::Keys, *GlobalKeys] : Search::Keys),
       ]
     )
   }

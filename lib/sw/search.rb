@@ -36,6 +36,8 @@ module Sw
 
     receive_events :backspace, -> (_, model) { Change.(model, model.query.chop) }
 
+    Keys = [["enter", "Finish search"], ["esc", "Clear search"]].freeze
+
     Update = from_router
 
     View = -> (model, tui, focused:, number:) {

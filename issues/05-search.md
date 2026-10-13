@@ -21,7 +21,7 @@ unbound until then.
 - [ ] Search is a bordered box in a three-row title area, numbered `[1]`, and Characters is numbered `[2]`; the status line moves to the title area's third row on every screen, with its labels dimmed and its keys not
 - [x] `2` focuses Characters (no test drives it until a third panel takes focus)
 - [x] The list's keys work only while Characters has focus
-- [ ] The status line lists the focused panel's keys, with the global ones after them
+- [x] The status line lists the focused panel's keys, with the global ones after them
 - [x] Each keystroke filters the list live; Search bubbles the query to the root, which forwards it to Characters
 - [x] When the highlighted character stops matching, the highlight moves to the first match
 - [x] The list's keys move through the matches only
@@ -39,4 +39,4 @@ unbound until then.
 - [x] A paste drops its trailing line break
 - [x] A search with no matches says "No match for" over the query
 - [ ] The cursor is drawn with `tui.cursor`
-- [ ] Search shows its own key help and hides the global `r: Reload  q: Quit`, because those keys type into it
+- [x] Search shows its own key help and hides the global `r: Reload  q: Quit`, because those keys type into it

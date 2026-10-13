@@ -78,6 +78,22 @@ class TestSw < Minitest::Test
     end
   end
 
+  def test_the_status_line_hides_r_and_q_while_search_has_focus
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    with_rendered(Sw::View.call(searching, tui)) do
+      %w[r q].each { |key| refute_match(/\b#{key}:/, buffer_content.join("\n")) }
+    end
+  end
+
+  def test_the_status_line_shows_enter_and_esc_as_hotkeys_while_search_has_focus
+    searching = Sw::Model.new(characters: three_characters, focus: :search)
+
+    with_rendered(Sw::View.call(searching, tui)) do
+      %w[enter esc].each { |key| assert_text_style "#{key}:", modifiers: [:bold, :underlined] }
+    end
+  end
+
   def test_the_screen_shows_grogu_typed_into_search
     typing_grogu = Sw::Model.new(characters: three_characters, focus: :search, search: Sw::Search::Init.call.with(query: "Grogu"))
 

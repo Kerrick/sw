@@ -122,6 +122,7 @@ module Sw
     end
 
     Init: ^() -> Model
+    Keys: Array[[String, String]]
     Typed: ^(Rooibos::message, Model) -> bool
     View: ^(Model, RatatuiRuby::TUI, focused: bool, number: Integer) -> RatatuiRuby::Widgets::Paragraph
     Update: ^(Rooibos::message, Model) -> [Model, Rooibos::Command::execution?]
