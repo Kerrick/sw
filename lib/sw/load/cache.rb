@@ -15,6 +15,9 @@ module Sw
 
       def complete?(*names) = names.all? { |name| file(name).file? }
 
+      # The oldest file's time, so a write that stopped partway counts as old.
+      def modified(*names) = names.map { |name| file(name).mtime }.min
+
       def read(*names) = names.to_h { |name| [name, file(name).binread] }
 
       def write(bodies)

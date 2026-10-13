@@ -31,6 +31,33 @@ class TestLoad < Minitest::Test
     assert_equal 82, cached.characters.count
   end
 
+  def test_a_cache_downloaded_just_now_is_not_stale
+    finished
+    cached = delivered(unreachable_url)
+
+    refute cached.stale, "Expected a cache downloaded just now to be fresh"
+  end
+
+  def test_a_cache_an_hour_short_of_a_week_old_is_not_stale
+    finished
+    an_hour_short_of_a_week_ago = Time.now - (((7 * 24) - 1) * 60 * 60)
+    age_cache(an_hour_short_of_a_week_ago)
+    cached = delivered(unreachable_url)
+
+    refute cached.stale, "Expected a cache an hour short of a week old to be fresh"
+  end
+
+  def test_a_cache_a_week_and_an_hour_old_still_loads_but_knows_it_is_stale
+    finished
+    a_week_and_an_hour_ago = Time.now - (((7 * 24) + 1) * 60 * 60)
+    age_cache(a_week_and_an_hour_ago)
+    cached = delivered(unreachable_url)
+
+    assert_equal "Sw::Load::Finished", cached.class.name
+    assert_equal 82, cached.characters.count
+    assert cached.stale, "Expected a cache a week and an hour old to be stale"
+  end
+
   def test_a_reload_goes_to_the_network_even_when_the_cache_is_fresh
     finished
     reloaded = delivered(unreachable_url, reload: true)

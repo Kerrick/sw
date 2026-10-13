@@ -143,7 +143,7 @@ module Sw
 
     selected = model.characters.selected
     status = if model.loading?
-      StatusWord.call(tui, "Loading", :blue)
+      StatusWord.call(tui, "Reloading", :blue)
     elsif model.failure
       StatusWord.call(tui, "Reload failed", :red)
     else
@@ -226,7 +226,8 @@ module Sw
   end
 
   receive_instances_of Load::Finished, -> (message, model) {
-    model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), films: message.films, loading: false)
+    loaded = model.with(characters: Characters::Init.(characters: message.characters, query: model.search.query), films: message.films, loading: message.stale)
+    message.stale ? [loaded, Load.new(reload: true)] : loaded
   }
 
   receive_instances_of Load::Failed, -> (message, model) {

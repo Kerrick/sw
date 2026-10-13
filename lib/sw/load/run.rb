@@ -9,6 +9,9 @@ module Sw
       # The root and every collection, which together make a complete cache.
       BODIES = [:root, *Mapper::COLLECTIONS.keys].freeze
 
+      # How long a cache stays fresh, in seconds.
+      STALE_AFTER = 7 * 24 * 60 * 60
+
       def initialize(url, out, token, reload:)
         @url = url
         @reload = reload
@@ -28,17 +31,17 @@ module Sw
         cache.write(bodies)
       end
 
-      private def finished = @finished ||= map(cache.read(*BODIES))
+      private def finished = @finished ||= map(cache.read(*BODIES), stale: cache.modified(*BODIES) < Time.now - STALE_AFTER)
 
       private def download
         root = fetch_root.body
         { root:, **fetch_collections(parse(@url) { mapper.links(root) }) }
       end
 
-      private def map(bodies)
+      private def map(bodies, stale: false)
         links = parse(@url) { mapper.links(bodies.fetch(:root)) }
         parsed = Mapper::COLLECTIONS.keys.to_h { |name| [name, parse(links.fetch(name)) { mapper.parse(bodies.fetch(name)) }] }
-        Finished.new(**mapper.records(**parsed))
+        Finished.new(**mapper.records(**parsed), stale:)
       end
 
       private def fetch_root

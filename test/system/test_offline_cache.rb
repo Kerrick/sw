@@ -4,6 +4,7 @@ require "test_helper"
 
 class TestOfflineCache < Minitest::Test
   include Rooibos::TestHelper
+  include ViewTestHelper
 
   def test_the_second_launch_needs_no_network
     launch
@@ -12,6 +13,22 @@ class TestOfflineCache < Minitest::Test
     launch do
       assert_includes buffer_content.join("\n"), "Ackbar"
     end
+  end
+
+  def test_a_week_old_cache_shows_at_once_and_reloads_behind_it
+    launch
+    eight_days_ago = Time.now - (8 * 24 * 60 * 60)
+    age_cache(eight_days_ago)
+    never_answers = TCPServer.new("127.0.0.1", 0)
+    ENV["SW_API_URL"] = "http://127.0.0.1:#{never_answers.addr[1]}/api"
+
+    launch do
+      assert_includes buffer_content.join("\n"), "Ackbar"
+      assert_text_style "Reloading", fg: :blue
+      assert_snapshots("a_week_old_cache_reloading")
+    end
+  ensure
+    never_answers&.close
   end
 
   def test_a_reload_without_a_network_keeps_the_characters_on_screen

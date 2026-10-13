@@ -138,7 +138,8 @@ class Collection[T] < Data
       attr_reader films: Collection[Film]
       attr_reader planets: Collection[Planet]
       attr_reader species: Collection[Species]
-      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], starships: Collection[Starship], films: Collection[Film], planets: Collection[Planet], species: Collection[Species]) -> void
+      attr_reader stale: bool
+      def initialize: (characters: Collection[Character], vehicles: Collection[Vehicle], starships: Collection[Starship], films: Collection[Film], planets: Collection[Planet], species: Collection[Species], ?stale: bool) -> void
     end
 
     class Failed < Data
@@ -162,12 +163,14 @@ class Collection[T] < Data
       attr_reader directory: Pathname
       def initialize: (?directory: Pathname) -> void
       def complete?: (*Symbol names) -> bool
+      def modified: (*Symbol names) -> Time
       def read: (*Symbol names) -> Hash[Symbol, String]
       def write: (Hash[Symbol, String] bodies) -> void
     end
 
     class Run
       BODIES: Array[Symbol]
+      STALE_AFTER: Integer
       def initialize: (String url, Rooibos::Command::Outlet out, Concurrent::Cancellation token, reload: bool) -> void
       def call: () -> Finished
     end

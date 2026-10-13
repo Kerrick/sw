@@ -37,6 +37,8 @@
 - Show why the download failed, with a red Error status word, when the first launch has no network or the server answers with an error, with something that isn't JSON, or with data the Datapad can't read.
 - Keep the downloaded data in the platform's cache directory, so every launch after the first works offline.
 - Keep the characters on screen when a reload fails, with a red Reload failed status word, rather than showing the error screen.
+- Show a cache more than a week old at once, with a blue Reloading status word, and reload it in the background.
+- Say Reloading, not Loading, while r or F5 reloads with characters on screen.
 
 ## [0.1.0] - 2026-10-12
 

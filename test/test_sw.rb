@@ -216,13 +216,13 @@ class TestSw < Minitest::Test
     assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
   end
 
-  def test_reloading_with_characters_on_screen_shows_the_blue_loading_status_word
+  def test_reloading_with_characters_on_screen_shows_the_blue_reloading_status_word
     loading, = Sw::Init.call
     loaded = loading.with(characters: three_characters, films:)
     reloading, = Sw::Update.call(RatatuiRuby::Event::Key.new(code: "r"), loaded)
 
     with_rendered(Sw::View.call(reloading, tui)) do
-      assert_text_style "Loading", fg: :blue
+      assert_text_style "Reloading", fg: :blue
     end
   end
 
@@ -412,6 +412,33 @@ class TestSw < Minitest::Test
     model, = Sw::Update.call(downloaded, loading)
 
     assert_equal [a_new_hope, revenge_of_the_sith], model.films.to_a
+  end
+
+  def test_a_stale_cache_shows_its_characters_and_reloads_from_the_api
+    week_old = Sw::Load::Finished.new(
+      characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]),
+      films: Sw::Collection.new([]), planets: Sw::Collection.new([]), species: Sw::Collection.new([]), stale: true
+    )
+    loading, = Sw::Init.call
+
+    model, command = Sw::Update.call(week_old, loading)
+
+    assert_equal [ackbar, han, luke], model.characters.matches.to_a
+    assert_equal Sw::Load.new(url: FIXTURE_SERVER.url, reload: true), command
+  end
+
+  def test_a_stale_cache_shows_the_blue_reloading_status_word_until_the_new_data_arrives
+    week_old = Sw::Load::Finished.new(
+      characters: Sw::Collection.new([ackbar, han, luke]), vehicles: Sw::Collection.new([]), starships: Sw::Collection.new([]),
+      films:, planets: Sw::Collection.new([]), species: Sw::Collection.new([]), stale: true
+    )
+    loading, = Sw::Init.call
+
+    reloading, = Sw::Update.call(week_old, loading)
+
+    with_rendered(Sw::View.call(reloading, tui)) do
+      assert_text_style "Reloading", fg: :blue
+    end
   end
 
   def test_the_down_arrow_does_nothing_while_the_download_is_under_way

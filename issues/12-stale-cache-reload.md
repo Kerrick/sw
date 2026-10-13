@@ -6,7 +6,7 @@ A cache older than seven days is still good enough to show. The app
 reloads it in the background and never shows the error screen while any
 cache exists.
 
-- [ ] A cache older than 7 days shows immediately, with "Reloading" as the status word, in blue like Loading
+- [x] A cache older than 7 days shows immediately, with "Reloading" as the status word, in blue like Loading
 - [ ] A load from the cache never rewrites it, so the files' modification time says when the data arrived
 - [ ] The new data swaps in with one message
 - [ ] A failed or malformed background reload leaves the cache files as they were

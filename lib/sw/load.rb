@@ -8,9 +8,11 @@ module Sw
 
     Command = Rooibos::Command
 
-    # The message Load sends when the whole dataset has arrived.
-    class Finished < Data.define(:characters, :vehicles, :starships, :films, :planets, :species)
+    # The message Load sends when the whole dataset has arrived. Data from a stale cache is still whole, but needs reloading.
+    class Finished < Data.define(:characters, :vehicles, :starships, :films, :planets, :species, :stale)
       include Rooibos::Message::Predicates
+
+      def initialize(stale: false, **) = super
     end
 
     # The message Load sends when the download fails.

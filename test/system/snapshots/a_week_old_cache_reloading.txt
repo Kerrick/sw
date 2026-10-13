@@ -1,0 +1,40 @@
+Star Wars Character Datapad                                                                  ┌[1] Search───────────────┐
+                                                                                             │                         │
+Reloading k/j: Prev/Next  g/G: First/Last  r: Reload  q: Quit                                └─────────────────────────┘
+┌[2] Characters───────────┐┌Ackbar─────────────────────────────────────────────────────────────────────────────────────┐
+│> Ackbar                 ││┌Attributes──────────────────┐┌Species: Mon Calamari────────┐┌Homeworld: Mon Cala─────────┐│
+│  Adi Gallia             │││Birth year: 41BBY           ││Classification:   amphibian  ││Population:      27,000,000,││
+│  Anakin Skywalker       │││Gender:     male            ││Designation:      sentient   ││Terrain:         oceans, ree││
+│  Arvel Crynyd           │││Height:     180 cm          ││Average height:   160 cm     ││Climate:         temperate  ││
+│  Ayla Secura            │││Mass:       83 kg           ││Average lifespan: unknown    ││Surface water:   100%       ││
+│  Bail Prestor Organa    │││Eye color:  orange          ││Language:         Mon Calamar││Diameter:        11,030 km  ││
+│  Barriss Offee          │││Hair color: none            ││                             ││Rotation period: 21 hr      ││
+│  Ben Quadinaros         │││Skin color: brown mottle    ││                             ││Orbital period:  398 d      ││
+│  Beru Whitesun lars     │││                            ││                             ││Gravity:         1          ││
+│  Bib Fortuna            ││└────────────────────────────┘└─────────────────────────────┘└────────────────────────────┘│
+└─────────────────────────┘└───────────────────────────────────────────────────────────────────────────────────────────┘
+┌Films─────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ The Phantom Menace Attack of the Clone Revenge of the Sith     A New Hope     The Empire Strikes  Return of the Jedi │
+│      Episode I         Episode II          Episode III         Episode IV          Episode V          Episode VI     │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌Starships─────────────────────────────────────────────────┐┌Vehicles──────────────────────────────────────────────────┐
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                       No starships                       ││                        No vehicles                       │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+│                                                          ││                                                          │
+└──────────────────────────────────────────────────────────┘└──────────────────────────────────────────────────────────┘

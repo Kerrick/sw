@@ -37,6 +37,11 @@ module EmptyCache
     CACHE_HOMES.each { |name| ENV[name] = @cache_home }
   end
 
+  # Dates every cached file to the given time, as if the download had happened then.
+  private def age_cache(mtime)
+    FileUtils.touch(Dir.glob("**/*.json", base: @cache_home).map { |name| File.join(@cache_home, name) }, mtime:)
+  end
+
   def after_teardown
     CACHE_HOMES.each { |name| ENV[name] = @user_cache_homes[name] }
     FileUtils.remove_entry(@cache_home)
